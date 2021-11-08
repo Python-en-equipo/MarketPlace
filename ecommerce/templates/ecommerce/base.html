@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       a {
+            color: black;
+        }
+        a:link {
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: yellow;
+        }
+        a:visited { 
+            text-decoration: none
+        }
+        .top-menu {
+            position: absolute;
+            top: 300;
+            right: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div class="page-header">
+        <a href="{% url 'ecommerce:product-create' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+        <h1><a href="{% url 'ecommerce:home' %}">Ais Moda</a></h1>
+    </div>
+    {% block content %}
+    <ul>
+        {% for prod in result %}
+        <div>
+            <h2><a href="{% url 'ecommerce:product-detail' prod.pk %}"> {{prod.title}} </a></h2>
+            <p> {{ prod.description}}, ${{prod.price}} </p>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends 'ecommerce/base.html' %}
+
+{% block content %}
+<div>
+    <h2> {{product.title}}</h2>
+    <p> {{ product.description}}</p>
+    <p> ${{product.price}} </p>
+</div>
+<a href="{% url 'ecommerce:product-edit' product.pk %}">Edita este producto</a>
+
+
+{% endblock content %}
