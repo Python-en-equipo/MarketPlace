@@ -11,7 +11,7 @@ from .models import Product
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
-# @cache_page(CACHE_TTL)
+@cache_page(CACHE_TTL)
 def show_my_page(request):
     queryset = Product.objects.exclude(price__lt=50)
     return render(request, 'ecommerce/base.html', {'result': queryset})
