@@ -22,8 +22,7 @@ class ProductForm(forms.ModelForm):
         return price
 
 class ImageForm(forms.ModelForm):
-    image_location = forms.FileField(required=False, label='Select an image file', 
-    help_text='Please select a photo to upload')
+    image_location = forms.ImageField(required=False, label='Select an image file')
     class Meta:
         model = Image
         fields = [
