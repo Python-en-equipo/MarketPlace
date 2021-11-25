@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,25 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-       a {
-            color: black;
-        }
-        a:link {
-            text-decoration: none;
-        }
-        a:hover {
-            background-color: yellow;
-        }
-        a:visited { 
-            text-decoration: none
-        }
-        .top-menu {
-            position: absolute;
-            top: 300;
-            right: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -35,11 +18,12 @@
     </div>
     {% block content %}
     <ul>
-        {% for prod in result %}
+        {% for product in result %}
         <div>
-            <h2><a href="{% url 'ecommerce:product-detail' prod.pk %}"> {{prod.title}} </a></h2>
-            <p> {{ prod.description}}, ${{prod.price}} </p>
+        <h2><a href="{% url 'ecommerce:product-detail' product.pk %}"> {{product.title}} </a></h2>
+        <p> {{ product.description}}, ${{product.price}} </p>
         </div>
+        {% include "ecommerce/images.html" %}  
         {% endfor %}
     </ul>
     {% endblock %}

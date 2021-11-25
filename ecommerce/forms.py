@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import Product, Image
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -7,9 +7,8 @@ class ProductForm(forms.ModelForm):
         fields = [
             'title',
             'description',
-            'price'
+            'price',          
         ]
-    
     # def clean_title(self, *args, **kwargs):
     #     title = self.cleaned_data.get('title')
     #     if not title.startswith('Shein'):
@@ -21,3 +20,12 @@ class ProductForm(forms.ModelForm):
         if price < 0:
             raise forms.ValidationError('No puedes ingresar números negativos.')
         return price
+
+class ImageForm(forms.ModelForm):
+    image_location = forms.FileField(required=False, label='Select an image file', 
+    help_text='Please select a photo to upload')
+    class Meta:
+        model = Image
+        fields = [
+            'image_location'
+        ]

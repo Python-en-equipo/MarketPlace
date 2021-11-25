@@ -5,6 +5,7 @@
     <h2> {{product.title}}</h2>
     <p> {{ product.description}}</p>
     <p> ${{product.price}} </p>
+    {% include "ecommerce/images.html" %}  
 </div>
 <a href="{% url 'ecommerce:product-edit' product.pk %}">Edita este producto</a>
 
