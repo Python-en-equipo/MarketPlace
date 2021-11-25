@@ -41,12 +41,15 @@ def product_edit_view(request, id):
         instance_image = None
     product_form = ProductForm(request.POST or None, instance=instance_product)
     image_form = ImageForm(request.POST, request.FILES, instance=instance_image)
-    if product_form.is_valid() and image_form.is_valid():
+    if product_form.is_valid():
             product = product_form.save()
-            image = image_form.save(commit=False)
-            image.product = product
-            image.save()
             return HttpResponseRedirect(reverse('ecommerce:home'))
+    elif product_form.is_valid() and image_form.is_valid():
+        product = product_form.save()
+        image = image_form.save(commit=False)
+        image.product = product
+        image.save()
+        return HttpResponseRedirect(reverse('ecommerce:home'))
     
     return render(request, 'ecommerce/product_edit.html', {'product_form': product_form, 'image_form': image_form})
 
