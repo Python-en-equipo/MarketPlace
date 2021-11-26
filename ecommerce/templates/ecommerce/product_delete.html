@@ -1,0 +1,14 @@
+{% extends 'ecommerce/base.html' %}
+{% block content %}
+<p> ¿Estás seguro que deseas borrar "{{product.title}}"? </p>
+
+<form action="{% url 'ecommerce:product-delete' product.pk %}" method="POST">
+    {% csrf_token %}
+
+    <a href="{% url 'ecommerce:product-detail' product.pk %}"> Cancelar </a>
+
+    <input type="submit" value="Sí">
+
+</form>
+
+{% endblock content %}

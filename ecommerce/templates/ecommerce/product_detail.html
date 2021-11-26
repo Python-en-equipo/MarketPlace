@@ -8,6 +8,7 @@
     {% include "ecommerce/images.html" %}  
 </div>
 <a href="{% url 'ecommerce:product-edit' product.pk %}">Edita este producto</a>
+<a href="{% url 'ecommerce:product-delete' product.pk %}">Borra este producto</a>
 
 
 {% endblock content %}

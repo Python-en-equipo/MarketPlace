@@ -57,3 +57,10 @@ def product_detail_view(request, id):
     product = Product.objects.get(id=id)
 
     return render(request, 'ecommerce/product_detail.html', {'product': product})
+
+def product_deletion(request, id):
+    product = Product.objects.get(id=id)
+    if request.method == 'POST':
+        product.delete()
+        return HttpResponseRedirect(reverse('ecommerce:home'))
+    return render(request, 'ecommerce/product_delete.html', {'product': product})
