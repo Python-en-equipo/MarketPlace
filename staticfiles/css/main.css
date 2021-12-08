@@ -14,4 +14,12 @@ a:visited {
     position: absolute;
     top: 300;
     right: 0;
+    margin-right: 20px;
+}
+
+.user-msg {
+    font-size: 18px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
 }
