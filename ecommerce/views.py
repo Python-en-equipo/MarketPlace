@@ -18,7 +18,6 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 #cache_page(CACHE_TTL)
-@login_required(login_url='ecommerce:login')
 def show_my_page(request):
     queryset = Product.objects.exclude(price__lt=50)
     return render(request, 'ecommerce/base.html', {'result': queryset})
@@ -93,20 +92,19 @@ def product_edit_view(request, id):
         instance_image = None
     product_form = ProductForm(request.POST or None, instance=instance_product)
     image_form = ImageForm(request.POST, request.FILES, instance=instance_image)
-    if product_form.is_valid():
-            product = product_form.save()
-            return redirect('ecommerce:home')
-    elif product_form.is_valid() and image_form.is_valid():
+    if product_form.is_valid() and image_form.is_valid():
         product = product_form.save()
         image = image_form.save(commit=False)
         image.product = product
         image.save()
         return redirect('ecommerce:home')
-    
+    elif product_form.is_valid():
+            product = product_form.save()
+            return redirect('ecommerce:home')
+       
     return render(request, 'ecommerce/product_edit.html', {'product_form': product_form, 'image_form': image_form})
 
 
-@login_required(login_url='ecommerce:login')
 def product_detail_view(request, id):
     product = Product.objects.get(id=id)
 
