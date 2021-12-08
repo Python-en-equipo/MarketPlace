@@ -15,8 +15,13 @@
     <div class="page-header">
         <a href="{% url 'ecommerce:product-create' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
         <h1><a href="{% url 'ecommerce:home' %}">Ais Moda</a></h1>
+        <span class="user-msg"> Hello, {{request.user}}</span>
+        <span><a class="user-msg" href="{% url 'ecommerce:logout' %}"> Logout </a></span>
     </div>
     {% block content %}
+        {%for message in messages %}
+            <p> {{ message }} </p>
+        {% endfor %}
     <ul>
         {% for product in result %}
         <div>
@@ -26,6 +31,7 @@
         {% include "ecommerce/images.html" %}  
         {% endfor %}
     </ul>
+
     {% endblock %}
 </body>
 </html>
