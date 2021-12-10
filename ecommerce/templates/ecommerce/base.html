@@ -13,14 +13,18 @@
 </head>
 <body>
     <div class="page-header">
-        <a href="{% url 'ecommerce:product-create' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-        <h1><a href="{% url 'ecommerce:home' %}">Ais Moda</a></h1>
-        {% if request.user.is_authenticated %}
+        
+        {% if request.user.is_authenticated and request.user.is_staff %}
+            <a href="{% url 'ecommerce:product-create' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+            <span class="user-msg"> Hello, {{request.user}}</span>
+            <span><a class="user-msg" href="{% url 'ecommerce:logout' %}"> Logout </a></span>
+        {% elif request.user.is_authenticated %}
             <span class="user-msg"> Hello, {{request.user}}</span>
             <span><a class="user-msg" href="{% url 'ecommerce:logout' %}"> Logout </a></span>
         {% else %}
             <span><a class="user-msg" href="{% url 'ecommerce:login' %}"> Login </a></span>
         {% endif %}
+        <h1><a href="{% url 'ecommerce:home' %}">Ais Moda</a></h1>
     </div>
     {% block content %}
         {%for message in messages %}
