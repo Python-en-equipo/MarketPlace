@@ -1,5 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.urls import reverse
 
 class Product(models.Model):
@@ -17,3 +18,7 @@ class Product(models.Model):
 
     # def get_absolute_url(self):
     #     return reverse("detail", kwargs={"id": self.id})
+
+class Image(models.Model):
+    product = models.ForeignKey(Product, on_delete=CASCADE, related_name="product_images")
+    image_location = models.ImageField(upload_to='products/', null=True, blank=True)

@@ -1,0 +1,3 @@
+{% for image in product.product_images.all %}
+<img src="{{ image.image_location.url  }}" alt="">
+{% endfor %}

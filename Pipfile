@@ -8,6 +8,7 @@ django = "*"
 psycopg2 = "*"
 django-redis = "*"
 django-debug-toolbar = "*"
+pillow = "*"
 
 [dev-packages]
 

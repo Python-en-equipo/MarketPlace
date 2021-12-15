@@ -1,5 +1,7 @@
 from django import forms
-from .models import Product
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from .models import Product, Image
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -7,9 +9,8 @@ class ProductForm(forms.ModelForm):
         fields = [
             'title',
             'description',
-            'price'
+            'price',          
         ]
-    
     # def clean_title(self, *args, **kwargs):
     #     title = self.cleaned_data.get('title')
     #     if not title.startswith('Shein'):
@@ -21,3 +22,21 @@ class ProductForm(forms.ModelForm):
         if price < 0:
             raise forms.ValidationError('No puedes ingresar números negativos.')
         return price
+
+class ImageForm(forms.ModelForm):
+    image_location = forms.ImageField(required=True, label='Select an image file')
+    class Meta:
+        model = Image
+        fields = [
+            'image_location'
+        ]
+
+class UserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'email',
+            'password1', 
+            'password2'
+        ]
