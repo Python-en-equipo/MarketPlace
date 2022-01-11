@@ -9,6 +9,7 @@ psycopg2 = "*"
 django-redis = "*"
 django-debug-toolbar = "*"
 pillow = "*"
+flake8 = "*"
 
 [dev-packages]
 
