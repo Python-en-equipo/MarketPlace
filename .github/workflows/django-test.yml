@@ -34,15 +34,12 @@ jobs:
     - name: Create virtual environment with dependencies
       run: |
         python -m pipenv install
-    - name: Activate shell
-      run: |
-        pipenv shell
     - name: Use Black
       run: |
-        black -l 119 .
+        pipenv run black -l 119 .
     - name: Run migrations
       run: |
-        python manage.py migrate
+        pipenv run python manage.py migrate
     - name: Run Tests
       run: |
-        python manage.py test
+        pipenv run python manage.py test
