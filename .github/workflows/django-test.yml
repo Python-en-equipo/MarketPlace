@@ -37,6 +37,9 @@ jobs:
     - name: Use Black
       run: |
         pipenv run black -l 119 .
+    - name: Flake
+      run: |
+        pipenv run flake8
     - name: Run migrations
       run: |
         pipenv run python manage.py migrate
