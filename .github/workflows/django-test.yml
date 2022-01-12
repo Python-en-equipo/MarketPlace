@@ -40,3 +40,5 @@ jobs:
     - name: Run Tests
       run: |
         pipenv run python manage.py test
+    - name: Flake8
+      uses: py-actions/flake8@v2
