@@ -6,14 +6,14 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ecommerce', '0003_image'),
-    ]
+    dependencies = [("ecommerce", "0003_image")]
 
     operations = [
         migrations.AlterField(
-            model_name='image',
-            name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='product_images', to='ecommerce.product'),
-        ),
+            model_name="image",
+            name="product",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name="product_images", to="ecommerce.product"
+            ),
+        )
     ]

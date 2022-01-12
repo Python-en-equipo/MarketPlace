@@ -3,40 +3,34 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Product, Image
 
+
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = [
-            'title',
-            'description',
-            'price',          
-        ]
+        fields = ["title", "description", "price"]
+
     # def clean_title(self, *args, **kwargs):
     #     title = self.cleaned_data.get('title')
     #     if not title.startswith('Shein'):
     #         raise forms.ValidationError('Tu producto debe empezar con Shein')
     #     return title
-    
+
     def clean_price(self, *args, **kwargs):
-        price = self.cleaned_data.get('price')
+        price = self.cleaned_data.get("price")
         if price < 0:
-            raise forms.ValidationError('No puedes ingresar números negativos.')
+            raise forms.ValidationError("No puedes ingresar números negativos.")
         return price
 
+
 class ImageForm(forms.ModelForm):
-    image_location = forms.ImageField(required=True, label='Select an image file')
+    image_location = forms.ImageField(required=True, label="Select an image file")
+
     class Meta:
         model = Image
-        fields = [
-            'image_location'
-        ]
+        fields = ["image_location"]
+
 
 class UserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = [
-            'username',
-            'email',
-            'password1', 
-            'password2'
-        ]
+        fields = ["username", "email", "password1", "password2"]
