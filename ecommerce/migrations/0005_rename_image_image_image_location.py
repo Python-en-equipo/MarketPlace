@@ -5,14 +5,6 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ecommerce', '0004_alter_image_product'),
-    ]
+    dependencies = [("ecommerce", "0004_alter_image_product")]
 
-    operations = [
-        migrations.RenameField(
-            model_name='image',
-            old_name='image',
-            new_name='image_location',
-        ),
-    ]
+    operations = [migrations.RenameField(model_name="image", old_name="image", new_name="image_location")]

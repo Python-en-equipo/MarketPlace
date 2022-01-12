@@ -10,8 +10,9 @@ django-redis = "*"
 django-debug-toolbar = "*"
 pillow = "*"
 flake8 = "*"
+black = "==18.9b0"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.8"
