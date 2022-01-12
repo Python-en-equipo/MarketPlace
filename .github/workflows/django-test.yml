@@ -35,7 +35,7 @@ jobs:
       run: |
         python -m pipenv install
     - name: Use Black
-     run: |
+      run: |
         pipenv run black -l 119 .
     - name: Run migrations
       run: |
