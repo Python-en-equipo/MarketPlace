@@ -12,6 +12,7 @@ pillow = "*"
 flake8 = "*"
 black = "==18.9b0"
 isort = "*"
+pylint = "*"
 
 [dev-packages]
 

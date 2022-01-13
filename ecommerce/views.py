@@ -73,10 +73,10 @@ def product_create(request):
 
 
 @staff_member_required
-def product_edit_view(request, id):
-    instance_product = Product.objects.get(id=id)
+def product_edit_view(request, product_id):
+    instance_product = Product.objects.get(id=product_id)
     try:
-        instance_image = Image.objects.get(product__id=id)
+        instance_image = Image.objects.get(product__id=product_id)
     except Image.DoesNotExist:
         instance_image = None
     product_form = ProductForm(request.POST or None, instance=instance_product)
@@ -94,15 +94,15 @@ def product_edit_view(request, id):
     return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
 
 
-def product_detail_view(request, id):
-    product = Product.objects.get(id=id)
+def product_detail_view(request, product_id):
+    product = Product.objects.get(id=product_id)
 
     return render(request, "ecommerce/product_detail.html", {"product": product})
 
 
 @staff_member_required
-def product_deletion(request, id):
-    product = Product.objects.get(id=id)
+def product_deletion(request, product_id):
+    product = Product.objects.get(id=product_id)
     if request.method == "POST":
         messages.success(request, f"{product} was succesfully deleted")
         product.delete()
