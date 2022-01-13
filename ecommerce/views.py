@@ -3,10 +3,10 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.shortcuts import redirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+
 from .decorators import unauthenticated_user
-from .forms import ProductForm, ImageForm, UserForm
+from .forms import ImageForm, ProductForm, UserForm
 from .models import Image, Product
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)

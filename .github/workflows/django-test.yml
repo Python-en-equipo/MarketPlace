@@ -34,9 +34,12 @@ jobs:
     - name: Create virtual environment with dependencies
       run: |
         python -m pipenv install
+    - name: Use isort
+      run: |
+        pipenv run isort .
     - name: Use Black
       run: |
-        pipenv run black -l 119 .
+        pipenv run black .
     - name: Flake
       run: |
         pipenv run flake8
