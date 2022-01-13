@@ -43,6 +43,9 @@ jobs:
     - name: Flake
       run: |
         pipenv run flake8
+    - name: Pylint
+      run: |
+        pipenv run pylint ./ecommerce
     - name: Run migrations
       run: |
         pipenv run python manage.py migrate
