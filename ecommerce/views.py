@@ -2,15 +2,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.shortcuts import render
-from django.urls import reverse
-from django.views.decorators.cache import cache_page
 from .decorators import unauthenticated_user
 from .forms import ProductForm, ImageForm, UserForm
 from .models import Image, Product
