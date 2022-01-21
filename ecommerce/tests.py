@@ -71,11 +71,7 @@ class ProductHomeTests(TestCase):
         wrong_product = create_product("Producto aceptable 1", "descripcion dummy", 67)
         right_product = create_product("Producto aceptable 2", "descripcion dummy", 50)
         response = self.client.get(reverse("ecommerce:home"))
-        self.assertQuerysetEqual(
-            response.context["result"],
-            ["<Product: Producto aceptable 1>", "<Product: Producto aceptable 2>"],
-            ordered=False,
-        )
+        self.assertQuerysetEqual(response.context["result"], ["<Product: Producto aceptable 1>", "<Product: Producto aceptable 2>"], ordered=False)
 
     def test_two_wrong_products(self):
         """
