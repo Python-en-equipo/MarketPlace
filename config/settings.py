@@ -79,10 +79,28 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {"default": {"ENGINE": "django.db.backends.postgresql_psycopg2", "NAME": "postgres", "USER": "postgres", "PASSWORD": "123123", "HOST": "localhost", "PORT": "5432"}}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "123123",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}
 
 if os.environ.get("GITHUB_WORKFLOW"):
-    DATABASES = {"default": {"ENGINE": "django.db.backends.postgresql", "NAME": "github_actions", "USER": "postgres", "PASSWORD": "postgres", "HOST": "127.0.0.1", "PORT": "5432"}}
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "github_actions",
+            "USER": "postgres",
+            "PASSWORD": "postgres",
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -139,7 +157,14 @@ if DEBUG:
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CACHE REDIS
-CACHES = {"default": {"BACKEND": "django_redis.cache.RedisCache", "LOCATION": "redis://127.0.0.1:6379/1", "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"}, "KEY_PREFIX": "example"}}
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+        "KEY_PREFIX": "example",
+    }
+}
 
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15

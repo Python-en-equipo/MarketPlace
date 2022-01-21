@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+django = "*"
 psycopg2 = "*"
 django-redis = "*"
 django-debug-toolbar = "*"
@@ -12,7 +13,6 @@ flake8 = "*"
 black = "==18.9b0"
 isort = "*"
 pylint = "*"
-django = "*"
 
 [dev-packages]
 
