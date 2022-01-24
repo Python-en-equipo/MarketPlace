@@ -8,4 +8,10 @@ class Migration(migrations.Migration):
 
     dependencies = [("ecommerce", "0001_initial")]
 
-    operations = [migrations.AlterField(model_name="product", name="price", field=models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(50)]))]
+    operations = [
+        migrations.AlterField(
+            model_name="product",
+            name="price",
+            field=models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(50)]),
+        )
+    ]
