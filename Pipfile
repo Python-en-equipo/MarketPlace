@@ -15,8 +15,6 @@ pylint = "*"
 django = "*"
 gunicorn = "*"
 whitenoise = "*"
-python-decouple = "*"
-boto = "*"
 
 [dev-packages]
 
