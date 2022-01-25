@@ -4,6 +4,7 @@ astroid==2.9.3
 attrs==21.4.0
 backports.zoneinfo==0.2.1
 black==18.9b0
+boto==2.49.0
 click==8.0.3
 Deprecated==1.2.13
 Django==4.0.1
