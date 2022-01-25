@@ -22,4 +22,4 @@ class Product(models.Model):
 
 class Image(models.Model):
     product = models.ForeignKey(Product, on_delete=CASCADE, related_name="product_images")
-    image_location = models.ImageField(upload_to="products/", null=True, blank=True)
+    image_location = models.ImageField(upload_to="media/products/", null=True, blank=True)

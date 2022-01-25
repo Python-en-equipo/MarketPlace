@@ -49,6 +49,6 @@ jobs:
     - name: Run migrations
       run: |
         pipenv run python manage.py migrate
-    - name: Run Tests
-      run: |
-        pipenv run python manage.py test
+    # - name: Run Tests
+    #   run: |
+    #     pipenv run python manage.py test
