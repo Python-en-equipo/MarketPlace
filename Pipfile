@@ -14,8 +14,8 @@ isort = "*"
 pylint = "*"
 django = "*"
 gunicorn = "*"
-python-decouple = "*"
 whitenoise = "*"
+python-decouple = "*"
 
 [dev-packages]
 
