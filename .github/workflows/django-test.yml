@@ -24,6 +24,10 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     env:
       DJANGO_KEY: ${{ secrets.DJANGO_KEY }}
+      NAME_DB_HEROKU: ${{ secrets.NAME_DB_HEROKU }}
+      USER_DB_HEROKU: ${{ secrets.USER_DB_HEROKU }}
+      PASSWORD_DB_HEROKU: ${{ secrets.PASSWORD_DB_HEROKU }}
+      HOST_DB_HEROKU: ${{ secrets.HOST_DB_HEROKU }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
