@@ -7,9 +7,9 @@
     <p> ${{product.price}} </p>
     {% include "ecommerce/images.html" %}  
 </div>
-{% if request.user.is_staff %}
+<!-- {% if request.user.is_staff %}
     <a href="{% url 'ecommerce:product-edit' product.pk %}">Edit</a>
     <a href="{% url 'ecommerce:product-delete' product.pk %}">Delete</a>
-{% endif %}
+{% endif %} -->
 
 {% endblock content %}

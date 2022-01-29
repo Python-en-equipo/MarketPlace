@@ -1,0 +1,37 @@
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a class="d-flex align-items-center mb-2 mb-lg-0 mx-3 btn btn-outline-secondary" href="{% url 'ecommerce:home' %}">Ais Moda</a>
+           
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 mx-5">
+                <li><a href="#" class="btn btn-outline-secondary">Features</a></li>
+                <li><a href="#" class="btn btn-outline-secondary">Pricing</a></li>
+                <li><a href="#" class="btn btn-outline-secondary">FAQs</a></li>
+                <li><a href="#" class="btn btn-outline-secondary">About</a></li>
+            </ul>
+
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+            </form>
+
+            <div class="text-end">          
+
+            {% if request.user.is_authenticated and request.user.is_staff %}
+            <span class="user-msg"> Hello, {{request.user}}</span>
+            <a  class="btn btn-warning" href="{% url 'ecommerce:logout' %}"> Logout </a>
+            <a  class="btn btn-warning" href="{% url 'ecommerce:product-create' %}"> Crea un producto </a>
+
+            {% elif request.user.is_authenticated %}
+
+            <span class="user-msg"> Hello, {{request.user}}</span>
+            <a  class="btn btn-warning" href="{% url 'ecommerce:logout' %}"> Logout </a>
+
+            {% else %}
+            <a class="btn btn-outline-light me-2" href="{% url 'ecommerce:login' %}"> Login </a>
+            {% endif %}
+
+            </div>
+        </div>
+    </div>
+</header>

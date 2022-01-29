@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 psycopg2 = "*"
 django-redis = "*"
-django-debug-toolbar = "*"
 pillow = "*"
 flake8 = "*"
 black = "==18.9b0"
@@ -17,8 +16,10 @@ gunicorn = "*"
 whitenoise = "*"
 django-storages = "*"
 boto3 = "*"
+django-heroku = "*"
 
 [dev-packages]
+environ = "*"
 
 [requires]
 python_version = "3.8"
