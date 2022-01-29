@@ -1,22 +1,55 @@
-
 {% extends '../base.html' %}
 
 {% block content %}
 
-<h1>hello world </h1>
-
-
 {%for message in messages %}
 <p> {{ message }} </p>
 {% endfor %}
-<ul>
-{% for product in result %}
-<div>
-<h2><a href="{% url 'ecommerce:product-detail' product.pk %}"> {{product.title}} </a></h2>
-<p> {{ product.description}}, ${{product.price}} </p>
+
+
+
+
+<div class="container mt-5">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for product in result %}
+        <div class="col">
+            <div class="card shadow-sm">
+                {% for image in product.product_images.all %}
+
+                <div class="d-flex justify-content-center mt-1">
+                    <div class="card p-1 border-white" style="width: 20rem;  height: 20rem;">
+                        <div class="card-body w-100 border-white" style=" 
+                            background-size: cover; 
+                            background-position: 50% 50%;
+                            background-image: url('{{ image.image_location.url }}');">
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+                <div class="card-body">
+                    <a class="h3 text-muted" href="{% url 'ecommerce:product-detail' product.pk %}"> {{product.title}}
+                    </a>
+                    <p class="card-text">{{ product.description}} </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        </div>
+                        <small class="text-muted">${{product.price}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+
 </div>
-{% include "ecommerce/images.html" %}  
-{% endfor %}
-</ul>
+
+
 
 {% endblock content %}
