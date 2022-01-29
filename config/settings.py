@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["DJANGO_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["localhost","127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
 
@@ -92,16 +92,16 @@ if DEBUG:
         }
     }
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": os.environ["NAME_DB_HEROKU"],
-#         "USER": os.environ["USER_DB_HEROKU"],
-#         "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
-#         "HOST": os.environ["HOST_DB_HEROKU"],
-#         "PORT": "5432",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ["NAME_DB_HEROKU"],
+        "USER": os.environ["USER_DB_HEROKU"],
+        "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
+        "HOST": os.environ["HOST_DB_HEROKU"],
+        "PORT": "5432",
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -123,6 +123,9 @@ if os.environ.get("GITHUB_WORKFLOW"):
         }
     }
 
+
+
+
 if "test" in sys.argv:
     DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3", "NAME": "mydatabase"}
 
@@ -136,6 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
+print(DATABASES)
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
