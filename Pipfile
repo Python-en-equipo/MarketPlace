@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 psycopg2 = "*"
 django-redis = "*"
-django-debug-toolbar = "*"
 pillow = "*"
 flake8 = "*"
 black = "==18.9b0"
