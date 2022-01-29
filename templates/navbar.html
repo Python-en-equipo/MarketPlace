@@ -18,9 +18,9 @@
             <div class="text-end">          
 
             {% if request.user.is_authenticated and request.user.is_staff %}
-            <a href="{% url 'ecommerce:product-create' %}" class="top-menu">      </a>
             <span class="user-msg"> Hello, {{request.user}}</span>
             <a  class="btn btn-warning" href="{% url 'ecommerce:logout' %}"> Logout </a>
+            <a  class="btn btn-warning" href="{% url 'ecommerce:product-create' %}"> Crea un producto </a>
 
             {% elif request.user.is_authenticated %}
 

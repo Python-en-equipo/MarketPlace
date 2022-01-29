@@ -15,7 +15,7 @@ class Product(models.Model):
         if self.price < 50:
             return False
         return True
-
+        
     # def get_absolute_url(self):
     #     return reverse("detail", kwargs={"id": self.id})
 
