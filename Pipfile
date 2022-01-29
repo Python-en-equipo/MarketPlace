@@ -17,8 +17,10 @@ gunicorn = "*"
 whitenoise = "*"
 django-storages = "*"
 boto3 = "*"
+django-heroku = "*"
 
 [dev-packages]
+environ = "*"
 
 [requires]
 python_version = "3.8"

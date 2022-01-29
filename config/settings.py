@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["DJANGO_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "django-ecommerce-v1.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost","127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
 
 
 # Application definition
@@ -38,12 +38,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar",
+    #"debug_toolbar",
     "storages",
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    #"debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -61,7 +61,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR, 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -92,16 +92,23 @@ if DEBUG:
         }
     }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ["NAME_DB_HEROKU"],
-        "USER": os.environ["USER_DB_HEROKU"],
-        "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
-        "HOST": os.environ["HOST_DB_HEROKU"],
-        "PORT": "5432",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": os.environ["NAME_DB_HEROKU"],
+#         "USER": os.environ["USER_DB_HEROKU"],
+#         "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
+#         "HOST": os.environ["HOST_DB_HEROKU"],
+#         "PORT": "5432",
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 if os.environ.get("GITHUB_WORKFLOW"):

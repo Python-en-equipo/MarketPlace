@@ -1,0 +1,22 @@
+
+{% extends '../base.html' %}
+
+{% block content %}
+
+<h1>hello world </h1>
+
+
+{%for message in messages %}
+<p> {{ message }} </p>
+{% endfor %}
+<ul>
+{% for product in result %}
+<div>
+<h2><a href="{% url 'ecommerce:product-detail' product.pk %}"> {{product.title}} </a></h2>
+<p> {{ product.description}}, ${{product.price}} </p>
+</div>
+{% include "ecommerce/images.html" %}  
+{% endfor %}
+</ul>
+
+{% endblock content %}
