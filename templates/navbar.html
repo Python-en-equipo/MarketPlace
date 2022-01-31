@@ -14,14 +14,13 @@
             <div class="col-lg-6 col-mb-8 d-flex justify-content-end ">
                 <!--  ni idea como lo hise funcionar :) -->
 
-                {% if request.user.is_authenticated %}
-
+                {% if request.user.is_authenticated and request.user.is_staff%}
                 <span class="user-msg h3 mx-3"> Hello, {{request.user}}</span>
                 <a class="btn btn-warning m-1" href="{% url 'ecommerce:logout' %}"> Logout </a>
                 <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>
-                {% elif request.user.is_authenticated and request.user.is_staff %}
-                ACCIONES DE STAFF
-
+                {% elif request.user.is_authenticated %}
+                <span class="user-msg h3 mx-3"> Hello, {{request.user}}</span>
+                <a class="btn btn-warning m-1" href="{% url 'ecommerce:logout' %}"> Logout </a>
                 {% else %}
                 <a class="btn btn-outline-light me-2 m-3" href="{% url 'ecommerce:login' %}"> Login </a>
                 <!-- <a class="btn btn-outline-light me-2 m-3" href="{% url 'ecommerce:register' %}"> register </a> -->
