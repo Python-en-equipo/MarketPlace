@@ -1,14 +1,33 @@
-{% extends 'ecommerce/base.html' %}
+{% extends '../base.html' %}
+
+
+
+{% block title %}{{product.title}}{% endblock title %}
 {% block content %}
-<p> Are you sure you want to delete"{{product.title}}"? </p>
 
-<form action="{% url 'ecommerce:product-delete' product.pk %}" method="POST">
-    {% csrf_token %}
+<div class="mt-5 d-flex justify-content-center align-items-center">
 
-    <a href="{% url 'ecommerce:product-detail' product.pk %}"> Cancel </a>
+  <div class="card rounded-4 shadow">
+    <div class="card-body pt-4 text-center">
+      <h5 class="mb-0">Are you sure you want to delete</h5>
+      <p>"{{product.title}}"</p>
+      {% if product.product_images.image_location %}
+      
+      <h1>si existo</h1>
+      {% endif %}
 
-    <input type="submit" value="Yes">
+    <form class="card-footer flex-nowrap p-0" action="{% url 'ecommerce:product-delete' product.pk %}" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <input class="col btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" type="submit"
+          value="Yes, enable">
+        <a class="col btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+          href="{% url 'ecommerce:product-detail' product.pk %}"> Cancel </a>
+      </div>
+    </form>
+  </div>
+</div>
 
-</form>
+
 
 {% endblock content %}

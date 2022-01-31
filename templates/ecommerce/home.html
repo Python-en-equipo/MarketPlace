@@ -1,6 +1,11 @@
 {% extends '../base.html' %}
 
+
+{% block title %}MarketPlace{% endblock title %}
+
 {% block content %}
+
+
 
 {%for message in messages %}
 <p> {{ message }} </p>
@@ -15,10 +20,15 @@
         {% for product in result %}
         <div class="col">
             <div class="card shadow-sm">
-                {% include "ecommerce/images.html" %}
+                <div class="d-flex justify-content-center mt-1">
+                    <div class="card p-1 border-white" style="width: 20rem;  height: 20rem;">
+                
+                        {% include "ecommerce/images.html" %}
+                    </div>
+                </div>
                 <div class="card-body">
                     <a class="h3 text-muted" href="{% url 'ecommerce:product-detail' product.pk %}"> {{product.title}} </a>
-                    <p class="card-text">{{ product.description}} </p>
+                    <p class="card-text">{{ product.description|truncatewords:7 }} </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <a href="{% url 'ecommerce:product-detail' product.pk %}"> <button type="button" class="btn btn-sm btn-outline-secondary">View</button> </a>
@@ -39,3 +49,6 @@
 
 
 {% endblock content %}
+
+<button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Sign up</button>
+<small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>

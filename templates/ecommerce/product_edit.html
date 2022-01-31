@@ -1,9 +1,50 @@
-{% extends 'ecommerce/base.html' %}
+{% extends '../base.html' %}
 
 {% block content %}
-    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
-        {{ product_form.as_p }}
-        {{ image_form.as_p}}
-        <input type="submit" value="Save" />
-    </form>
+
+<div class="m-5 mt-5 d-flex flex-wrap align-items-center justify-content-center">
+
+    <div class="card p-5 w-50">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Name input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_title">name</label>
+                    {{ product_form.title }}
+                </div>
+
+
+                <!-- Message input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_description">Descripcion</label>
+                    {{ product_form.description }}
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_price">price ^50 </label>
+                    {{ product_form.price }}
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_image_location">Select an image file: </label>
+                    {{ image_form.image_location }}
+                </div>
+
+
+                <!-- Submit button -->
+
+                <input class="btn btn-primary btn-block mb-4 d-flex justify-content-center" type="submit" value="Save" />
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
 {% endblock content %}
+
+
+<form>
+
+</form>

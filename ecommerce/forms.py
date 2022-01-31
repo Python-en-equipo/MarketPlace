@@ -6,6 +6,11 @@ from .models import Image, Product
 
 
 class ProductForm(forms.ModelForm):
+    description = forms.CharField(widget=forms.Textarea(
+		attrs={
+			'class':'form-control w-100',
+			'rows':'3',
+			}))
     class Meta:
         model = Product
         fields = ["title", "description", "price"]

@@ -8,6 +8,13 @@ class Product(models.Model):
     description = models.TextField()
     price = models.PositiveIntegerField(validators=[MinValueValidator(50)])
 
+    """ Falta
+    Stock de cantidad de productos disponibles
+    usuario o perfil que ha creado el producto
+    slugfield campo que define la url unica 
+    categorias
+    """
+
     def __str__(self):
         return self.title
 
@@ -15,7 +22,7 @@ class Product(models.Model):
         if self.price < 50:
             return False
         return True
-        
+
     # def get_absolute_url(self):
     #     return reverse("detail", kwargs={"id": self.id})
 

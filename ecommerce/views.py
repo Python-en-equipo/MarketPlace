@@ -15,7 +15,7 @@ CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 # cache_page(CACHE_TTL)
 def show_my_page(request):
     queryset = Product.objects.exclude(price__lt=50)
-    return render(request, "ecommerce/base.html", {"result": queryset})
+    return render(request, "ecommerce/home.html", {"result": queryset})
 
 
 @unauthenticated_user
@@ -29,7 +29,7 @@ def register_view(request):
             messages.success(request, f"{user} was succesfully created")
 
             return redirect("ecommerce:login")
-
+    print(form)
     return render(request, "ecommerce/register.html", {"user_registration": form})
 
 
@@ -68,7 +68,7 @@ def product_create(request):
             image.product = product
             image.save()
             return redirect("ecommerce:home")
-
+    print(product_form, "\n OTA", image_form)
     return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
 
 
