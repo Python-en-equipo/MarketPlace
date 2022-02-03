@@ -30,7 +30,7 @@ DEBUG = False
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
 
 
-# Application definition
+# Application definitionds
 
 INSTALLED_APPS = [
     "ecommerce",
