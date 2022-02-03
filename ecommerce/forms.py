@@ -36,7 +36,8 @@ class ImageForm(forms.ModelForm):
         fields = ["image_location"]
 
 
-class UserForm(UserCreationForm):
+class UserForm(UserCreationForm):    
+
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]

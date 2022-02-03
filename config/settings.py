@@ -92,23 +92,23 @@ if DEBUG:
         }
     }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ["NAME_DB_HEROKU"],
-        "USER": os.environ["USER_DB_HEROKU"],
-        "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
-        "HOST": os.environ["HOST_DB_HEROKU"],
-        "PORT": "5432",
-    }
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": os.environ["NAME_DB_HEROKU"],
+#         "USER": os.environ["USER_DB_HEROKU"],
+#         "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
+#         "HOST": os.environ["HOST_DB_HEROKU"],
+#         "PORT": "5432",
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 if os.environ.get("GITHUB_WORKFLOW"):

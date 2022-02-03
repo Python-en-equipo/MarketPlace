@@ -5,23 +5,21 @@
 {% block content %}
 
 
-<div class="modal modal-signin position-static d-block bg-secondary m-0">
-	<div class="modal-dialog" >
-		<div class="modal-content rounded-5 shadow">
+<div class="d-block modal modal-signin position-static  bg-secondary m-0 "  style="min-height: 30rem;">
+	<div class="modal-dialog mt-5" >
+		<div class="modal-content rounded-5 shadow mt-5">
 
 
-			<div class="modal-body pt-5 p-5 pt-0">
+			<div class="modal-body pt-5 p-5 pt-0 ">
 				<form method="POST" action="">
 					{% csrf_token %}
 
-					<div class="form-floating mb-3">
+					<div class="input-group mb-3">
 						<input type="text" name="username" placeholder="Username..." class="form-control">
 
-						<label for="floatingInput">User</label>
 					</div>
-					<div class="form-floating mb-3">
+					<div class="input-group mb-3">
 						<input type="password" name="password" placeholder="Password..." class="form-control" >
-						<label for="floatingPassword">Password</label>
 					</div>
 
 					<input type="submit" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" ></input>
@@ -29,7 +27,6 @@
 					<hr>
 					<small class="text-muted">No have acount?</small>
 					<a href="{% url 'ecommerce:register' %}" class="ml-2">Sign Up</a>
-
 
 
 				</form>
