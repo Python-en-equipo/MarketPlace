@@ -15,6 +15,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -24,15 +25,22 @@ SECRET_KEY = os.environ["DJANGO_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = os.environ["DEBUG"] 
+# Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
+
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
+
+
+
+
+# Alojar las apps en un directorio
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
 # Application definitionds
 
 INSTALLED_APPS = [
-    "ecommerce",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -40,6 +48,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "storages",
+    "ecommerce",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -83,7 +93,7 @@ if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "postgres",
+            "NAME": "marketplace", # db postgres es la que se usa para administrar todas las tablas asi que la cambio
             "USER": "postgres",
             "PASSWORD": "123123",
             "HOST": "localhost",
@@ -91,23 +101,20 @@ if DEBUG:
         }
     }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ["NAME_DB_HEROKU"],
-        "USER": os.environ["USER_DB_HEROKU"],
-        "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
-        "HOST": os.environ["HOST_DB_HEROKU"],
-        "PORT": "5432",
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.environ["NAME_DB_HEROKU"],
+            "USER": os.environ["USER_DB_HEROKU"],
+            "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
+            "HOST": os.environ["HOST_DB_HEROKU"],
+            "PORT": "5432",
+        }
     }
-}
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+
+
 
 
 if os.environ.get("GITHUB_WORKFLOW"):
