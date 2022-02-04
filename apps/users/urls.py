@@ -1,9 +1,12 @@
 from django.urls import path
+from . import views
 
-from .views import register_view, login_view, logout_view
+# no borrar porque los templates usan la appname
+app_name = "users"
 
 urlpatterns = [
-    path("register/", register_view, name="register"),
-    path("login/", login_view, name="login"),
-    path("logout/", logout_view, name="logout"),
+    path("register/", views.register_view, name="register"),
+    path("login/", views.login_view, name="login"),
+    path("logout/", views.logout_view, name="logout"),
+    path("new-employee/", views.employee_register, name="employee-register"),
 ]

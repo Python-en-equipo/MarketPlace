@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Employee, GeneralProfile
+
+admin.site.register(GeneralProfile)
+admin.site.register(Employee)

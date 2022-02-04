@@ -1,16 +1,25 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login, logout
+from django.core.cache import cache
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.shortcuts import redirect, render
+from django.views.decorators.cache import cache_page
+from django.views.decorators.http import condition
+
 from .forms import ImageForm, ProductForm
 from .models import Image, Product
 
+
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
+def delete_home_cache():
+    """borra las keys de los valores en cache de la home"""
+    cache.delete_many(["views.decorators.cache.cache_header..17abf5259517d604cc9599a00b7385d6.en-us.UTC",
+                        "views.decorators.cache.cache_page..GET.17abf5259517d604cc9599a00b7385d6.d41d8cd98f00b204e9800998ecf8427e.en-us.UTC",])
 
-# cache_page(CACHE_TTL)
-def show_my_page(request):
+def show_my_page(request):  
     queryset = Product.objects.exclude(price__lt=50)
     return render(request, "ecommerce/home.html", {"result": queryset})
 
@@ -27,7 +36,8 @@ def product_create(request):
             image = image_form.save(commit=False)
             image.product = product
             image.save()
-            return redirect("home")
+            delete_home_cache()
+            return redirect("ecommerce:home")
     print(product_form, "\n OTA", image_form)
     return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
 
@@ -46,10 +56,11 @@ def product_edit_view(request, product_id):
         image = image_form.save(commit=False)
         image.product = product
         image.save()
-        return redirect("home")
+        delete_home_cache()
+        return redirect("ecommerce:home")
     elif product_form.is_valid():
         product = product_form.save()
-        return redirect("home")
+        return redirect("ecommerce:home")
 
     return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
 
@@ -66,5 +77,6 @@ def product_deletion(request, product_id):
     if request.method == "POST":
         messages.success(request, f"{product} was succesfully deleted")
         product.delete()
-        return redirect("home")
+        delete_home_cache()
+        return redirect("ecommerce:home")
     return render(request, "ecommerce/product_delete.html", {"product": product})
