@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import show_my_page,  product_edit_view, product_create, product_detail_view, product_deletion
 
+# no borrar porque los templates usan la appname
 app_name = "ecommerce"
 
 urlpatterns = [
