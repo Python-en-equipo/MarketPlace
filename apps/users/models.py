@@ -9,8 +9,8 @@ class GeneralProfile(AbstractUser):
     is_seller = models.BooleanField(default=False)
     is_client = models.BooleanField(default=False)
 
-    # def __str__(self):
-    #     return f"{self.first_name} {self.last_name}"
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
 
 class Seller(models.Model):
     user = models.OneToOneField(GeneralProfile, on_delete=models.CASCADE, related_name="user_key", primary_key=True)
