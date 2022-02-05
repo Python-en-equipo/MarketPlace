@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-eco
 
 
 
-
 # Alojar las apps en un directorio
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
@@ -130,6 +129,10 @@ if "test" in sys.argv:
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+
+
+# user personalizado
+AUTH_USER_MODEL = 'users.GeneralProfile'
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},

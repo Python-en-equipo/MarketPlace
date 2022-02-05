@@ -1,6 +1,6 @@
-from django.contrib import admin
+from django.contrib import admin    
+from django.contrib.auth.admin import UserAdmin
+from .models import User, Seller
 
-from .models import Employee, GeneralProfile
-
-admin.site.register(GeneralProfile)
-admin.site.register(Employee)
+admin.site.register(User, UserAdmin)
+admin.site.register(Seller)

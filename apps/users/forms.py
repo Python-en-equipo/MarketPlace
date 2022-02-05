@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Employee, GeneralProfile
+from .models import Seller, GeneralProfile
 
 class UserForm(UserCreationForm):    
 
@@ -22,9 +22,9 @@ class GeneralFormUser(forms.ModelForm):
               
                 }
 
-class EmployeeForm(forms.ModelForm):
+class SellerForm(forms.ModelForm):
     class Meta:
-        model = Employee
+        model = Seller
         fields = ["phone_number", "address"]
         labels = {
                 "phone_number": "Número de celular",

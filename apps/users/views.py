@@ -1,4 +1,4 @@
-from .forms import UserForm, EmployeeForm, GeneralFormUser
+from .forms import UserForm, SellerForm, GeneralFormUser
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from apps.ecommerce.decorators import unauthenticated_user
@@ -50,16 +50,16 @@ def logout_view(request):
     return redirect("users:login")
 
 
-def employee_register(request):
+def seller_register(request):
     user_form = GeneralFormUser()
-    employee_form = EmployeeForm()
+    employee_form = SellerForm()
     if request.method == "POST":
         user_form = GeneralFormUser(request.POST)
-        employee_form = EmployeeForm(request.POST)
+        employee_form = SellerForm(request.POST)
         if user_form.is_valid() and employee_form.is_valid():
             user = user_form.save()
             employee = employee_form.save(commit=False)
             employee.user = user
             employee.save()
             return redirect("ecommerce:home")
-    return render(request, "users/employee_register.html", { "user_form": user_form, "employee_form": employee_form})
+    return render(request, "users/seller_register.html", { "user_form": user_form, "employee_form": employee_form})
