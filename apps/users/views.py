@@ -19,9 +19,8 @@ def register_view(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            user = form.cleaned_data.get("username")
+            user = form.cleaned_data.get("first_name")
             messages.success(request, f"{user} was succesfully created")
-
             return redirect("users:login")
     print(form)
     return render(request, "users/register.html", {"user_registration": form})

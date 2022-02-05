@@ -14,7 +14,11 @@
 					{% csrf_token %}
 					<div class="input-group mb-3">
 					
-						{{ user_registration.username }}
+						{{ user_registration.first_name }}
+					</div>
+					<div class="input-group mb-3">
+					
+						{{ user_registration.last_name }}
 					</div>
 					<div class="input-group mb-2">
 					
@@ -52,10 +56,11 @@
 
 	//Query All input fields
 	var form_fields = document.getElementById('form')
-	form_fields[1].placeholder = 'Username..';
-	form_fields[2].placeholder = 'Email..';
-	form_fields[3].placeholder = 'Enter password...';
-	form_fields[4].placeholder = 'Re-enter Password...';
+	form_fields[1].placeholder = 'Nombre..';
+	form_fields[2].placeholder = 'Apellido..';
+	form_fields[3].placeholder = 'Email..';
+	form_fields[4].placeholder = 'Enter password...';
+	form_fields[5].placeholder = 'Re-enter Password...';
 
 
 	for (var field in form_fields) {
