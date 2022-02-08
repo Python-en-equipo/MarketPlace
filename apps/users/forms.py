@@ -1,10 +1,16 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import CustomUser
 
-from .models import Seller, GeneralProfile
 
-class UserForm(UserCreationForm):    
+class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
-        model = GeneralProfile
-        fields = ["first_name", "last_name", "email", "password1", "password2"]
+        model = CustomUser
+        fields = ['first_name', 'last_name', "email", "password1", "password2"]
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email')

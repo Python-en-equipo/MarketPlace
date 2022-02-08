@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     "storages",
     "ecommerce",
     "users",
+     # 3rd party
+    'allauth', 
+    'allauth.account', 
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -132,7 +136,7 @@ if "test" in sys.argv:
 
 
 # user personalizado
-AUTH_USER_MODEL = 'users.GeneralProfile'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -145,9 +149,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "es-MX"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Mexico_city"
 
 USE_I18N = True
 
@@ -201,3 +205,27 @@ AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+# configuración para loguearse via email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT= 10
+ACCOUNT_LOGOUT_ON_GET = True
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'

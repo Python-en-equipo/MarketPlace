@@ -16,13 +16,13 @@
 
                 {% if request.user.is_authenticated and request.user.is_staff%}
                 <span class="user-msg h3 mx-3"> Hello, {{request.user}}</span>
-                <a class="btn btn-warning m-1" href="{% url 'users:logout' %}"> Logout </a>
+                <a class="btn btn-warning m-1" href="{% url 'account_logout' %}"> Logout </a>
                 <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>
                 {% elif request.user.is_authenticated %}
                 <span class="user-msg h3 mx-3"> Hello, {{request.user}}</span>
-                <a class="btn btn-warning m-1" href="{% url 'users:logout' %}"> Logout </a>
+                <a class="btn btn-warning m-1" href="{% url 'account_logout' %}"> Logout </a>
                 {% else %}
-                <a class="btn btn-outline-light me-2 m-3" href="{% url 'users:login' %}"> Login </a>
+                <a class="btn btn-outline-light me-2 m-3" href="{% url 'account_login' %}"> Login </a>
                 {% endif %}
             </div>
         </div>
