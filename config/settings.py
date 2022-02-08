@@ -94,17 +94,17 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "marketplace", # db postgres es la que se usa para administrar todas las tablas asi que la cambio
-            "USER": "postgres",
-            "PASSWORD": "123123",
-            "HOST": "localhost",
-            "PORT": "5432",
-        }
-    }
+# if DEBUG:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.postgresql_psycopg2",
+#             "NAME": "marketplace", # db postgres es la que se usa para administrar todas las tablas asi que la cambio
+#             "USER": "postgres",
+#             "PASSWORD": "123123",
+#             "HOST": "localhost",
+#             "PORT": "5432",
+#         }
+#     }
 # else:
 #     DATABASES = {
 #         "default": {
@@ -116,6 +116,15 @@ if DEBUG:
 #             "PORT": "5432",
 #         }
 #     }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
 
 
 if os.environ.get("GITHUB_WORKFLOW"):
@@ -153,7 +162,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "es-MX"
 
-TIME_ZONE = "America/Mexico_city"
+# TIME_ZONE = "America/Mexico_city"  me causa confictos
+TIME_ZONE = "UTC"
+
 
 USE_I18N = True
 

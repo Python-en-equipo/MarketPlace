@@ -17,12 +17,16 @@ whitenoise = "*"
 django-storages = "*"
 boto3 = "*"
 django-heroku = "*"
-django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 django-debug-toolbar = "*"
 django-allauth = "*"
+django-environ = "*"
 
 [dev-packages]
 environ = "*"
 
 [requires]
 python_version = "3.8"
+
+[packages.django-phonenumber-field]
+extras = [ "phonenumberslite",]
+version = "*"
