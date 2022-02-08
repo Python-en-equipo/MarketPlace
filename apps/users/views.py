@@ -14,33 +14,32 @@ def delete_home_cache():
 
 @unauthenticated_user
 def register_view(request):
-    form = CustomUserCreationForm()
+    form = CustomUserCreationForm
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            user = form.cleaned_data.get("first_name")
+            user = form.cleaned_data.get("email")
             messages.success(request, f"{user} was succesfully created")
-            return redirect('account_login')
-    print(form)
-    return render(request, "account/signup.html", {"user_registration": form})
+            return redirect("account_login")
+    return render(request, "users/register.html", {"user_registration": form})
 
 
-@unauthenticated_user
-def login_view(request):
-    delete_home_cache()
-    if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+# @unauthenticated_user
+# def login_view(request):
+#     delete_home_cache()
+#     if request.method == "POST":
+#         email = request.POST.get("email")
+#         password = request.POST.get("password")
 
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("ecommerce:home")
-        else:
-            messages.info(request, "Email or password is incorrect.")
+#         user = authenticate(request, email=email, password=password)
+#         if user is not None:
+#             login(request, user)
+#             return redirect("ecommerce:home")
+#         else:
+#             messages.info(request, "Email or password is incorrect.")
 
-    return render(request, "users/login.html")
+#     return render(request, "users/login.html")
 
 
 # def logout_view(request):
