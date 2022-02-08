@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ["DJANGO_KEY"]
+SECRET_KEY = "*"#os.environ["DJANGO_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -63,6 +63,8 @@ MIDDLEWARE = [
     # "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
+
+
 INTERNAL_IPS = ["127.0.0.1"]
 
 ROOT_URLCONF = "config.urls"
@@ -100,17 +102,17 @@ if DEBUG:
             "PORT": "5432",
         }
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": os.environ["NAME_DB_HEROKU"],
-            "USER": os.environ["USER_DB_HEROKU"],
-            "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
-            "HOST": os.environ["HOST_DB_HEROKU"],
-            "PORT": "5432",
-        }
-    }
+# else:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.postgresql_psycopg2",
+#             "NAME": os.environ["NAME_DB_HEROKU"],
+#             "USER": os.environ["USER_DB_HEROKU"],
+#             "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
+#             "HOST": os.environ["HOST_DB_HEROKU"],
+#             "PORT": "5432",
+#         }
+#     }
 
 
 if os.environ.get("GITHUB_WORKFLOW"):
@@ -190,11 +192,11 @@ CACHES = {
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
 
-#S3 BUCKETS CONFIG
-AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
+#3 BUCKETS CONFIG
+# AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
+# AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+# AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
 
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
