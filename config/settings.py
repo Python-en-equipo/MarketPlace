@@ -6,7 +6,11 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+# en caso de error 111 
+# sudo apt-get install redis-server
+# sudo service redis-server start
 
+import environ                      # add this
 import os
 import sys
 from pathlib import Path
@@ -15,22 +19,27 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+env = environ.Env(                  # add this
+    # set casting, default value
+    DEBUG=(bool, False)             # add this
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  #add this
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = "*"#os.environ["DJANGO_KEY"]
+SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = env('DEBUG')
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
-
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
-
 
 
 # Alojar las apps en un directorio
@@ -49,9 +58,9 @@ INSTALLED_APPS = [
     "storages",
     "ecommerce",
     "users",
-     # 3rd party
-    'allauth', 
-    'allauth.account', 
+    # 3rd party
+    'allauth',
+    'allauth.account',
     'allauth.socialaccount',
 ]
 
@@ -94,28 +103,29 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# if DEBUG:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.postgresql_psycopg2",
-#             "NAME": "marketplace", # db postgres es la que se usa para administrar todas las tablas asi que la cambio
-#             "USER": "postgres",
-#             "PASSWORD": "123123",
-#             "HOST": "localhost",
-#             "PORT": "5432",
-#         }
-#     }
-# else:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.postgresql_psycopg2",
-#             "NAME": os.environ["NAME_DB_HEROKU"],
-#             "USER": os.environ["USER_DB_HEROKU"],
-#             "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
-#             "HOST": os.environ["HOST_DB_HEROKU"],
-#             "PORT": "5432",
-#         }
-#     }
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": "marketplace",  # db postgres es la que se usa para administrar todas las tablas asi que la cambio
+            "USER": "postgres",
+            "PASSWORD": "123123",
+            "HOST": "localhost",
+            "PORT": "5432",
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": env("NAME_DB_HEROKU"),
+            "USER": env("USER_DB_HEROKU"),
+            "PASSWORD": env("PASSWORD_DB_HEROKU"),
+            "HOST": env("HOST_DB_HEROKU"),
+            "PORT": "5432",
+        }
+    }
+
 
 
 DATABASES = {
@@ -124,6 +134,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 
@@ -173,6 +184,7 @@ USE_L10N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 # this is used for internal use
@@ -210,10 +222,10 @@ CACHES = {
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
 
-#3 BUCKETS CONFIG
-# AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-# AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-# AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
+# S3 BUCKETS CONFIG
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
 
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
@@ -238,7 +250,7 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT= 10
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
 ACCOUNT_LOGOUT_ON_GET = True
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
