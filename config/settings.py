@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+print(os.environ)
 SECRET_KEY = os.environ["DJANGO_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -84,8 +85,8 @@ if DEBUG:
             "ENGINE": "django.db.backends.postgresql_psycopg2",
             "NAME": "postgres",
             "USER": "postgres",
-            "PASSWORD": "123123",
-            "HOST": "localhost",
+            "PASSWORD": "postgres",
+            "HOST": "db",
             "PORT": "5432",
         }
     }
