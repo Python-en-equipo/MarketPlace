@@ -15,9 +15,13 @@
                 <!--  ni idea como lo hise funcionar :) -->
 
                 {% if request.user.is_authenticated and request.user.is_staff%}
+
                 <span class="user-msg h3 mx-3"> Hello, {{request.user.email}}</span>
+
                 <a class="btn btn-warning m-1" href="{% url 'account_logout' %}"> Logout </a>
+
                 <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>
+                
                 {% elif request.user.is_authenticated %}
                 <span class="user-msg h3 mx-3"> Hello, {{request.user.email}}</span>
                 <a class="btn btn-warning m-1" href="{% url 'account_logout' %}"> Logout </a>

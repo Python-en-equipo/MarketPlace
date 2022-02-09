@@ -4,7 +4,6 @@ from .models import CustomUser, Vendor
 
 
 class CustomUserCreationForm(UserCreationForm):
-
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', "email", "password1", "password2"]
@@ -12,12 +11,10 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email')
+        fields = ('__all__')
 
 
 class VendorForm(forms.ModelForm):
     class Meta:
         model = Vendor
         fields = ("__all__")
-        # labels = { 
-        #         }
