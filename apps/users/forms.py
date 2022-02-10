@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser, Vendor
+from .models import CustomUser, Seller
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -15,9 +15,7 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('username', 'email')
 
 
-class VendorForm(forms.ModelForm):
+class SellerForm(forms.ModelForm):
     class Meta:
-        model = Vendor
-        fields = ("__all__")
-        # labels = { 
-        #         }
+        model = Seller
+        fields = ("seller_name",)

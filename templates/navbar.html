@@ -14,7 +14,7 @@
             <div class="col-lg-6 col-mb-8 d-flex justify-content-end ">
                 <!--  ni idea como lo hise funcionar :) -->
 
-                {% if request.user.is_authenticated and request.user.is_staff%}
+                {% if request.user.is_authenticated and request.user.seller %}
                 <span class="user-msg h3 mx-3"> Hello, {{request.user.email}}</span>
                 <a class="btn btn-warning m-1" href="{% url 'account_logout' %}"> Logout </a>
                 <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>

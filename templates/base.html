@@ -18,7 +18,10 @@
 <body>
 
 
-
+    {% if request.user %}
+    {{request.user}} become 
+    <a href="{% url 'users:vendor_register' %}"> seller</a>
+    {% endif %}
 
 
     {% include 'navbar.html' %}
