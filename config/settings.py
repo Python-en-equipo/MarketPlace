@@ -6,7 +6,12 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+# en caso de error 111 
+# sudo apt-get install redis-server
+# sudo service redis-server start
 
+
+import environ                      # add this
 import os
 import sys
 from pathlib import Path
@@ -15,17 +20,24 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+env = environ.Env(                  # add this
+    # set casting, default value
+    DEBUG=(bool, False)             # add this
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  #add this
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ["DJANGO_KEY"]
+SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = env('DEBUG')
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
 
@@ -34,7 +46,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-eco
 
 
 # Alojar las apps en un directorio
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+#sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
 # Application definitionds
@@ -103,13 +115,22 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": os.environ["NAME_DB_HEROKU"],
-            "USER": os.environ["USER_DB_HEROKU"],
-            "PASSWORD": os.environ["PASSWORD_DB_HEROKU"],
-            "HOST": os.environ["HOST_DB_HEROKU"],
+            "NAME": env("NAME_DB_HEROKU"),
+            "USER": env("USER_DB_HEROKU"),
+            "PASSWORD": env("PASSWORD_DB_HEROKU"),
+            "HOST": env("HOST_DB_HEROKU"),
             "PORT": "5432",
         }
     }
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 if os.environ.get("GITHUB_WORKFLOW"):
@@ -147,7 +168,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "es-MX"
 
-TIME_ZONE = "America/Mexico_city"
+# TIME_ZONE = "America/Mexico_city"  me causa confictos
+TIME_ZONE = "UTC"
+
 
 USE_I18N = True
 
@@ -159,18 +182,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 # this is used for internal use
+
+
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
-
 STATIC_URL = "/static/"
-
 # django app related files, its used for external use
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-
 MEDIA_URL = "/media/"
-
 # user uploaded files
 MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
-
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
@@ -194,9 +215,9 @@ CACHES = {
 CACHE_TTL = 60 * 15
 
 #S3 BUCKETS CONFIG
-AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None

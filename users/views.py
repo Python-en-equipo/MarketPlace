@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from apps.ecommerce.decorators import unauthenticated_user
+from ecommerce.decorators import unauthenticated_user
+
 from django.contrib import messages
 from django.core.cache import cache
-from .forms import UserForm
+from .forms import UserForm, SellerForm
+
+from django.contrib.auth.decorators import login_required 
 
 
 
@@ -48,3 +51,16 @@ def logout_view(request):
 
     return redirect("users:login")
 
+@login_required
+def seller_register(request):
+    """ registro disponible para clientes, debe estar registrado en la plataforma para acceder a este registro"""
+    seller_form = SellerForm()
+    if request.method == "POST":
+        seller_form = SellerForm(request.POST)
+        if seller_form.is_valid():
+            vendor = seller_form.save(commit=False)
+            vendor.profile = request.user
+            vendor.save()
+            return redirect("ecommerce:home")
+            
+    return render(request, "users/seller_register.html", { "seller_form": seller_form})

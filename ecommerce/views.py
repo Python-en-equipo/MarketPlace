@@ -1,12 +1,18 @@
 from django.conf import settings
+from django.core.cache import cache
+
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth import authenticate, login, logout
-from django.core.cache import cache
+from django.contrib.auth.decorators import login_required
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.shortcuts import redirect, render
+
+
+
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import condition
+
 
 from .forms import ImageForm, ProductForm
 from .models import Image, Product
@@ -19,30 +25,35 @@ def delete_home_cache():
     cache.delete_many(["views.decorators.cache.cache_header..17abf5259517d604cc9599a00b7385d6.en-us.UTC",
                         "views.decorators.cache.cache_page..GET.17abf5259517d604cc9599a00b7385d6.d41d8cd98f00b204e9800998ecf8427e.en-us.UTC",])
 
-def show_my_page(request):  
-    queryset = Product.objects.exclude(price__lt=50)
-    return render(request, "ecommerce/home.html", {"result": queryset})
+def home(request):  
+    products = Product.objects.exclude(price__lt=50)
+    return render(request, "ecommerce/home.html", {"products": products})
 
 
-@staff_member_required
+@login_required
 def product_create(request):
-    product_form = ProductForm()
-    image_form = ImageForm()
-    if request.method == "POST":
-        product_form = ProductForm(request.POST)
-        image_form = ImageForm(request.POST, request.FILES)
-        if product_form.is_valid() and image_form.is_valid():
-            product = product_form.save()
-            image = image_form.save(commit=False)
-            image.product = product
-            image.save()
-            delete_home_cache()
-            return redirect("ecommerce:home")
-    print(product_form, "\n OTA", image_form)
+    if request.user.seller:
+        product_form = ProductForm()
+        image_form = ImageForm()
+        if request.method == "POST":
+            product_form = ProductForm(request.POST)
+            image_form = ImageForm(request.POST, request.FILES)
+            if product_form.is_valid() and image_form.is_valid():
+                product = product_form.save(commit=False)
+                product.seller = request.user.seller
+                product.save()
+                image = image_form.save(commit=False)
+                image.product = product
+                image.save()
+                delete_home_cache()
+                return redirect("ecommerce:home")
+    else:
+        return redirect("ecommerce:home")
+    
     return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
 
 
-@staff_member_required
+@login_required
 def product_edit_view(request, product_id):
     instance_product = Product.objects.get(id=product_id)
     try:
@@ -67,11 +78,10 @@ def product_edit_view(request, product_id):
 
 def product_detail_view(request, product_id):
     product = Product.objects.get(id=product_id)
-
     return render(request, "ecommerce/product_detail.html", {"product": product})
 
 
-@staff_member_required
+@login_required
 def product_deletion(request, product_id):
     product = Product.objects.get(id=product_id)
     if request.method == "POST":
