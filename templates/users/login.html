@@ -4,6 +4,10 @@
 
 {% block content %}
 
+{%for message in messages %}
+<p> {{ message }} </p>
+{% endfor %}
+
 
 <div class="d-block modal modal-signin position-static  bg-secondary m-0 "  style="min-height: 30rem;">
 	<div class="modal-dialog mt-5" >

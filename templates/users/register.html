@@ -4,6 +4,9 @@
 
 {% block content %}
 
+{% if user_registration.errors %}
+{{ user_registration.errors }} <!-- display the form errors if they exist -->
+{% endif %}
 
 <div class="modal modal-signin position-static d-block bg-secondary m-0">
 	<div class="modal-dialog">
@@ -13,7 +16,6 @@
 				<form id="form" method="POST" action="">
 					{% csrf_token %}
 					<div class="input-group mb-3">
-					
 						{{ user_registration.first_name }}
 					</div>
 					<div class="input-group mb-3">
@@ -36,7 +38,7 @@
 					<input type="submit" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"></input>
 					<hr>
 					<small class="text-muted">Already have acount?</small>
-					<a href="{% url 'account_login' %}" class="ml-2">Login</a>
+					<a href="{% url 'users:login' %}" class="ml-2">Login</a>
 				</form>
 
 
@@ -70,4 +72,3 @@
 
 
 {% endblock content %}
-

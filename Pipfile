@@ -18,8 +18,6 @@ django-storages = "*"
 boto3 = "*"
 django-heroku = "*"
 django-debug-toolbar = "*"
-django-allauth = "*"
-django-environ = "*"
 
 [dev-packages]
 environ = "*"
