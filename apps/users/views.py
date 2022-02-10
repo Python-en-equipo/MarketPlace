@@ -1,7 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from apps.ecommerce.decorators import unauthenticated_user
-from django.contrib import messages
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required 
 from .forms import SellerForm

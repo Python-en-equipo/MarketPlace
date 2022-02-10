@@ -26,6 +26,12 @@
 
     {% include 'navbar.html' %}
 
+    {% if request.user %}
+    <h1>hello</h1> {{ request.all }}
+  
+
+    {% endif %}
+
     <section style="min-height: 35rem;" class="m-0 p-0">
         {% block content %}
 

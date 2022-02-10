@@ -14,10 +14,18 @@
             <div class="col-lg-6 col-mb-8 d-flex justify-content-end ">
                 <!--  ni idea como lo hise funcionar :) -->
 
+<<<<<<< HEAD
                 {% if request.user.is_authenticated and request.user.seller %}
+=======
+                {% if request.user.is_authenticated and request.user.is_staff%}
+
+>>>>>>> a44874ec013345caaa739d12e8b98cb81a249632
                 <span class="user-msg h3 mx-3"> Hello, {{request.user.email}}</span>
+
                 <a class="btn btn-warning m-1" href="{% url 'account_logout' %}"> Logout </a>
+
                 <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>
+                
                 {% elif request.user.is_authenticated %}
                 <span class="user-msg h3 mx-3"> Hello, {{request.user.email}}</span>
                 <a class="btn btn-warning m-1" href="{% url 'account_logout' %}"> Logout </a>
