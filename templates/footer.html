@@ -12,7 +12,7 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
 
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated and request.user.seller is false %}
         <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">vendor_register</a></li>
         {% endif %}
       </ul>

@@ -54,13 +54,15 @@ def logout_view(request):
 @login_required
 def seller_register(request):
     """ registro disponible para clientes, debe estar registrado en la plataforma para acceder a este registro"""
-    seller_form = SellerForm()
-    if request.method == "POST":
-        seller_form = SellerForm(request.POST)
-        if seller_form.is_valid():
-            vendor = seller_form.save(commit=False)
-            vendor.profile = request.user
-            vendor.save()
-            return redirect("ecommerce:home")
-            
+    if request.user.seller == False :
+        seller_form = SellerForm()
+        if request.method == "POST":
+            seller_form = SellerForm(request.POST)
+            if seller_form.is_valid():
+                seller = seller_form.save(commit=False)
+                seller.profile = request.user
+                seller.save()
+                return redirect("ecommerce:home")
+    else:
+        return redirect("ecommerce:home")
     return render(request, "users/seller_register.html", { "seller_form": seller_form})
