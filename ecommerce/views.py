@@ -48,10 +48,6 @@ def product_create(request):
         product_form = ProductForm()
         image_form = ImageForm()
 
-    if request.user.seller:
-        product_form = ProductForm()
-        image_form = ImageForm()
-
         if request.method == "POST":
             product_form = ProductForm(request.POST)
             image_form = ImageForm(request.POST, request.FILES)

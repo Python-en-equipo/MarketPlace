@@ -1,7 +1,7 @@
 
 
 
-        {{ request.user }}
+      
 
 
     <footer class="pt-4 bg-dark text-white footer-fixed-bottom ">
@@ -12,8 +12,8 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
 
-        {% if request.user.is_authenticated and request.user.seller is false %}
-        <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">vendor_register</a></li>
+        {% if request.user.is_authenticated and not request.user.seller %}
+        <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">Registra tu tienda</a></li>
         {% endif %}
       </ul>
       <p class="pb-0 mb-0 text-center text-muted">© 2021 Company, Inc</p>

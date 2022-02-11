@@ -16,10 +16,14 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
+
+
     def create_user(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
+
+
     def create_superuser(self, email, password=None, **extra_fields):
         """Create and save a SuperUser with the given email and password."""
         extra_fields.setdefault('is_staff', True)
@@ -52,7 +56,7 @@ class CustomUser(AbstractUser):
 
 class Seller(models.Model):
     profile = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="seller", primary_key=True)
-    seller_name = models.CharField(max_length=50)
+    seller_name = models.CharField(max_length=50, unique=True)
     #is_active = models.BooleanField(default=False)
 
     def __str__(self):
