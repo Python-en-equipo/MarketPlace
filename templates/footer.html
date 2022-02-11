@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+
+
+
+      
+
+
+>>>>>>> 669b8258cea6b6751a2675bebc58b57241b69c53
     <footer class="pt-4 bg-dark text-white footer-fixed-bottom ">
       <ul class="nav justify-content-center border-bottom pb-2 mb-2 ">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
@@ -6,8 +15,8 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
 
-        {% if request.user.is_authenticated and request.user.seller is false %}
-        <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">vendor_register</a></li>
+        {% if request.user.is_authenticated and not request.user.seller %}
+        <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">Registra tu tienda</a></li>
         {% endif %}
       </ul>
       <p class="pb-0 mb-0 text-center text-muted">© 2021 Company, Inc</p>
