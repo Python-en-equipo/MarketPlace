@@ -56,8 +56,4 @@ class Seller(models.Model):
     #is_active = models.BooleanField(default=False)
 
     def __str__(self):
-<<<<<<< HEAD:users/models.py
         return f"{self.seller_name}"
-=======
-        return f"{self.seller_name}"
->>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2:apps/users/models.py

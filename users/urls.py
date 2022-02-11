@@ -8,9 +8,6 @@ urlpatterns = [
     path("register/", views.register_view, name="register"),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
-<<<<<<< HEAD:users/urls.py
     path("seller_register/", views.seller_register, name="seller_register"),
-=======
-    path("vendor_register/", views.vendor_register, name="vendor_register"),
->>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2:apps/users/urls.py
+    path("user_panel/", views.user_panel, name="user_panel")
 ]

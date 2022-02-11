@@ -10,10 +10,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo apt-get install redis-server
 # sudo service redis-server start
 
-<<<<<<< HEAD
 
-=======
->>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2
 import environ                      # add this
 import os
 import sys
@@ -136,11 +133,8 @@ DATABASES = {
 }
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2
 if os.environ.get("GITHUB_WORKFLOW"):
     DATABASES = {
         "default": {
@@ -223,11 +217,7 @@ CACHES = {
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
 
-<<<<<<< HEAD
-#S3 BUCKETS CONFIG
-=======
 # S3 BUCKETS CONFIG
->>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
