@@ -7,6 +7,7 @@ from ecommerce.decorators import unauthenticated_user
 
 from django.contrib import messages
 from .forms import UserForm, SellerForm
+from ecommerce.models import Product
 
 
 def delete_home_cache():
@@ -51,7 +52,9 @@ def logout_view(request):
 
 @login_required
 def user_panel(request):
-    return render(request, "users/user_panel.html")
+    products = Product.objects.filter(seller= request.user.seller)
+    ctx = {"products": products}
+    return render(request, "users/user_panel.html", ctx)
 
 
 @login_required

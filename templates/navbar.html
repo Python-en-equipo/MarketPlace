@@ -22,9 +22,6 @@
                 <a class="btn btn-outline-light me-2 m-3" href="{% url 'users:login' %}"> Login </a>
                 {% endif %}
 
-                {% if request.user.seller %}
-                <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>
-                {% endif %}
             </div>
         </div>
 

@@ -3,7 +3,7 @@
 {% block content %}
 
 
-<div class="container mx-3">
+<div class="container mx-3 mb-5">
     <div class="row mt-5">
         <div class="col-4 d-flex justify-content-center align-items-center text-center">
             <div class="">
@@ -14,6 +14,8 @@
                     
                 </a>
                 <p>price:  ${{product.price}} </p>
+                <small class="text-muted" >vendedor: <a class="btn btn-sm btn-outline-secondary" href="">{{product.seller}}</a> </small>
+
             </div>
         </div>
         <div class="col ">          
@@ -21,8 +23,7 @@
             
                     {% include "ecommerce/images.html" %}
                 </div>
-       
-
+    
         </div>
     </div>
 </div>
