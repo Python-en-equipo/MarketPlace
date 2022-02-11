@@ -11,29 +11,35 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 
 
-
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import condition
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.decorators import login_required
 
 
 from .forms import ImageForm, ProductForm
-from .models import Image, Product
+from .models import Image, Product, Category
 
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
+
 def delete_home_cache():
     """borra las keys de los valores en cache de la home"""
     cache.delete_many(["views.decorators.cache.cache_header..17abf5259517d604cc9599a00b7385d6.en-us.UTC",
-                        "views.decorators.cache.cache_page..GET.17abf5259517d604cc9599a00b7385d6.d41d8cd98f00b204e9800998ecf8427e.en-us.UTC",])
+                       "views.decorators.cache.cache_page..GET.17abf5259517d604cc9599a00b7385d6.d41d8cd98f00b204e9800998ecf8427e.en-us.UTC", ])
 
-def home(request):  
+
+def home(request):
     products = Product.objects.exclude(price__lt=50)
     return render(request, "ecommerce/home.html", {"products": products})
 
+
+def category(request, category_slug):
+    products = Product.objects.filter(category__slug=category_slug)
+    ctx = {"products": products}
+    return render(request, 'ecommerce/home.html', ctx)
 
 
 @login_required
@@ -52,7 +58,7 @@ def product_create(request):
             if product_form.is_valid() and image_form.is_valid():
                 product = product_form.save(commit=False)
                 product.seller = request.user.seller
-
+                product.save()
                 image = image_form.save(commit=False)
                 image.product = product
                 image.save()
@@ -61,9 +67,8 @@ def product_create(request):
                 return redirect("ecommerce:home")
     else:
         return redirect("ecommerce:home")
-    
-    return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
 
+    return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
 
 
 @staff_member_required

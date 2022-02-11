@@ -57,17 +57,15 @@ def user_panel(request):
 @login_required
 def seller_register(request):
     """ registro disponible para clientes, debe estar registrado en la plataforma para acceder a este registro"""
-    if request.user.seller == False:
-        seller_form = SellerForm()
-        if request.method == "POST":
-            seller_form = SellerForm(request.POST)
-            if seller_form.is_valid():
-                seller = seller_form.save(commit=False)
-                seller.profile = request.user
-                seller.save()
-                return redirect("ecommerce:home")
-    else:
-        return redirect("ecommerce:home")
+    """ hay que preveer de que alguien ya registrado como vendedor no se pueda volver a entrar a este registro"""
+    seller_form = SellerForm()
+    if request.method == "POST":
+        seller_form = SellerForm(request.POST)
+        if seller_form.is_valid():
+            seller = seller_form.save(commit=False)
+            seller.profile = request.user
+            seller.save()
+            return redirect("ecommerce:home")
     
     return render(request, "users/seller_register.html", {"seller_form": seller_form})
 

@@ -1,8 +1,8 @@
 <header class="py-3 bg-dark text-white">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a class="d-flex mb-2 mb-lg-0 mx-3 btn btn-outline-light"
-            href="{% url 'ecommerce:home' %}"> AisModa marketPlace</a>
+            <a class="d-flex mb-2 mb-lg-0 mx-3 btn btn-outline-light" href="{% url 'ecommerce:home' %}"> AisModa
+                marketPlace</a>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-auto">
                 <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
@@ -15,7 +15,8 @@
                 <!--  ni idea como lo hise funcionar :) -->
 
                 {% if request.user.is_authenticated %}
-                <span class="user-msg h6 mx-3"> Hello,<a href="{% url 'users:user_panel' %}">{{request.user.email}}</a> </span>
+                <span class="user-msg h6 mx-3"> Hello,<a href="{% url 'users:user_panel' %}">{{request.user.email}}</a>
+                </span>
                 <a class="btn btn-warning m-1" href="{% url 'users:logout' %}"> Logout </a>
                 {% else %}
                 <a class="btn btn-outline-light me-2 m-3" href="{% url 'users:login' %}"> Login </a>
@@ -29,9 +30,13 @@
 
         <ul role="group"
             class="nav btn-group btn-group-sm  col-12 col-lg-auto me-lg-auto justify-content-center justify-content-lg-start mb-md-0  m-2">
-            <li><a href="#" class="btn btn-outline-secondary">categoria1</a></li>
-            <li><a href="#" class="btn btn-outline-secondary">categoria2</a></li>
-            <li><a href="#" class="btn btn-outline-secondary">categoria3</a></li>
+
+            {% for i in menu_categories %}
+
+            <li>
+                <a class="btn btn-outline-secondary" href="{% url 'ecommerce:category' i.slug %}">{{ i.title }}</a>
+            </li>
+            {% endfor %}
         </ul>
 
     </div>

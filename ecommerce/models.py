@@ -14,6 +14,9 @@ class Category(models.Model):
         ordering = ['ordering']
     def __str__(self):
         return self.title
+    def save(self, *args, **kwargs):  
+        self.slug = slugify(self.title) # creacion automatica apartir del titulo
+        super(Category, self).save(*args, **kwargs)
 
 
 
