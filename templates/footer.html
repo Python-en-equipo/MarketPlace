@@ -11,10 +11,14 @@
 
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+<<<<<<< HEAD
 
         {% if request.user.is_authenticated and request.user.seller is false %}
         <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">vendor_register</a></li>
         {% endif %}
+=======
+        <li class="nav-item"><a href="{% url 'users:vendor_register' %}" class="nav-link px-2 text-muted">become vendor</a></li>
+>>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2
       </ul>
       <p class="pb-0 mb-0 text-center text-muted">© 2021 Company, Inc</p>
     </footer>

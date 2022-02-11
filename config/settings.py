@@ -10,7 +10,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo apt-get install redis-server
 # sudo service redis-server start
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2
 import environ                      # add this
 import os
 import sys
@@ -40,9 +43,7 @@ SECRET_KEY = env('DJANGO_KEY')
 DEBUG = env('DEBUG')
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
-
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
-
 
 
 # Alojar las apps en un directorio
@@ -74,6 +75,8 @@ MIDDLEWARE = [
     # "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
+
+
 INTERNAL_IPS = ["127.0.0.1"]
 
 ROOT_URLCONF = "config.urls"
@@ -104,7 +107,7 @@ if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "marketplace", # db postgres es la que se usa para administrar todas las tablas asi que la cambio
+            "NAME": "marketplace",  # db postgres es la que se usa para administrar todas las tablas asi que la cambio
             "USER": "postgres",
             "PASSWORD": "123123",
             "HOST": "localhost",
@@ -133,6 +136,11 @@ DATABASES = {
 }
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2
 if os.environ.get("GITHUB_WORKFLOW"):
     DATABASES = {
         "default": {
@@ -179,6 +187,7 @@ USE_L10N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 # this is used for internal use
@@ -214,17 +223,22 @@ CACHES = {
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
 
+<<<<<<< HEAD
 #S3 BUCKETS CONFIG
+=======
+# S3 BUCKETS CONFIG
+>>>>>>> f05a6c44dcb73ead5b8033d62261eb2477088ec2
 AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
 
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
