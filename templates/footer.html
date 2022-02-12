@@ -16,7 +16,7 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
 
         {% if request.user.is_authenticated and not request.user.seller %}
-        <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">Registra tu tienda</a></li>
+        <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">Regístrate como vendedor</a></li>
         {% endif %}
       </ul>
       <p class="pb-0 mb-0 text-center text-muted">© 2021 Company, Inc</p>

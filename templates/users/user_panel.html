@@ -17,7 +17,7 @@
                     <td> {{ request.user.email}}</td>
                 </tr>
                 <tr>
-                    <th scope="row">Primer nombre: </th>
+                    <th scope="row">Nombre: </th>
                     <td> {{ request.user.first_name}}</td>
                 </tr>
                 <tr>
@@ -28,6 +28,12 @@
                     <th scope="row">Tienda: </th>
                     <td> {{ request.user.seller}}</td>
                 </tr>
+                <th scope="col">
+
+                    <a href="{% url 'users:user_edit' %}"><button type="button"
+                            class="btn btn-sm btn-outline-primary">Edit</button></a>
+
+                </th>
             </tbody>
         </table>
     </div>
@@ -115,7 +121,7 @@
 
     {% else %}
     aqui no hay nada:
-    <a class="btn btn-primary" href="{% url 'users:seller_register' %}"> abre tu tienda</a>
+    <a class="btn btn-primary" href="{% url 'users:seller_register' %}">Regístrate como vendedor</a>
     {% endif %}
 
 </div>

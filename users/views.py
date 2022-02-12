@@ -1,12 +1,16 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 from ecommerce.decorators import unauthenticated_user
 
 from django.contrib import messages
-from .forms import UserForm, SellerForm
+
+from users.models import CustomUser, Seller
+from .forms import UserForm, SellerForm, UserEditForm
 from ecommerce.models import Product
 
 
@@ -72,3 +76,13 @@ def seller_register(request):
     
     return render(request, "users/seller_register.html", {"seller_form": seller_form})
 
+@login_required
+def user_modify_view(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse("ecommerce:home"))
+    else:
+        user_form = UserEditForm(instance=request.user)
+        return render(request, "users/users_edit.html", {"user_form": user_form})

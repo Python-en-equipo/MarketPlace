@@ -39,13 +39,6 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    """ Hay que agregar estos datos a todos los usuarios clientes y vendedores"""
-    # user  = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="profile", primary_key=True)
-    # first_name = models.CharField(max_length=20, null=True, blank=True)
-    # last_name = models.CharField(max_length=40, null=True, blank=True)
-    # address = models.CharField(max_length=170, null=True, blank=True)
-    # joined_at = models.DateTimeField(auto_now_add=True)
-    # #phone_number = PhoneNumberField(unique=True, blank=True) # no encuentro este modulo
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

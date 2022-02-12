@@ -10,14 +10,14 @@
                 {% csrf_token %}
                 <!-- Name input -->
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="id_title">name</label>
+                    <label class="form-label" for="id_title">Nombre</label>
                     {{ product_form.title }}
                 </div>
 
 
                 <!-- Message input -->
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="id_description">Descripcion</label>
+                    <label class="form-label" for="id_description">Descripción</label>
                     {{ product_form.description }}
                 </div>
 
@@ -27,12 +27,12 @@
                 </div>
 
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="id_price">Categoria</label>
+                    <label class="form-label" for="id_price">Categoría</label>
                     {{ product_form.category }}
                 </div>
 
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="id_image_location">Select an image file: </label>
+                    <label class="form-label" for="id_image_location">Selecciona una imagen: </label>
                     {{ image_form.image_location }}
                 </div>
 
@@ -48,8 +48,3 @@
 </div>
 
 {% endblock content %}
-
-
-<form>
-
-</form>

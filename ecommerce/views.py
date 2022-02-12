@@ -48,10 +48,6 @@ def product_create(request):
         product_form = ProductForm()
         image_form = ImageForm()
 
-    if request.user.seller:
-        product_form = ProductForm()
-        image_form = ImageForm()
-
         if request.method == "POST":
             product_form = ProductForm(request.POST)
             image_form = ImageForm(request.POST, request.FILES)
@@ -87,6 +83,8 @@ def product_edit_view(request, product_id):
         image.save()
         delete_home_cache()
         return redirect("ecommerce:home")
+
+        
     elif product_form.is_valid():
         product = product_form.save()
         return redirect("ecommerce:home")
