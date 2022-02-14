@@ -15,14 +15,10 @@
         <div class="card-body">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <!-- Name input -->
                 <div class="form-outline mb-4">
                     <label class="form-label" for="id_title">Nombre</label>
                     {{ user_form.first_name }}
                 </div>
-
-
-                <!-- Message input -->
                 <div class="form-outline mb-4">
                     <label class="form-label" for="id_description">Apellido</label>
                     {{ user_form.last_name }}
