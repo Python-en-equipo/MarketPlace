@@ -56,9 +56,13 @@ def logout_view(request):
 
 @login_required
 def user_panel(request):
-    products = Product.objects.filter(seller= request.user.seller)
-    ctx = {"products": products}
-    return render(request, "users/user_panel.html", ctx)
+    if hasattr(request.user, 'seller'):
+        products = Product.objects.filter(seller= request.user.seller)
+        ctx = {"products": products}
+        return render(request, "users/user_panel.html", ctx)
+    else:
+        return render(request, "users/user_panel.html")
+
 
 
 @login_required
@@ -78,23 +82,47 @@ def seller_register(request):
 
 @login_required
 def user_modify_view(request):
-    my_form = UserEditForm(instance=request.user)
+    try:
+        instance_seller = Seller.objects.get(profile__id=request.user.id)
+    except Seller.DoesNotExist:
+        instance_seller = None
+    user_form = UserEditForm(instance=request.user)
+    seller_form = SellerForm(instance=instance_seller)
     if request.method == 'POST':
-        my_form = UserEditForm(request.POST, instance=request.user)
-        if my_form.is_valid():
-            my_form.save()
+        user_form = UserEditForm(request.POST, instance=request.user)
+        seller_form = SellerForm(request.POST or None, instance=instance_seller)
+        if user_form.is_valid() and seller_form.is_valid():
+            custom_user = user_form.save()
+            seller = seller_form.save(commit=False)
+            seller.profile_name = custom_user
+            seller.save()
             return redirect("users:user_panel")
-    return render(request, "users/users_edit.html", {"user_form": my_form})
+        elif user_form.is_valid():
+            user_form.save()
+            return redirect("users:user_panel")
+
+    return render(request, "users/users_edit.html", {"user_form": user_form, "seller_form": seller_form})
 
 
-# def edit_profile(request):
-#     if request.method == 'POST':
-#         form = EditProfileForm(request.POST, instance=request.user)
 
-#         if form.is_valid():
-#             form.save()
-#             return redirect(reverse('accounts:view_profile'))
-#     else:
-#         form = EditProfileForm(instance=request.user)
-#         args = {'form': form}
-#         return render(request, 'accounts/edit_profile.html', args)
+# def product_edit_view(request, product_id):
+#     instance_product = Product.objects.get(id=product_id)
+#     try:
+#         instance_image = Image.objects.get(product__id=product_id)
+#     except Image.DoesNotExist:
+#         instance_image = None
+#     product_form = ProductForm(request.POST or None, instance=instance_product)
+#     image_form = ImageForm(request.POST, request.FILES, instance=instance_image)
+#     if product_form.is_valid() and image_form.is_valid():
+#         product = product_form.save()
+#         image = image_form.save(commit=False)
+#         image.product = product
+#         image.save()
+#         delete_home_cache()
+#         return redirect("ecommerce:home")
+
+#    elif product_form.is_valid():
+#         product = product_form.save()
+#         return redirect("ecommerce:home")
+
+#     return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})

@@ -28,6 +28,12 @@
                     <label class="form-label" for="id_price">Correo</label>
                     {{ user_form.email }}
                 </div>
+                {% if request.user.seller %}
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_price">Nombre de tu tienda</label>
+                    {{ seller_form.seller_name }}
+                </div>
+                {% endif %}
 
                 <!-- Submit button -->
 

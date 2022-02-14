@@ -24,10 +24,12 @@
                     <th scope="row">Apellido: </th>
                     <td> {{ request.user.last_name}}</td>
                 </tr>
+                {% if request.user.seller %}
                 <tr>
                     <th scope="row">Tienda: </th>
                     <td> {{ request.user.seller}}</td>
                 </tr>
+                {% endif %}
                 <th scope="col">
 
                     <a href="{% url 'users:user_edit' %}"><button type="button"
@@ -120,7 +122,7 @@
     </table>
 
     {% else %}
-    aqui no hay nada:
+    Aún no has creado tu tienda
     <a class="btn btn-primary" href="{% url 'users:seller_register' %}">Regístrate como vendedor</a>
     {% endif %}
 
