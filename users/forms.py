@@ -10,12 +10,8 @@ class UserForm(UserCreationForm):
         fields = ("first_name", "last_name", "email", "password1", "password2")
 
 
-class UserEditForm(UserChangeForm):
-    description = forms.CharField(widget=forms.Textarea(
-		attrs={
-			'class':'form-control w-100',
-			'rows':'3',
-			}))
+class UserEditForm(forms.ModelForm):
+
     class Meta:
         model = CustomUser
         fields = ("first_name", "last_name", "email")

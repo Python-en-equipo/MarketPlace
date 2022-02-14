@@ -78,11 +78,23 @@ def seller_register(request):
 
 @login_required
 def user_modify_view(request):
+    my_form = UserEditForm(instance=request.user)
     if request.method == 'POST':
-        user_form = UserEditForm(request.POST, instance=request.user)
-        if user_form.is_valid():
-            user_form.save()
-            return HttpResponseRedirect(reverse("ecommerce:home"))
-    else:
-        user_form = UserEditForm(instance=request.user)
-        return render(request, "users/users_edit.html", {"user_form": user_form})
+        my_form = UserEditForm(request.POST, instance=request.user)
+        if my_form.is_valid():
+            my_form.save()
+            return redirect("users:user_panel")
+    return render(request, "users/users_edit.html", {"user_form": my_form})
+
+
+# def edit_profile(request):
+#     if request.method == 'POST':
+#         form = EditProfileForm(request.POST, instance=request.user)
+
+#         if form.is_valid():
+#             form.save()
+#             return redirect(reverse('accounts:view_profile'))
+#     else:
+#         form = EditProfileForm(instance=request.user)
+#         args = {'form': form}
+#         return render(request, 'accounts/edit_profile.html', args)
