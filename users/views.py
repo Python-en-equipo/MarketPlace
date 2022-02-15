@@ -14,12 +14,6 @@ from .forms import UserForm, SellerForm, UserEditForm
 from ecommerce.models import Product
 
 
-def delete_home_cache():
-    """borra las keys de los valores en cache de la home"""
-    cache.delete_many(["views.decorators.cache.cache_header..17abf5259517d604cc9599a00b7385d6.en-us.UTC",
-                       "views.decorators.cache.cache_page..GET.17abf5259517d604cc9599a00b7385d6.d41d8cd98f00b204e9800998ecf8427e.en-us.UTC", ])
-
-
 @unauthenticated_user
 def register_view(request):
     form = UserForm
@@ -43,6 +37,7 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
+            cache.clear()
             return redirect("ecommerce:home")
         else:
             messages.info(request, "Email or password is incorrect.")
@@ -54,6 +49,7 @@ def logout_view(request):
     logout(request)
     return redirect("users:login")
 
+
 @login_required
 def user_panel(request):
     if hasattr(request.user, 'seller'):
@@ -62,7 +58,6 @@ def user_panel(request):
         return render(request, "users/user_panel.html", ctx)
     else:
         return render(request, "users/user_panel.html")
-
 
 
 @login_required
@@ -76,9 +71,11 @@ def seller_register(request):
             seller = seller_form.save(commit=False)
             seller.profile = request.user
             seller.save()
+            cache.clear()
             return redirect("ecommerce:home")
     
     return render(request, "users/seller_register.html", {"seller_form": seller_form})
+
 
 @login_required
 def user_modify_view(request):
