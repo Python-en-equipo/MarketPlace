@@ -94,7 +94,7 @@ def user_modify_view(request):
         if user_form.is_valid() and seller_form.is_valid():
             custom_user = user_form.save()
             seller = seller_form.save(commit=False)
-            seller.profile_name = custom_user
+            seller.profile = custom_user
             seller.save()
             return redirect("users:user_panel")
         elif user_form.is_valid():
@@ -103,26 +103,3 @@ def user_modify_view(request):
 
     return render(request, "users/users_edit.html", {"user_form": user_form, "seller_form": seller_form})
 
-
-
-# def product_edit_view(request, product_id):
-#     instance_product = Product.objects.get(id=product_id)
-#     try:
-#         instance_image = Image.objects.get(product__id=product_id)
-#     except Image.DoesNotExist:
-#         instance_image = None
-#     product_form = ProductForm(request.POST or None, instance=instance_product)
-#     image_form = ImageForm(request.POST, request.FILES, instance=instance_image)
-#     if product_form.is_valid() and image_form.is_valid():
-#         product = product_form.save()
-#         image = image_form.save(commit=False)
-#         image.product = product
-#         image.save()
-#         delete_home_cache()
-#         return redirect("ecommerce:home")
-
-#    elif product_form.is_valid():
-#         product = product_form.save()
-#         return redirect("ecommerce:home")
-
-#     return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})

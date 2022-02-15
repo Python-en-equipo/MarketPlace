@@ -75,7 +75,7 @@
 
     <br><br><br>
 
-    <h1>Tienda</h1>
+    <h1>Tienda {{request.user.seller}}</h1>
 
     {% if request.user.seller %}
     <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>
