@@ -11,6 +11,9 @@ class Category(models.Model):
     ordering = models.IntegerField(default=0) # para tener un control sobre el orden de las categorias
     class Meta:
         ordering = ['ordering']
+        verbose_name = 'category'
+        verbose_name_plural = "categories"
+
     def __str__(self):
         return self.title
     def save(self, *args, **kwargs):  
