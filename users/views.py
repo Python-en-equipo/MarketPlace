@@ -1,15 +1,13 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
 from ecommerce.decorators import unauthenticated_user
 
 from django.contrib import messages
 
-from users.models import CustomUser, Seller
+from users.models import Seller
 from .forms import UserForm, SellerForm, UserEditForm
 from ecommerce.models import Product
 

@@ -2,7 +2,6 @@ from django.conf import settings
 from django.core.cache import cache
 
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.contrib.auth.decorators import user_passes_test
@@ -11,15 +10,12 @@ from django.core.cache import cache
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
-from django.views.decorators.cache import cache_page
-from django.views.decorators.http import condition
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
 
 from .forms import ImageForm, ProductForm
-from .models import Image, Product, Category
+from .models import Image, Product
 
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
