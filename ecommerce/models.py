@@ -2,7 +2,6 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from users.models import Seller
 from django.template.defaultfilters import slugify
-from django.contrib.auth.models import User
 
 
 class Category(models.Model):

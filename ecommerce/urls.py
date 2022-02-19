@@ -1,13 +1,10 @@
 from django.urls import path
-from django.views.decorators.cache import cache_page
-
 from .views import *
 
 # no borrar porque los templates usan la appname
 app_name = "ecommerce"
 
 urlpatterns = [
-    # cache_page(60 * 15)
     path("", home, name="home"),
     path("categoria/<str:category_slug>/", category, name="category"),
     path("new/", product_create, name="product-create"),
