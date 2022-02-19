@@ -22,8 +22,8 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
-    seller = models.ForeignKey(Seller, related_name="products", on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, null=True, blank=True)
+    seller = models.ForeignKey(Seller, related_name="products", on_delete=models.CASCADE, null=True, blank=True) #momentaneo, hay que modificar tests!!
 
     title = models.CharField(max_length=250)
     description = models.TextField()

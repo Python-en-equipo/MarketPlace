@@ -35,7 +35,7 @@ class ProductHomeTests(TestCase):
         """
         response = self.client.get(reverse("ecommerce:home"))
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context["result"], [])
+        self.assertQuerysetEqual(response.context["products"], [])
 
     def test_product_wrong_price(self):
         """
@@ -43,7 +43,7 @@ class ProductHomeTests(TestCase):
         """
         product_inst = create_product("Title", "Description", 5)
         response = self.client.get(reverse("ecommerce:home"))
-        self.assertQuerysetEqual(response.context["result"], [])
+        self.assertQuerysetEqual(response.context["products"], [])
 
     def test_product_right_price(self):
         """
@@ -51,7 +51,7 @@ class ProductHomeTests(TestCase):
         """
         product_inst = create_product("Product with right price", "Description", 50)
         response = self.client.get(reverse("ecommerce:home"))
-        self.assertQuerysetEqual(response.context["result"], ["<Product: Product with right price>"])
+        self.assertQuerysetEqual(response.context["products"], ["<Product: Product with right price>"])
 
     def test_two_products_right_and_wrong(self):
         """
@@ -61,7 +61,7 @@ class ProductHomeTests(TestCase):
         wrong_product = create_product("Producto no aceptado", "descripcion dummy", 49)
         right_product = create_product("Producto aceptable", "descripcion dummy", 50)
         response = self.client.get(reverse("ecommerce:home"))
-        self.assertQuerysetEqual(response.context["result"], ["<Product: Producto aceptable>"])
+        self.assertQuerysetEqual(response.context["products"], ["<Product: Producto aceptable>"])
 
     def test_two_right_products(self):
         """
@@ -72,7 +72,7 @@ class ProductHomeTests(TestCase):
         right_product = create_product("Producto aceptable 2", "descripcion dummy", 50)
         response = self.client.get(reverse("ecommerce:home"))
         self.assertQuerysetEqual(
-            response.context["result"],
+            response.context["products"],
             ["<Product: Producto aceptable 1>", "<Product: Producto aceptable 2>"],
             ordered=False,
         )
@@ -85,5 +85,5 @@ class ProductHomeTests(TestCase):
         wrong_product = create_product("Producto no aceptado 1", "descripcion dummy", 20)
         right_product = create_product("Producto no aceptado 2", "descripcion dummy", 49)
         response = self.client.get(reverse("ecommerce:home"))
-        self.assertQuerysetEqual(response.context["result"], [])
+        self.assertQuerysetEqual(response.context["products"], [])
         
