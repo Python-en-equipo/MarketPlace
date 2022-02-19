@@ -121,7 +121,6 @@ else:
             "PORT": "5432",
         }
     }
-print(env("NAME_DB_HEROKU"), env("USER_DB_HEROKU"))
 
 
 
