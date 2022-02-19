@@ -7,7 +7,8 @@ from .views import *
 app_name = "ecommerce"
 
 urlpatterns = [
-    path("", cache_page(60 * 15)(home), name="home"),
+    # cache_page(60 * 15)
+    path("", home, name="home"),
     path("categoria/<str:category_slug>/", category, name="category"),
     path("new/", product_create, name="product-create"),
     path("edit/<int:product_id>", product_edit_view, name="product-edit"),
