@@ -34,7 +34,8 @@ SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = env('DEBUG')
+DEBUG = False
+
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
@@ -120,6 +121,7 @@ else:
             "PORT": "5432",
         }
     }
+print(env("NAME_DB_HEROKU"), env("USER_DB_HEROKU"))
 
 
 
