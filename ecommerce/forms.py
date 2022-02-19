@@ -1,14 +1,17 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
 from .models import Image, Product
 
 
 class ProductForm(forms.ModelForm):
+    description = forms.CharField(widget=forms.Textarea(
+		attrs={
+			'class':'form-control w-100',
+			'rows':'3',
+			}))
     class Meta:
         model = Product
-        fields = ["title", "description", "price"]
+        fields = ["title", "description", "price", "category"]
 
     # def clean_title(self, *args, **kwargs):
     #     title = self.cleaned_data.get('title')
@@ -31,7 +34,3 @@ class ImageForm(forms.ModelForm):
         fields = ["image_location"]
 
 
-class UserForm(UserCreationForm):
-    class Meta:
-        model = User
-        fields = ["username", "email", "password1", "password2"]

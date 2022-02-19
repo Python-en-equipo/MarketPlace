@@ -1,0 +1,43 @@
+{% extends '../base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+
+{%for message in messages %}
+<p> {{ message }} </p>
+{% endfor %}
+
+
+<div class="d-block modal modal-signin position-static  bg-secondary m-0 "  style="min-height: 30rem;">
+	<div class="modal-dialog mt-5" >
+		<div class="modal-content rounded-5 shadow mt-5">
+
+
+			<div class="modal-body pt-5 p-5 pt-0 ">
+				<form method="POST" action="">
+					{% csrf_token %}
+
+					<div class="input-group mb-3">
+						<input type="text" name="email" placeholder="Email..." class="form-control">
+
+					</div>
+					<div class="input-group mb-3">
+						<input type="password" name="password" placeholder="Password..." class="form-control" >
+					</div>
+
+					<input type="submit" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" ></input>
+
+					<hr>
+					<small class="text-muted">No have acount?</small>
+					<a href="{% url 'users:register' %}" class="ml-2">Sign Up</a>
+
+
+				</form>
+	
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

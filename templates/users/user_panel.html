@@ -1,0 +1,130 @@
+{% extends '../base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+
+
+    <h1> Datos personales: </h1>
+
+    <div class="card w-25   ">
+        <table class="mb-0 table ">
+            <tbody>
+                <tr>
+                    <th scope="row">Email: </th>
+                    <td> {{ request.user.email}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nombre: </th>
+                    <td> {{ request.user.first_name}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Apellido: </th>
+                    <td> {{ request.user.last_name}}</td>
+                </tr>
+                {% if request.user.seller %}
+                <tr>
+                    <th scope="row">Tienda: </th>
+                    <td> {{ request.user.seller}}</td>
+                </tr>
+                {% endif %}
+                <th scope="col">
+
+                    <a href="{% url 'users:user_edit' %}"><button type="button"
+                            class="btn btn-sm btn-outline-primary">Edit</button></a>
+
+                </th>
+            </tbody>
+        </table>
+    </div>
+
+    <br><br><br>
+
+    <h1>compras realizadas</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><br><br>
+
+    <h1>Tienda {{request.user.seller}}</h1>
+
+    {% if request.user.seller %}
+    <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>
+
+    <table class="table mb-5">
+        <thead>
+            <tr>
+                <th scope="col">categoria</th>
+                <th scope="col">nombre</th>
+                <th scope="col">precio</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+
+            <tr>
+                <th scope="col">{{product.category}}</th>
+
+                <th scope="col">
+                    <a href="{% url 'ecommerce:product-detail' product.pk %}"> <button type="button"
+                            class="btn btn-sm btn-outline-secondary">{{ product.title }}</button> </a>
+                </th>
+
+                <th scope="col">{{product.price}}</th>
+                {% if request.user.is_staff or request.user.seller %}
+                <th scope="col">
+
+                    <a href="{% url 'ecommerce:product-edit' product.pk %}"><button type="button"
+                            class="btn btn-sm btn-outline-primary">Edit</button></a>
+
+                </th>
+                <th scope="col">
+
+                    <a href="{% url 'ecommerce:product-delete' product.pk %}"><button type="button"
+                            class="btn btn-sm btn-outline-danger">Delete</button></a>
+                </th>
+                {% endif %}
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    Aún no has creado tu tienda
+    <a class="btn btn-primary" href="{% url 'users:seller_register' %}">Regístrate como vendedor</a>
+    {% endif %}
+
+</div>
+{% endblock content %}

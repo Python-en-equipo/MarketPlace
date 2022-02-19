@@ -1,11 +1,8 @@
 {% for image in product.product_images.all %}
-<div class="d-flex justify-content-center mt-1">
-    <div class="card p-1 border-white" style="width: 20rem;  height: 20rem;">
-        <div class="card-body w-100 border-white" style=" 
-            background-size: cover; 
-            background-position: 50% 50%;
-            background-image: url('{{ image.image_location.url }}');">
-        </div>
-    </div>
+
+<div class="card-body w-100 border-white" style=" 
+background-size: cover; 
+background-position: 50% 50%;
+background-image: url('{{ image.image_location.url }}');">
 </div>
 {% endfor %}

@@ -2,5 +2,5 @@
 disable = line-too-long, missing-module-docstring, missing-function-docstring,
         no-member, no-value-for-parameter, no-else-return, too-few-public-methods,
         missing-class-docstring, unused-variable, invalid-str-returned, unused-argument,
-        invalid-name
+        invalid-name, W0401, W0614, R1725
 ignore = migrations
