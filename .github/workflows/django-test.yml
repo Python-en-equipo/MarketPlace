@@ -23,6 +23,7 @@ jobs:
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     env:
+      DEBUG: ${{ secrets.DEBUG }}
       DJANGO_KEY: ${{ secrets.DJANGO_KEY }}
       NAME_DB_HEROKU: ${{ secrets.NAME_DB_HEROKU }}
       USER_DB_HEROKU: ${{ secrets.USER_DB_HEROKU }}
