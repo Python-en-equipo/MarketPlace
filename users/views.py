@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import authenticate, login, logout
@@ -35,7 +34,6 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            cache.clear()
             return redirect("ecommerce:home")
         else:
             messages.info(request, "Email or password is incorrect.")
@@ -69,7 +67,6 @@ def seller_register(request):
             seller = seller_form.save(commit=False)
             seller.profile = request.user
             seller.save()
-            cache.clear()
             return redirect("ecommerce:home")
     
     return render(request, "users/seller_register.html", {"seller_form": seller_form})

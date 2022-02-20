@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.cache import cache
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -52,7 +51,6 @@ def product_create(request):
                 image = image_form.save(commit=False)
                 image.product = product
                 image.save()
-                cache.clear()
                 return redirect("ecommerce:home")
     else:
         return redirect("ecommerce:home")
@@ -75,13 +73,11 @@ def product_edit_view(request, product_id):
         image = image_form.save(commit=False)
         image.product = product
         image.save()
-        cache.clear()
         return redirect("ecommerce:home")
 
         
     elif product_form.is_valid():
         product = product_form.save()
-        cache.clear()
         return redirect("ecommerce:home")
 
     return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
@@ -99,6 +95,5 @@ def product_deletion(request, product_id):
     if request.method == "POST":
         messages.success(request, f"{product} was succesfully deleted")
         product.delete()
-        cache.clear()
         return redirect("ecommerce:home")
     return render(request, "ecommerce/product_delete.html", {"product": product})
