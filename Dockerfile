@@ -10,7 +10,10 @@ ENV PYTHONUNBUFFERED=1
 
 # Install pip requirements 
 #COPY backend/requirements.txt /backend/
+#python -m pip install --upgrade pip
 #RUN python -m pip install -r requirements.txt
+#RUN python3 manage.py makemigrations
+#RUN python3 manage.py migrate
 
 WORKDIR /app
 COPY . ./app
