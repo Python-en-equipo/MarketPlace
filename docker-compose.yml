@@ -1,28 +1,35 @@
 version: '3.4'
 
 services:
-  db:    
+  redis:
+    restart: always
+    image: redis:5
+    ports:
+      - "6379:6379"
+
+  db:
     restart: always
     #restart: unless-stopped
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    ports: 
-      - 5432:5432     # para que sea visible en nuestro entorno local 
+    ports:
+      - 5432:5432 # para que sea visible en nuestro entorno local 
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
   django:    
-    #image: backend_django
     restart: always
+    image: django
     container_name: django
     build:      
+      context: .
       dockerfile: ./Dockerfile
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity   
-    #command: python manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
     environment:
@@ -35,5 +42,6 @@ services:
       - .:/workspace
     depends_on:
       - db
+      - redis
 
 

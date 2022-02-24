@@ -18,8 +18,23 @@ django-storages = "*"
 boto3 = "*"
 django-heroku = "*"
 django-debug-toolbar = "*"
+environ = "*"
 
 [dev-packages]
+psycopg2 = "*"
+django-redis = "*"
+pillow = "*"
+flake8 = "*"
+black = "==18.9b0"
+isort = "*"
+pylint = "*"
+django = "*"
+gunicorn = "*"
+whitenoise = "*"
+django-storages = "*"
+boto3 = "*"
+django-heroku = "*"
+django-debug-toolbar = "*"
 environ = "*"
 
 [requires]
