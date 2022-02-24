@@ -1,0 +1,51 @@
+{% extends '../base.html' %}
+
+{% block title %}Cambia tus datos{% endblock title %}
+
+{% block content %}
+
+{% if form.errors %}
+{{ form.errors }} <!-- display the form errors if they exist -->
+{% endif %}
+
+
+<div class="m-5 mt-5 d-flex flex-wrap align-items-center justify-content-center">
+
+    <div class="card p-5 w-50">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_title">Nombre</label>
+                    {{ user_form.first_name }}
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_description">Apellido</label>
+                    {{ user_form.last_name }}
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_price">Correo</label>
+                    {{ user_form.email }}
+                </div>
+                {% if request.user.seller %}
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_price">Nombre de tu tienda</label>
+                    {{ seller_form.seller_name }}
+                </div>
+                {% endif %}
+
+                <!-- Submit button -->
+
+                <input class="btn btn-primary btn-block mb-4 d-flex justify-content-center" type="submit" value="Save" />
+
+                <a href="{% url 'users:user_panel' %}"><button type="button" class="btn btn-sm btn-outline-danger">Cancel</button></a>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

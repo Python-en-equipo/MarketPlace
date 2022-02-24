@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'ecommerce/base.html' %}
 
 {% block content %}
@@ -7,3 +8,55 @@
         <input type="submit" value="Save" />
     </form>
 {% endblock content %}
+=======
+{% extends '../base.html' %}
+
+{% block content %}
+
+<div class="m-5 mt-5 d-flex flex-wrap align-items-center justify-content-center">
+
+    <div class="card p-5 w-50">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Name input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_title">Nombre</label>
+                    {{ product_form.title }}
+                </div>
+
+
+                <!-- Message input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_description">Descripción</label>
+                    {{ product_form.description }}
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_price">Precio</label>
+                    {{ product_form.price }}
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_price">Categoría</label>
+                    {{ product_form.category }}
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_image_location">Selecciona una imagen: </label>
+                    {{ image_form.image_location }}
+                </div>
+
+
+                <!-- Submit button -->
+
+                <input class="btn btn-primary btn-block mb-4 d-flex justify-content-center" type="submit" value="Save" />
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}
+>>>>>>> redis

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 
@@ -13,3 +14,31 @@
       <p class="text-center text-muted">© 2021 Company, Inc</p>
     </footer>
   </div>
+=======
+
+
+
+
+
+      
+
+
+
+    <footer class="pt-4 bg-dark text-white footer-fixed-bottom ">
+      <ul class="nav justify-content-center border-bottom pb-2 mb-2 ">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+
+        {% if request.user.is_authenticated and not request.user.seller %}
+        <li class="nav-item"><a href="{% url 'users:seller_register' %}" class="nav-link px-2 text-muted">Regístrate como vendedor</a></li>
+        {% endif %}
+      </ul>
+      <p class="pb-0 mb-0 text-center text-muted">© 2021 Company, Inc</p>
+    </footer>
+
+<!-- Por añadir -->
+<!-- <li class="nav-item"><a href="" class="nav-link px-2 text-muted">Trabaja con nosotros</a></li> -->
+>>>>>>> redis

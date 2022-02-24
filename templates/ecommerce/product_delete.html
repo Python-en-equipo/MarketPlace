@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'ecommerce/base.html' %}
 {% block content %}
 <p> Are you sure you want to delete"{{product.title}}"? </p>
@@ -11,4 +12,38 @@
 
 </form>
 
+=======
+{% extends '../base.html' %}
+
+
+
+{% block title %}{{product.title}}{% endblock title %}
+{% block content %}
+
+<div class="mt-5 d-flex justify-content-center align-items-center">
+
+  <div class="card rounded-4 shadow">
+    <div class="card-body pt-4 text-center">
+      <h5 class="mb-0">Are you sure you want to delete</h5>
+      <p>"{{product.title}}"</p>
+      {% if product.product_images.image_location %}
+      
+      <h1>si existo</h1>
+      {% endif %}
+
+    <form class="card-footer flex-nowrap p-0" action="{% url 'ecommerce:product-delete' product.pk %}" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <input class="col btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" type="submit"
+          value="Yes, enable">
+        <a class="col btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+          href="{% url 'users:user_panel' %}"> Cancel </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+>>>>>>> redis
 {% endblock content %}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [[source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
@@ -23,3 +24,35 @@ environ = "*"
 
 [requires]
 python_version = "3.8"
+=======
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+psycopg2 = "*"
+django-redis = "*"
+pillow = "*"
+flake8 = "*"
+black = "==18.9b0"
+isort = "*"
+pylint = "*"
+django = "*"
+gunicorn = "*"
+whitenoise = "*"
+django-storages = "*"
+boto3 = "*"
+django-heroku = "*"
+django-debug-toolbar = "*"
+
+[dev-packages]
+environ = "*"
+
+[requires]
+python_version = "3.8"
+
+[packages.django-phonenumber-field]
+extras = [ "phonenumberslite",]
+version = "*"
+>>>>>>> redis
