@@ -5,8 +5,8 @@ from django.template.defaultfilters import slugify
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, null=True, blank=True)
+    title = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
     ordering = models.IntegerField(default=0) # para tener un control sobre el orden de las categorias
     class Meta:
         ordering = ['ordering']
@@ -15,10 +15,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
-    def save(self, *args, **kwargs):  
-        self.slug = slugify(self.title) # creacion automatica apartir del titulo
-        super(Category, self).save(*args, **kwargs)
-
 
 
 class Product(models.Model):
