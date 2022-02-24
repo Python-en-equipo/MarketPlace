@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-from django.contrib import admin
-
-from .models import Image, Product
-
-admin.site.register(Product)
-admin.site.register(Image)
-=======
 from django.contrib import admin
 
 from .models import Image, Product, Category
@@ -18,4 +10,3 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product)
 admin.site.register(Image)
->>>>>>> redis
