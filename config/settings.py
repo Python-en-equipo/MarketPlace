@@ -24,6 +24,10 @@ env = environ.Env( )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  #add this
 
+# env = environ.Env(                #add this
+#     # set casting, default value
+#     DEBUG=(bool, False)         # add this
+# )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -34,7 +38,7 @@ SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
@@ -103,10 +107,10 @@ if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "marketplace",  # db postgres es la que se usa para administrar todas las tablas asi que la cambio
-            "USER": "postgres",
-            "PASSWORD": "123123",
-            "HOST": "localhost",
+            "NAME": env("POSTGRES_NAME"),
+            "USER": env("POSTGRES_USER"),
+            "PASSWORD": env("POSTGRES_PASSWORD"),
+            "HOST": env("POSTGRES_HOST"),
             "PORT": "5432",
         }
     }
@@ -121,16 +125,6 @@ else:
             "PORT": "5432",
         }
     }
-
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 
 
 
@@ -221,8 +215,8 @@ AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
 
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 

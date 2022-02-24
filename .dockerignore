@@ -1,0 +1,4 @@
+.github
+db.sqlite3
+Pipfile
+Pipfile.lock
