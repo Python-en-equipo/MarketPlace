@@ -24,7 +24,7 @@ def seller_check(user):
 
 
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(is_available=True)
     product_count = products.count()
 
     return render(request, "ecommerce/home.html", {"products": products, "product_count": product_count})
