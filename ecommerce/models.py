@@ -36,10 +36,6 @@ class Product(models.Model):
             return False
         return True
 
-    def check_availability(self):
-        if self.stock > 0:
-           return True
-        return False
 
     def save(self, *args, **kwargs):
         # LOGICA PARA LAS URLS UNICAS        
