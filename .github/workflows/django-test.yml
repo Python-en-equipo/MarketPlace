@@ -46,19 +46,19 @@ jobs:
         python -m pipenv install
     - name: Use isort
       run: |
-        pipenv run isort .
+        isort .
     - name: Use Black
       run: |
-        pipenv run black .
+        # black .
     - name: Flake
       run: |
-        pipenv run flake8
+        flake8
     - name: Pylint
       run: |
-        pipenv run pylint ./ecommerce
+        pylint ./ecommerce
     - name: Run migrations
       run: |
-        pipenv run python manage.py migrate
+        python manage.py migrate
     - name: Run Tests
       run: |
-        pipenv run python manage.py test
+        python manage.py test
