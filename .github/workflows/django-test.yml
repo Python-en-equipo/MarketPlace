@@ -44,7 +44,6 @@ jobs:
     - name: Create virtual environment with dependencies
       run: |
         python -m pipenv install
-        pipenv shell
     - name: Use isort
       run: |
         pipenv shell
