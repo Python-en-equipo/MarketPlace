@@ -1,5 +1,13 @@
 from django.urls import path
-from .views import home, product_create, product_detail_view, product_edit_view, product_deletion, category
+
+from .views import (
+    category,
+    home,
+    product_create,
+    product_deletion,
+    product_detail_view,
+    product_edit_view,
+)
 
 # no borrar porque los templates usan la appname
 app_name = "ecommerce"

@@ -1,14 +1,13 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-
-from django.contrib.auth import authenticate, login, logout
-from ecommerce.decorators import unauthenticated_user
-
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
 
-from users.models import Seller
-from .forms import UserForm, SellerForm, UserEditForm
+from ecommerce.decorators import unauthenticated_user
 from ecommerce.models import Product
+from users.models import Seller
+
+from .forms import SellerForm, UserEditForm, UserForm
 
 
 @unauthenticated_user
