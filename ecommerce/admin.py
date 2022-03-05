@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Image, Product, Category
+from .models import Category, Image, Product
 
 
 class CategoryAdmin(admin.ModelAdmin):

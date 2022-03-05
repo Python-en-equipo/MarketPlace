@@ -8,14 +8,16 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
-# Install pip requirements 
-#COPY backend/requirements.txt /backend/
-#python -m pip install --upgrade pip
-#RUN python -m pip install -r requirements.txt
-#RUN python3 manage.py makemigrations
-#RUN python3 manage.py migrate
 
 WORKDIR /app
 COPY . ./app
+# Install pip requirements 
+#COPY backend/requirements.txt /backend/
+#RUN python -m pip install --upgrade pip
+#RUN python -m pip install -r requirements.txt
+#RUN python manage.py makemigrations
+#RUN python manage.py migrate
+
+
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "pythonPath.to.wsgi"]

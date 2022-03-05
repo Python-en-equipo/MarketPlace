@@ -1,6 +1,7 @@
 
 from .models import Category
 
+
 def menu_categories(request): # NOMBRE DE LA FUNCION DEBEN SER IGUALES
     categories = Category.objects.all()
     
