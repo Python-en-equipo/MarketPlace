@@ -1,7 +1,9 @@
 from collections import defaultdict
 from pprint import pprint
 
+
 class ShoppingCart:
+  # TODO: add object session
     def __init__(self,) -> None:
         self.cart = defaultdict(dict)
 
@@ -93,4 +95,3 @@ class ShoppingCart:
 # shopping_cart.add_product(product4)
 # # print(shopping_cart.cart)
 # pprint(shopping_cart.cart)
-
