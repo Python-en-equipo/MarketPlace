@@ -39,7 +39,7 @@ SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = env('DEBUG')
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "storages",
+    # "storages",
     "ecommerce",
     "users",
 ]
@@ -142,7 +142,7 @@ if os.environ.get("GITHUB_WORKFLOW"):
     }
 
 if "test" in sys.argv:
-    DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3", "NAME": "mydatabase"}
+    DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3','NAME': 'mydatabase',}}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -198,14 +198,14 @@ STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CACHE REDIS
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-        "KEY_PREFIX": "ecomm",
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+#         "KEY_PREFIX": "ecomm",
+#     }
+# }
 
 
 # Cache time to live is 15 minutes.
