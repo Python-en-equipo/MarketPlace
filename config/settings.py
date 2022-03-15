@@ -43,7 +43,7 @@ DEBUG = env('DEBUG')
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com", "https://test-marketplace-django.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com", "test-marketplace-django.herokuapp.com"]
 
 
 # Alojar las apps en un directorio
