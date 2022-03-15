@@ -25,10 +25,10 @@ env = environ.Env( )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  #add this
 
-# env = environ.Env(                #add this
-#     # set casting, default value
-#     DEBUG=(bool, False)         # add this
-# )
+env = environ.Env(                #add this
+    # set casting, default value
+    DEBUG=(bool, False)         # add this
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -39,14 +39,12 @@ SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
-
-# Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
+DEBUG =  True #env('DEBUG')
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
 
 
-# Alojar las apps en un directorio
+# allow all apps in a dir
 #sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
