@@ -1,0 +1,22 @@
+name: Master Workflow - Build and deploy to production
+on:
+  push:
+    branches:
+      - cd-docker
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.TEST_HEROKU_API_KEY}}
+          heroku_app_name: "test-marketplace-django" #Must be unique in Heroku
+          heroku_email: "devrrior@gmail.com"
+        env:
+          HD_POSTGRES_NAME: ${{secrets.TEST_NAME_DB_HEROKU}}
+          HD_POSTGRES_USER: ${{secrets.TEST_USER_DB_HEROKU}}
+          HD_POSTGRES_PASSWORD: ${{secrets.TEST_PASSWORD_DB_HEROKU}}
+          HD_POSTGRES_HOST: ${{secrets.TEST_HOST_DB_HEROKU}}
+          HD_DJANGO_KEY: ${{secrets.DJANGO_KEY}}
