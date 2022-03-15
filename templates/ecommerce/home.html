@@ -2,12 +2,13 @@
 {% block title %}MarketPlace{% endblock title %}
 {% block content %}
 
+{% include '../hero.html' %}
+{% include '../categories.html' %}
 {%for message in messages %}
 <p> {{ message }} </p>
 {% endfor %}
 
-<div class="bg-white">
-    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+    <div class="max-w-2xl mx-auto  px-4 sm:py-6 mb-10 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 class="text-center mt-24 mb-8 text-4xl font-medium  ">Products List</h1>
         <div class=" mx-auto w-1/12 ">
             <div class="mx-auto w-1/4 border-b-4 border-gray-900"></div>
@@ -34,7 +35,6 @@
             {% endfor %}
         </div>
     </div>
-</div>
 
 
 

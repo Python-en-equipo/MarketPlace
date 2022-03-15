@@ -2,9 +2,18 @@
     <div class="max-w-7xl mx-auto my-5 px-4 sm:px-6 ">
         <div
             class="flex flex-col-reverse md:flex-row min-w-full py-6 space-y-8 justify-center md:justify-between  md:space-x-10">
-            <input id="search"
-                class="hidden md:flex  leading-none focus:outline-none  border-b-2 hover:border-b-3 border-red-800  w-5/6 mt-12 mx-auto md:w-1/4 md:mt-0 md:mx-0 "
-                type="text" placeholder=" Searsh.."><a class="flex-1 md:self-start" href="{% url 'ecommerce:home' %}">
+
+            <form action="" 
+            class="hidden md:flex leading-none  border-b-2 hover:border-b-3 border-red-800  w-5/6 mt-12 mx-auto md:w-1/4 md:mt-0 md:mx-0 "
+            
+            >
+
+
+                <input id="search" class="w-full focus:outline-none"
+                    type="search" placeholder="Searsh..">
+            </form>
+
+            <a class="flex-1 md:self-start" href="{% url 'ecommerce:home' %}">
                 <div class="flex justify-center ">
                     <div class="flex justify-center items-center"><span
                             class=" pt-1 mx-3 whitespace-nowrap text-4xl italic font-light text-red-700 hover:text-gray-900">AisModa.</span>
