@@ -14,6 +14,7 @@ jobs:
           heroku_api_key: ${{secrets.TEST_HEROKU_API_KEY}}
           heroku_app_name: "test-marketplace-django" #Must be unique in Heroku
           heroku_email: "devrrior@gmail.com"
+          usedocker: true
         env:
           HD_POSTGRES_NAME: ${{secrets.TEST_NAME_DB_HEROKU}}
           HD_POSTGRES_USER: ${{secrets.TEST_USER_DB_HEROKU}}
