@@ -46,6 +46,8 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com", "test-marketplace-django.herokuapp.com"]
 
 
+CSRF_TRUSTED_ORIGINS = ['https://test-marketplace-django.herokuapp.com', 'https://django-ecommerce-v1.herokuapp.com']
+
 # Alojar las apps en un directorio
 #sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
