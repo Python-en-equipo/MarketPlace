@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo service redis-server start
 
 
-import environ                     
+import environ                  
 import os
 import sys
 from pathlib import Path
@@ -54,9 +54,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "storages",
+    # local apps
     "ecommerce",
     "users",
+    "payment",
+
+    # 3rd apps
+    "stripe",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -103,7 +108,7 @@ if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "marketplace",  # db postgres es la que se usa para administrar todas las tablas asi que la cambio
+            "NAME": "marketplace",
             "USER": "postgres",
             "PASSWORD": "123123",
             "HOST": "localhost",
@@ -221,3 +226,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
+STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")
