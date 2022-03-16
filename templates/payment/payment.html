@@ -1,4 +1,4 @@
-<form action="/payment/checkout_session/" method="post">
+<form action="/payment/checkout-session/" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <p><input type="submit" value="Proceed" /></p>
