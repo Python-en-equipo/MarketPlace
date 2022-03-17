@@ -220,8 +220,11 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
+# para la consola
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# para enviar realmente
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 LOGIN_REDIRECT_URL = "/"
@@ -230,3 +233,5 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")
 STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY")
+
+EMAIL = env("EMAIL") # usa tu mail personal

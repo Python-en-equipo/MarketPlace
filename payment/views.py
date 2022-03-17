@@ -1,3 +1,4 @@
+from django.conf import settings
 import stripe
 from config.settings import STRIPE_PRIVATE_KEY, STRIPE_WEBHOOK_KEY
 from django.shortcuts import redirect, render
@@ -51,44 +52,41 @@ def create_checkout_session(request):
 
 @csrf_exempt
 def stripe_webhook(request):
-    payload = request.body
-    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
-    event = None
+  payload = request.body
+  sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+  event = None
 
-    try:
-        event = stripe.Webhook.construct_event(
-          payload, sig_header, STRIPE_WEBHOOK_KEY
-        )
-    except ValueError as e:
-        # Invalid payload
-        return HttpResponse(status=400)
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        return HttpResponse(status=400)
+  try:
+    event = stripe.Webhook.construct_event(
+      payload, sig_header, STRIPE_WEBHOOK_KEY
+    )
+  except ValueError as e:
+    # Invalid payload
+    return HttpResponse(status=400)
+  except stripe.error.SignatureVerificationError as e:
+    # Invalid signature
+    return HttpResponse(status=400)
 
-    # Handle the checkout.session.completed event
-    if event['type'] == 'checkout.session.completed':
-        # TODO Obtener datos del cliente
-        session = event['data']['object']
+  # Handle the checkout.session.completed event
+  if event['type'] == 'checkout.session.completed':
+    session = event['data']['object']
 
-        # line_items = event['line_items']
-        # customer_name = session['shipping']['name']
-        # print('event', event)
-        customer_email = session['customer_details']['email']
-        customer_shipping = session['shipping']
+    # Fulfill the purchase...
+    fulfill_order(session)
 
-        send_mail(
-            subject="Orden de compra",
-            message=f"Gracias por tu compra, te la enviaremos a {customer_shipping}",
-            recipient_list=[customer_email],
-            from_email="test@mail.com"
-        )
+  # Passed signature verification
+  return HttpResponse(status=200)
+
+def fulfill_order(session):
+    customer_email = session['customer_details']['email']
+    customer_shipping = session['shipping']
+
+    send_mail(
+        subject="Orden de compra",
+        message=f"Gracias por tu compra, te la enviaremos a {customer_shipping}",
+        recipient_list=[customer_email],
+        from_email=settings.EMAIL,
+        fail_silently=False,
+    )
         
-        # print(session)
-        # print('customer_name', customer_name)
-        # print('customer_email', customer_email)
-        # print('customer_shipping', customer_shipping)
-        # print('line_items', line_items)
-
-    # Passed signature verification
-    return HttpResponse(status=200)
+    print("Fulfilling order")
