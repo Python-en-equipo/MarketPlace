@@ -2,6 +2,7 @@ import stripe
 from config.settings import STRIPE_PRIVATE_KEY, STRIPE_WEBHOOK_KEY
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
@@ -72,9 +73,17 @@ def stripe_webhook(request):
 
         # line_items = event['line_items']
         # customer_name = session['shipping']['name']
-        print('event', event)
+        # print('event', event)
         customer_email = session['customer_details']['email']
         customer_shipping = session['shipping']
+
+        send_mail(
+            subject="Orden de compra",
+            message=f"Gracias por tu compra, te la enviaremos a {customer_shipping}",
+            recipient_list=[customer_email],
+            from_email="test@mail.com"
+        )
+        
         # print(session)
         # print('customer_name', customer_name)
         # print('customer_email', customer_email)
@@ -83,4 +92,3 @@ def stripe_webhook(request):
 
     # Passed signature verification
     return HttpResponse(status=200)
-
