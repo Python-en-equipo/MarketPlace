@@ -5,7 +5,66 @@ on:
       - cd-docker
 
 jobs:
-  build:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DEBUG: ${{ secrets.DEBUG }}
+      DJANGO_KEY: ${{ secrets.DJANGO_KEY }}
+      NAME_DB_HEROKU: ${{ secrets.TES_NAME_DB_HEROKU }}
+      USER_DB_HEROKU: ${{ secrets.TEST_USER_DB_HEROKU }}
+      PASSWORD_DB_HEROKU: ${{ secrets.TEST_PASSWORD_DB_HEROKU }}
+      HOST_DB_HEROKU: ${{ secrets.TEST_HOST_DB_HEROKU }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+      POSTGRES_NAME: github_actions
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: 127.0.0.1
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install pipenv
+      run: |
+        python -m pip install pipenv
+    - name: Create virtual environment with dependencies
+      run: |
+        python -m pipenv install
+    - name: Use isort
+      run: |
+        pipenv run isort .
+    - name: Use Black
+      run: |
+        pipenv run black .
+    - name: Flake
+      run: |
+        pipenv run flake8
+    - name: Pylint
+      run: |
+        pipenv run pylint ./ecommerce
+    - name: Run migrations
+      run: |
+        pipenv run python manage.py migrate
+    - name: Run Tests
+      run: |
+        pipenv run python manage.py test
+  deploy:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

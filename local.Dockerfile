@@ -16,5 +16,3 @@ RUN  apk update \
 RUN python -m pip install -r requirements.txt 
 
 COPY ./ ./
-
-CMD [ "python", "manage.py", "runserver" ]
