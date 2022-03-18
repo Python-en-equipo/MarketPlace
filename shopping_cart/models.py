@@ -1,29 +1,24 @@
 from django.db import models
 from ecommerce.models import Product
-from users.models import CustomUser
 
 # Create your models here.
 
+class CartSession(models.Model):
+    session_id = models.CharField(max_length=255, blank=True)
+    data_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.session_id
 
 class CartItem(models.Model):
-    product_id = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
-    user_id = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    cart = models.ForeignKey(CartSession, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_subtotal(self):
+        return self.product.price * self.quantity
 
-class OrderItem(models.Model):
-    user_id = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
-    total = models.DecimalField(max_digits=10,decimal_places=2)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-
-class OrderDetails(models.Model):
-    product_id = models.ForeignKey(Product, on_delete=models.PROTECT)
-    order_id = models.ForeignKey(OrderItem, on_delete=models.PROTECT)
-    preci = models.DecimalField(max_digits=10,decimal_places=2)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-
-class PaymentDetails(models.Model):
-    pass
+    def __unicode__(self):
+        return self.product
