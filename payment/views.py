@@ -52,41 +52,47 @@ def create_checkout_session(request):
 
 @csrf_exempt
 def stripe_webhook(request):
-  payload = request.body
-  sig_header = request.META['HTTP_STRIPE_SIGNATURE']
-  event = None
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
 
-  try:
-    event = stripe.Webhook.construct_event(
-      payload, sig_header, STRIPE_WEBHOOK_KEY
-    )
-  except ValueError as e:
-    # Invalid payload
-    return HttpResponse(status=400)
-  except stripe.error.SignatureVerificationError as e:
-    # Invalid signature
-    return HttpResponse(status=400)
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, STRIPE_WEBHOOK_KEY
+            )
+    except ValueError as e:
+        # Invalid payload
+        print('error')
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        print('error')
+        return HttpResponse(status=400)
 
-  # Handle the checkout.session.completed event
-  if event['type'] == 'checkout.session.completed':
-    session = event['data']['object']
+    # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
 
-    # Fulfill the purchase...
-    fulfill_order(session)
-
-  # Passed signature verification
-  return HttpResponse(status=200)
+        # Fulfill the purchase...
+        fulfill_order(session)
+        print('éxito')
+        # Passed signature verification
+        return HttpResponse(status=200)
 
 def fulfill_order(session):
     customer_email = session['customer_details']['email']
     customer_shipping = session['shipping']
+    
+
+    print(settings.EMAIL_HOST_USER)
 
     send_mail(
         subject="Orden de compra",
+        # TODO, NO GUARDA EL VALOR DE customer_shipping
         message=f"Gracias por tu compra, te la enviaremos a {customer_shipping}",
         recipient_list=[customer_email],
-        from_email=settings.EMAIL,
+        from_email=settings.EMAIL_HOST_USER,
         fail_silently=False,
     )
-        
+
     print("Fulfilling order")

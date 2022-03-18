@@ -224,8 +224,14 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # para enviar realmente
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = env("EMAIL")
+EMAIL_HOST_PASSWORD = env('GMAIL_TOKEN')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
@@ -233,5 +239,3 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")
 STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY")
-
-EMAIL = env("EMAIL") # usa tu mail personal
