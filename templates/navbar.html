@@ -15,12 +15,14 @@
                 <!--  ni idea como lo hise funcionar :) -->
 
                 {% if request.user.is_authenticated and not request.user.seller %}
+                <a class="btn btn-outline-primary" href="{% url 'shopping_cart:home' %}"><i class="fa-solid fa-cart-shopping"></i></a>
                 <span class="user-msg h6 mx-3"> Hola,<a href="{% url 'users:user_panel' %}">{{request.user.email}}</a></span>
                 <span class="user-msg h6 mx-3"><a href="{% url 'users:seller_register' %}">Regístrate como vendedor</a></span>
                 <a class="btn btn-warning m-1" href="{% url 'users:logout' %}"> Logout </a>
                 {% elif request.user.is_authenticated %}
                 <span class="user-msg h6 mx-3"> Hola,<a href="{% url 'users:user_panel' %}">{{request.user.email}}</a></span>
                 <a class="btn btn-warning m-1" href="{% url 'users:logout' %}"> Logout </a>
+                <a class="btn btn-outline-primary" href="{% url 'shopping_cart:home' %}"><i class="fa-solid fa-cart-shopping"></i></a>
                 {% else %}
                 <a class="btn btn-outline-light me-2 m-3" href="{% url 'users:login' %}"> Login </a>
                 {% endif %}

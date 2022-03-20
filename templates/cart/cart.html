@@ -3,38 +3,69 @@
   <div class="row">
     <div class="card">
       <div class="row">
-        <div class="col-2">
-          <figure>
-            <img src="https://img.ltwebstatic.com/images2_pi/2018/10/17/1539756300539727379.jpg" alt="suter" width="120px">
-          </figure>
-          <div class="input-group">
-            <form action="">
-              <button class="btn btn-primary" type="button">Agregar<i class="fa-solid fa-plus"></i></button>
-              <input type="text" class="form-control" placeholder="">
-              <button class="btn btn-primary" type="button">Quitar<i class="fa-solid fa-minus"></i></button>
-            </form>
+        <div class="col-9">
+          <div class="card">
+            <table class="table table-borderless table-shopping-cart">
+              <thead>
+                <tr class="small text-uppercase">
+                  <th scope="col">Producto</th>
+                  <th scope="col" width="120">Cantidad</th>
+                  <th scope="col" width="120">Precio</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart_items %}
+                  <tr>
+                    <td>
+                      <a href="#" class="title">
+                        {{item.product.title}}
+                      </a>
+                      <p class="text-muted small">{{item.product.description}}</p>
+                    </td>
+                    <td>
+                      <div class="col">
+                        <div class="input-group input-spinner">
+                            <div class="input-group-prepend">
+                                <a href="{% url 'shopping_cart:remove_product' item.product.id %}"
+                                    class="btn btn-light" type="button" id="button-plus"> <i
+                                        class="fa fa-minus"></i> </a>
+                            </div>
+                            <span class="d-flex" style="border: 1px solid #ccc; margin: 0 2px; padding:2px;box-sizing:border-box;">{{item.quantity}}</span>
+                            <div class="input-group-append">
+                                <a href="{% url 'shopping_cart:add_product' item.product.id %}"
+                                    class="btn btn-light" type="button" id="button-minus"> <i
+                                        class="fa fa-plus"></i> </a>
+                            </div>
+                        </div> <!-- input-group.// -->
+                    </div> <!-- col.// -->
+                    </td>
+                    <td>
+                      <div class="price-wrap">
+                        <div class="price">$ {{item.get_subtotal}}</div>
+                        <div class="text-muted">$ {{item.product.price }}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <a href="{% url 'shopping_cart:delete_product' item.product.id %}" class="btn btn-outline-danger">Eliminar</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
+        <aside class="col-3">
+          <div class="card">
+            <div class="card-body">
+              <dl class="dlist-align">
+                <dt>Precio total:</dt>
+                <dd class="text-right">$ {{total}}</dd>
+              </dl>
+              <a href="#" class="btn btn-success">Pagar</a>
+            </div>
+          </div>
+        </aside>
       </div>
-      <div class="card">
-        <div class="card-header">
-          <h5>Total a pagar</h5>
-        </div>
-        <div class="card-body">
-          <div>
-            <span>Precio total:</span>
-            <span>$9.00</span>
-          </div>
-          <div>
-            <span>Impuesto:</span>
-            <span>7%</span>
-          </div>
-          <div>
-            <span>Total</span>
-            <span>$9.00</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 {% endblock content %}
