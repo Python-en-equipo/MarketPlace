@@ -4,14 +4,27 @@
 
 {% block content %}
 
+
+
+<div class="container mx-auto">
+    <h1 class="text-2xl font-semibold mb-8 tracking-wide">Become Vendor!</h1>
+    <form id="form_vendor" action="" method="post">
+        {% csrf_token %}
+        {{seller_form.as_p}}
+        <div class="flex justify-center mt-8"><input type="submit" class="px-20 py-3 border border-red-500"
+                value="send"></div>
+    </form>
+</div>
+
+<script>
+    const form = $("#form_vendor")
+    form[0].className = "leading-none focus:outline-none border-b-2 hover:border-b-3 border-red-700"
+    form[0].placeholder = "your vendor name"
+</script>
+
+{% endblock content %}
 <form action="." method="post">
     {% csrf_token %}
     {{seller_form.as_p}}
     <input type="submit" value="guardar">
 </form>
-
-
-
-{% endblock content %}
-
-

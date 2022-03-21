@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo service redis-server start
 
 
+
 import environ                  
 import os
 import sys
@@ -24,6 +25,10 @@ env = environ.Env( )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  #add this
 
+env = environ.Env(                #add this
+    # set casting, default value
+    DEBUG=(bool, False)         # add this
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -34,12 +39,14 @@ SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = env('DEBUG')
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com", "test-marketplace-django.herokuapp.com"]
 
+
+CSRF_TRUSTED_ORIGINS = ['https://test-marketplace-django.herokuapp.com', 'https://django-ecommerce-v1.herokuapp.com']
 
 # Alojar las apps en un directorio
 #sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -108,10 +115,10 @@ if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "marketplace",
-            "USER": "postgres",
-            "PASSWORD": "123123",
-            "HOST": "localhost",
+            "NAME": env("POSTGRES_NAME"),
+            "USER": env("POSTGRES_USER"),
+            "PASSWORD": env("POSTGRES_PASSWORD"),
+            "HOST": env("POSTGRES_HOST"),
             "PORT": "5432",
         }
     }
@@ -198,14 +205,14 @@ STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CACHE REDIS
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-        "KEY_PREFIX": "ecomm",
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+#         "KEY_PREFIX": "ecomm",
+#     }
+# }
 
 
 # Cache time to live is 15 minutes.
