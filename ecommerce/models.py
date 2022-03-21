@@ -26,7 +26,7 @@ class Product(models.Model):
     price = models.PositiveIntegerField(validators=[MinValueValidator(50)])
     slug = models.SlugField(null=True, blank=True)
     stock = models.PositiveIntegerField(default=0)
-    is_available = models.BooleanField()
+    is_available = models.BooleanField(default=False)
 
 
     def __str__(self):
