@@ -18,13 +18,11 @@ django-storages = "*"
 boto3 = "*"
 django-heroku = "*"
 django-debug-toolbar = "*"
+django-environ = "*"
+stripe = "*"
 
 [dev-packages]
 environ = "*"
 
 [requires]
 python_version = "3.8"
-
-[packages.django-phonenumber-field]
-extras = [ "phonenumberslite",]
-version = "*"

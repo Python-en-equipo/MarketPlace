@@ -72,6 +72,7 @@
                 <th scope="col">Categoría</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -88,6 +89,9 @@
                 </th>
 
                 <th scope="col">{{product.price}}</th>
+
+                <th scope="col">{{product.stock}}</th>
+
                 {% if request.user.is_staff or request.user.seller %}
                 <th scope="col">
 
