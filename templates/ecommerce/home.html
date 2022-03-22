@@ -20,12 +20,12 @@
             <div class="group relative">
                 <a href="{% url 'ecommerce:product-detail' product.pk %}">
                     {% include "ecommerce/images.html" %}
-
                     <div class="mt-4 flex justify-center items-center flex-col">
                         <div>
                             <h3 class="text-md text-gray-700">
                                 <a href="{% url 'ecommerce:product-detail' product.pk %}"><span aria-hidden="true"
                                         class="absolute inset-0"></span>{{product.title}}</a>
+                                <a href="{% url 'shopping_cart:add_product' product.pk %}" class="btn btn-sm btn-outline-primary">Agregar al carrito</a> 
                             </h3>
                         </div>
                         <p class="mt-0 text-xl italic font-light text-red-600">${{product.price}}</p>

@@ -1,0 +1,71 @@
+{% extends '../base.html' %}
+{% block content %}
+  <div class="row">
+    <div class="card">
+      <div class="row">
+        <div class="col-9">
+          <div class="card">
+            <table class="table table-borderless table-shopping-cart">
+              <thead>
+                <tr class="small text-uppercase">
+                  <th scope="col">Producto</th>
+                  <th scope="col" width="120">Cantidad</th>
+                  <th scope="col" width="120">Precio</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart_items %}
+                  <tr>
+                    <td>
+                      <a href="#" class="title">
+                        {{item.product.title}}
+                      </a>
+                      <p class="text-muted small">{{item.product.description}}</p>
+                    </td>
+                    <td>
+                      <div class="col">
+                        <div class="input-group input-spinner">
+                            <div class="input-group-prepend">
+                                <a href="{% url 'shopping_cart:remove_product' item.product.id %}"
+                                    class="btn btn-light" type="button" id="button-plus"> <i
+                                        class="fa fa-minus"></i> </a>
+                            </div>
+                            <span class="d-flex" style="border: 1px solid #ccc; margin: 0 2px; padding:2px;box-sizing:border-box;">{{item.quantity}}</span>
+                            <div class="input-group-append">
+                                <a href="{% url 'shopping_cart:add_product' item.product.id %}"
+                                    class="btn btn-light" type="button" id="button-minus"> <i
+                                        class="fa fa-plus"></i> </a>
+                            </div>
+                        </div> <!-- input-group.// -->
+                    </div> <!-- col.// -->
+                    </td>
+                    <td>
+                      <div class="price-wrap">
+                        <div class="price">$ {{item.get_subtotal}}</div>
+                        <div class="text-muted">$ {{item.product.price }}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <a href="{% url 'shopping_cart:delete_product' item.product.id %}" class="btn btn-outline-danger">Eliminar</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <aside class="col-3">
+          <div class="card">
+            <div class="card-body">
+              <dl class="dlist-align">
+                <dt>Precio total:</dt>
+                <dd class="text-right">$ {{total}}</dd>
+              </dl>
+              <a href="#" class="btn btn-success">Pagar</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+  </div>
+{% endblock content %}

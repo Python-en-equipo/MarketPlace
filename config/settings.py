@@ -6,7 +6,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-# en caso de error 111 
+# en caso de error 111
 # sudo apt-get install redis-server
 # sudo service redis-server start
 
@@ -21,9 +21,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-env = environ.Env( )
+env = environ.Env()
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  #add this
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # add this
 
 env = environ.Env(                #add this
     # set casting, default value
@@ -38,8 +38,8 @@ env = environ.Env(                #add this
 SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 DEBUG = env('DEBUG')
+
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     # local apps
     "ecommerce",
     "users",
+    "shopping_cart",
     "payment",
 
     # 3rd apps
@@ -81,7 +82,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
-
 
 
 INTERNAL_IPS = ["127.0.0.1"]
@@ -182,11 +182,9 @@ USE_L10N = True
 USE_TZ = True
 
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 # this is used for internal use
-
 
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
