@@ -11,7 +11,7 @@ class ProductForm(forms.ModelForm):
 			}))
     class Meta:
         model = Product
-        fields = ["title", "description", "price", "category"]
+        fields = ["title", "description", "price", "category", "stock"]
 
     # def clean_title(self, *args, **kwargs):
     #     title = self.cleaned_data.get('title')

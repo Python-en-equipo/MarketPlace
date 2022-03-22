@@ -3,41 +3,42 @@
 {% block title %}Login{% endblock title %}
 
 {% block content %}
-
-{%for message in messages %}
-<p> {{ message }} </p>
-{% endfor %}
-
-
-<div class="d-block modal modal-signin position-static  bg-secondary m-0 "  style="min-height: 30rem;">
-	<div class="modal-dialog mt-5" >
-		<div class="modal-content rounded-5 shadow mt-5">
-
-
-			<div class="modal-body pt-5 p-5 pt-0 ">
-				<form method="POST" action="">
-					{% csrf_token %}
-
-					<div class="input-group mb-3">
-						<input type="text" name="email" placeholder="Email..." class="form-control">
-
-					</div>
-					<div class="input-group mb-3">
-						<input type="password" name="password" placeholder="Password..." class="form-control" >
-					</div>
-
-					<input type="submit" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" ></input>
-
-					<hr>
-					<small class="text-muted">No have acount?</small>
-					<a href="{% url 'users:register' %}" class="ml-2">Sign Up</a>
-
-
-				</form>
-	
+<div class="flex justify-center items-center">
+	<div
+		class="flex flex-col items-center justify-center my-20  pt-16   lg:mx-48 sm:2/3 md:w-2/4 lg:1/4 h-full border rounded-3xl  ">
+		<div class="flex justify-center ">
+			<div class="flex justify-center items-center"><span
+					class=" pt-1 mx-3 whitespace-nowrap text-4xl italic font-light text-red-700 hover:text-gray-900">AisModa.</span>
 			</div>
 		</div>
+		<form method="post" action="" class="px-20 pt-12 w-full flex-col space-y-6">
+			{% csrf_token %}
+			<div class="flex flex-col ">
+				<label for="input_email" class="text-left text-red-800">Email*</label>
+				<input type="text" name="email"
+					class="leading-none focus:outline-none border-b-2 hover:border-b-3 border-red-700">
+			</div>
+
+			<div class="flex  flex-col  ">
+				<label for="password" class="text-left text-red-800">Password</label>
+				<input type="password" name="password"
+					class="leading-none focus:outline-none border-b-2 hover:border-b-3 border-red-700">
+
+			</div>
+
+			<div class="mt-16 pt-16 flex justify-center">
+				<input type="submit" class="w-full  w-2/3 px-20 py-3 border border-red-500"
+					value="Login"></div>
+		</form>
+		{%for message in messages %}
+		<p> {{ message }} </p>
+		{% endfor %}
+
+		<h6 class="mb-16 mt-4"> No have acount?
+			<a class="text-blue-500 font-bold" href="{% url 'users:register' %}">Sing in</a>
+		</h6>
 	</div>
 </div>
+
 
 {% endblock content %}

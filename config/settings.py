@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo service redis-server start
 
 
-import environ
+
+import environ                  
 import os
 import sys
 from pathlib import Path
@@ -24,6 +25,10 @@ env = environ.Env()
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # add this
 
+env = environ.Env(                #add this
+    # set casting, default value
+    DEBUG=(bool, False)         # add this
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -33,13 +38,15 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # add this
 SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env('DEBUG')
 
-DEBUG = True
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com", "test-marketplace-django.herokuapp.com"]
 
+
+CSRF_TRUSTED_ORIGINS = ['https://test-marketplace-django.herokuapp.com', 'https://django-ecommerce-v1.herokuapp.com']
 
 # Alojar las apps en un directorio
 #sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -54,10 +61,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "storages",
+    # local apps
     "ecommerce",
     "users",
     "shopping_cart",
+    "payment",
+
+    # 3rd apps
+    "stripe",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -103,10 +115,10 @@ if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "marketplace",  # db postgres es la que se usa para administrar todas las tablas asi que la cambio
-            "USER": "postgres",
-            "PASSWORD": "123123",
-            "HOST": "localhost",
+            "NAME": env("POSTGRES_NAME"),
+            "USER": env("POSTGRES_USER"),
+            "PASSWORD": env("POSTGRES_PASSWORD"),
+            "HOST": env("POSTGRES_HOST"),
             "PORT": "5432",
         }
     }
@@ -122,13 +134,6 @@ else:
         }
     }
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 if os.environ.get("GITHUB_WORKFLOW"):
@@ -198,14 +203,14 @@ STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CACHE REDIS
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-        "KEY_PREFIX": "ecomm",
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+#         "KEY_PREFIX": "ecomm",
+#     }
+# }
 
 
 # Cache time to live is 15 minutes.
@@ -216,13 +221,26 @@ AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
 
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
+# para la consola
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# para enviar realmente
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = env("EMAIL")
+EMAIL_HOST_PASSWORD = env('GMAIL_TOKEN')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
+STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")
+STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY")

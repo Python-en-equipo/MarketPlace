@@ -5,49 +5,58 @@
 {% block content %}
 
 {% if user_registration.errors %}
-{{ user_registration.errors }} <!-- display the form errors if they exist -->
+{{ user_registration.errors }}
+<!-- display the form errors if they exist -->
 {% endif %}
 
-<div class="modal modal-signin position-static d-block bg-secondary m-0">
-	<div class="modal-dialog">
-		<div class="modal-content rounded-5 shadow">
-			<div class="modal-body pt-5 p-5 pt-0">
-
-				<form id="form" method="POST" action="">
-					{% csrf_token %}
-					<div class="input-group mb-3">
-						{{ user_registration.first_name }}
-					</div>
-					<div class="input-group mb-3">
-					
-						{{ user_registration.last_name }}
-					</div>
-					<div class="input-group mb-2">
-					
-						{{ user_registration.email }}
-					</div>
-					<div class="input-group mb-2">
-						
-						{{ user_registration.password1 }}
-					</div>
-					<div class="input-group mb-2">
-						
-						{{ user_registration.password2 }}
-					</div>
-
-					<input type="submit" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"></input>
-					<hr>
-					<small class="text-muted">Already have acount?</small>
-					<a href="{% url 'users:login' %}" class="ml-2">Login</a>
-				</form>
-
-
-
-
+<div class="flex justify-center items-center">
+	<div
+		class="flex flex-col items-center justify-center my-20  pt-16   lg:mx-48 sm:2/3 md:w-2/4 lg:1/4 h-full border rounded-3xl  ">
+		<div class="flex justify-center ">
+			<div class="flex justify-center items-center">
+				<span class="pt-1 mx-3 whitespace-nowrap text-4xl 
+				italic font-light text-red-700 hover:text-gray-900">
+				AisModa.</span>
 			</div>
 		</div>
+		<form id="form" action="" class="px-20 pt-12 w-full flex-col space-y-6">
+			<div class="flex flex-col ">
+				<label for="name" class="text-left text-red-800">First Name*</label>
+				{{ user_registration.first_name }}
+			</div>
+
+			<div class="flex flex-col ">
+				<label for="Last" class="text-left text-red-800">Last Name*</label>
+				{{ user_registration.last_name }}
+
+			</div>
+			<div class="flex flex-col ">
+				<label for="input_email" class="text-left text-red-800">Email*</label>
+				{{ user_registration.email }}
+
+			</div>
+			<div class="flex  flex-col  ">
+				<label for="password" class="text-left text-red-800">Enter password...</label>
+				{{ user_registration.password1 }}
+
+			</div>
+			<div class="flex  flex-col  ">
+				<label for="password" class="text-left text-red-800">Re-enter Password...</label>
+				{{ user_registration.password2 }}
+
+			</div>
+			<div class="mt-16 pt-16 flex justify-center">
+				<input type="submit" class="w-full  w-2/3 px-20 py-3 border border-red-500"
+				value="Register">
+			</div>
+
+		</form>
+		<h6 class="mb-16 mt-4"> Already have acount?<a class="text-blue-500 font-bold"
+				href="{% url 'users:login' %}">Login</a></h6>
 	</div>
 </div>
+
+
 
 
 
@@ -58,15 +67,8 @@
 
 	//Query All input fields
 	var form_fields = document.getElementById('form')
-	form_fields[1].placeholder = 'Nombre..';
-	form_fields[2].placeholder = 'Apellido..';
-	form_fields[3].placeholder = 'Email..';
-	form_fields[4].placeholder = 'Enter password...';
-	form_fields[5].placeholder = 'Re-enter Password...';
-
-
 	for (var field in form_fields) {
-		form_fields[field].className += ' form-control'
+		form_fields[field].className += 'leading-none focus:outline-none border-b-2 hover:border-b-3 border-red-700'
 	}
 </script>
 

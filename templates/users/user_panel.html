@@ -7,37 +7,18 @@
 <div class="container">
 
 
-    <h1> Datos personales: </h1>
 
-    <div class="card w-25   ">
-        <table class="mb-0 table ">
-            <tbody>
-                <tr>
-                    <th scope="row">Email: </th>
-                    <td> {{ request.user.email}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Nombre: </th>
-                    <td> {{ request.user.first_name}}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Apellido: </th>
-                    <td> {{ request.user.last_name}}</td>
-                </tr>
-                {% if request.user.seller %}
-                <tr>
-                    <th scope="row">Tienda: </th>
-                    <td> {{ request.user.seller}}</td>
-                </tr>
-                {% endif %}
-                <th scope="col">
 
-                    <a href="{% url 'users:user_edit' %}"><button type="button"
-                            class="btn btn-sm btn-outline-primary">Edit</button></a>
+    <div class="flex space-x-4 container mx-auto m-16 px-24">
 
-                </th>
-            </tbody>
-        </table>
+        <p class="text-gray-600 font-normal  
+         text-3xl">
+        Login Email: {{ request.user.email}}
+        </p>
+
+        <a href="{% url 'users:user_edit' %}" class="p-2 border ">
+            View and edi personal acount
+        </a>
     </div>
 
     <br><br><br>
@@ -75,7 +56,12 @@
 
     <br><br><br>
 
-    <h1>Tienda {{request.user.seller}}</h1>
+    <div class="flex justify-center ">
+        <div class="flex justify-center items-center"><span
+                class=" pt-1 mx-3 whitespace-nowrap text-4xl italic font-light text-red-700 hover:text-gray-900">Tienda:
+                {{request.user.seller}}</span>
+        </div>
+    </div>
 
     {% if request.user.seller %}
     <a class="btn btn-warning m-1" href="{% url 'ecommerce:product-create' %}">new product</a>
@@ -83,9 +69,10 @@
     <table class="table mb-5">
         <thead>
             <tr>
-                <th scope="col">categoria</th>
-                <th scope="col">nombre</th>
-                <th scope="col">precio</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -102,6 +89,9 @@
                 </th>
 
                 <th scope="col">{{product.price}}</th>
+
+                <th scope="col">{{product.stock}}</th>
+
                 {% if request.user.is_staff or request.user.seller %}
                 <th scope="col">
 
@@ -123,7 +113,9 @@
 
     {% else %}
     Aún no has creado tu tienda
-    <a class="btn btn-primary" href="{% url 'users:seller_register' %}">Regístrate como vendedor</a>
+    <a href="{% url 'users:seller_register' %}" class="text-gray-600 hover:underline">
+        Become a vendor</a>
+
     {% endif %}
 
 </div>
