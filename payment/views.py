@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from shopping_cart.models import CartItem, CartSession
+from shopping_cart.views import _get_session_id
 
 YOUR_DOMAIN = 'http://127.0.0.1:8000'
 
@@ -23,20 +24,35 @@ def payment_cancel(request):
 
 def create_checkout_session(request):
     if request.method == 'POST':
+        cart = CartSession.objects.get(session_id=_get_session_id(request))
+        cart_items = CartItem.objects.filter(cart=cart)
+        print(f'cart: {cart}')
+        print(f'cart items {cart_items}')
+        line_items = []
+        for item in cart_items:
+            # nombre de producto
+            name = item.product.title
+            # precio
+            price = item.product.price
+            # cantidad
+            quantity = item.quantity
+            item_dict = {
+                    'price_data': {
+                        'currency': 'mxn', # moneda de pago
+                        'product_data':{ # informacion del producto, tambien se puede agregar descripcion, pero no veo necesario
+                            'name': name,
+                        },
+                        'unit_amount': price * 100, # precio del articulo
+                    },
+                    'quantity': quantity, # cantidad de productos que se comprara
+            }
+            line_items.append(item_dict)
+
+        print(line_items)
+
         try:
             checkout_session = stripe.checkout.Session.create(
-                line_items=[
-                    {
-                        'price_data': {
-                            'currency': 'mxn', # moneda de pago
-                            'product_data':{ # informacion del producto, tambien se puede agregar descripcion, pero no veo necesario
-                                'name': 'microfono',
-                            },
-                            'unit_amount': 1000, # precio del articulo
-                        },
-                        'quantity': 2, # cantidad de productos que se comprara
-                    }
-                ],
+                line_items=line_items,
                 # customer_email=self.request.user.email, # for pass user email
                 payment_method_types = ['card','oxxo'],
                 billing_address_collection='required', # pedir direccion
