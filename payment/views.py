@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from shopping_cart.models import CartItem, CartSession
 
 YOUR_DOMAIN = 'http://127.0.0.1:8000'
 

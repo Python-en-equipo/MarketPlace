@@ -10,7 +10,7 @@
 
 
                 <input id="search" class="w-full focus:outline-none"
-                    type="search" placeholder="Searsh..">
+                    type="search" placeholder="Search..">
             </form>
 
             <a class="flex-1 md:self-start" href="{% url 'ecommerce:home' %}">
@@ -74,7 +74,7 @@
                             </a>
                             {% endif %}
                             <a class="ml-2 whitespace-nowrap text-base  text-red-800 hover:text-gray-900"
-                                href="/MarketPlace_AisModa/cart"> Cart ( 0 )
+                                href="{% url 'shopping_cart:home' %}"> Cart ( 0 )
                             </a>
                         </div>
 

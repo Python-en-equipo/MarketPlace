@@ -62,7 +62,7 @@
                 <dt>Precio total:</dt>
                 <dd class="text-right">$ {{total}}</dd>
               </dl>
-              <a href="#" class="btn btn-success">Pagar</a>
+              <form action="{% url 'payment:create-checkout-session'%}" method="POST">{% csrf_token %}<button type='submit' class="btn btn-success">Pagar</button></form>
             </div>
           </div>
         </aside>
