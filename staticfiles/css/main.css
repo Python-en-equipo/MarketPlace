@@ -23,3 +23,15 @@ a:visited {
     margin-right: 20px;
     margin-top: 20px;
 }
+.table-shopping-cart.table td, .table-shopping-cart.table th {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .table-shopping-cart .price-wrap {
+    line-height: 1.2;
+  }
+  .table-shopping-cart .price {
+    font-weight: bold;
+    margin-right: 5px;
+    display: block;
+  }

@@ -4,14 +4,11 @@ from .models import Image, Product
 
 
 class ProductForm(forms.ModelForm):
-    description = forms.CharField(widget=forms.Textarea(
-		attrs={
-			'class':'form-control w-100',
-			'rows':'3',
-			}))
+    description = forms.CharField(widget=forms.Textarea(attrs={"class": "form-control w-100", "rows": "3"}))
+
     class Meta:
         model = Product
-        fields = ["title", "description", "price", "category"]
+        fields = ["title", "description", "price", "category", "stock"]
 
     # def clean_title(self, *args, **kwargs):
     #     title = self.cleaned_data.get('title')
@@ -32,5 +29,3 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ["image_location"]
-
-

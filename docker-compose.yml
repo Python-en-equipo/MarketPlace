@@ -1,20 +1,20 @@
 version: '3.4'
 
 services:
-  redis:
-    restart: always
-    image: redis:5
-    ports:
-      - "6379:6379"
+  # redis:
+  #   restart: always
+  #   image: redis:5
+  #   ports:
+  #     - "6379:6379"
 
   db:
     restart: always
     #restart: unless-stopped
-    image: postgres
+    image: postgres:14.1-alpine3.15 
     volumes:
       - ./data/db:/var/lib/postgresql/data
     ports:
-      - 5432:5432 # para que sea visible en nuestro entorno local 
+      - 5431:5432 # para que sea visible en nuestro entorno local 
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
@@ -22,26 +22,24 @@ services:
 
   django:    
     restart: always
-    image: django
     container_name: django
     build:      
       context: .
-      dockerfile: ./Dockerfile
-    # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity   
-    # command: python manage.py runserver 0.0.0.0:8000
+      dockerfile: ./local.Dockerfile
+    command: >
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
       - ALLOWED_HOSTS=127.0.0.1, localhost     
+      - DJANGO_KEY=123
+      - DEBUG=True
 
     volumes:
-      - .:/workspace
+      - .:/app
     depends_on:
       - db
-      - redis
-
-

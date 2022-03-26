@@ -1,24 +1,34 @@
 from django.conf import settings
+
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.contrib.auth.decorators import user_passes_test
+
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+
+
 from .forms import ImageForm, ProductForm
-from .models import Category, Image, Product
+from .models import Image, Product, Category
+
 
 CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
 
 def seller_check(user):
-    return hasattr(user, 'seller')
+    return hasattr(user, "seller")
 
 
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(is_available=True)
     product_count = products.count()
 
     return render(request, "ecommerce/home.html", {"products": products, "product_count": product_count})
+
 
 def category(request, category_slug=None):
     category_instance = get_object_or_404(Category, slug=category_slug)
@@ -68,7 +78,6 @@ def product_edit_view(request, product_id):
         image.save()
         return redirect("ecommerce:home")
 
-        
     elif product_form.is_valid():
         product = product_form.save()
         return redirect("ecommerce:home")

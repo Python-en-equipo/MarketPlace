@@ -47,8 +47,8 @@ def logout_view(request):
 
 @login_required
 def user_panel(request):
-    if hasattr(request.user, 'seller'):
-        products = Product.objects.filter(seller= request.user.seller)
+    if hasattr(request.user, "seller"):
+        products = Product.objects.filter(seller=request.user.seller)
         ctx = {"products": products}
         return render(request, "users/user_panel.html", ctx)
     else:
@@ -67,7 +67,7 @@ def seller_register(request):
             seller.profile = request.user
             seller.save()
             return redirect("ecommerce:home")
-    
+
     return render(request, "users/seller_register.html", {"seller_form": seller_form})
 
 
@@ -79,7 +79,7 @@ def user_modify_view(request):
         instance_seller = None
     user_form = UserEditForm(instance=request.user)
     seller_form = SellerForm(instance=instance_seller)
-    if request.method == 'POST':
+    if request.method == "POST":
         user_form = UserEditForm(request.POST, instance=request.user)
         seller_form = SellerForm(request.POST or None, instance=instance_seller)
         if user_form.is_valid() and seller_form.is_valid():
@@ -93,4 +93,3 @@ def user_modify_view(request):
             return redirect("users:user_panel")
 
     return render(request, "users/users_edit.html", {"user_form": user_form, "seller_form": seller_form})
-
