@@ -89,3 +89,4 @@ jobs:
           HD_AWS_STORAGE_BUCKET_NAME: ${{secrets.AWS_STORAGE_BUCKET_NAME}}
           HD_STRIPE_PRIVATE_KEY: ${{secrets.STRIPE_PRIVATE_KEY}}
           HD_STRIPE_PUBLIC_KEY: ${{secrets.STRIPE_PUBLIC_KEY}}
+          HD_STRIPE_WEBHOOK_KEY: ${{secrets.STRIPE_WEBHOOK_KEY}}
