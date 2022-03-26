@@ -87,4 +87,3 @@ class ProductHomeTests(TestCase):
     #     right_product = create_product("Producto no aceptado 2", "descripcion dummy", 49)
     #     response = self.client.get(reverse("ecommerce:home"))
     #     self.assertQuerysetEqual(response.context["products"], [])
-        

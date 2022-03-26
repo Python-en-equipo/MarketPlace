@@ -9,42 +9,46 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255, unique=True)),
-                ('slug', models.SlugField(blank=True, max_length=255, null=True, unique=True)),
-                ('ordering', models.IntegerField(default=0)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=255, unique=True)),
+                ("slug", models.SlugField(blank=True, max_length=255, null=True, unique=True)),
+                ("ordering", models.IntegerField(default=0)),
             ],
-            options={
-                'verbose_name': 'category',
-                'verbose_name_plural': 'categories',
-                'ordering': ['ordering'],
-            },
+            options={"verbose_name": "category", "verbose_name_plural": "categories", "ordering": ["ordering"]},
         ),
         migrations.CreateModel(
-            name='Image',
+            name="Image",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image_location', models.ImageField(blank=True, null=True, upload_to='media/products/')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("image_location", models.ImageField(blank=True, null=True, upload_to="media/products/")),
             ],
         ),
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=250)),
-                ('description', models.TextField()),
-                ('price', models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(50)])),
-                ('slug', models.SlugField(blank=True, null=True)),
-                ('stock', models.PositiveIntegerField(default=0)),
-                ('is_available', models.BooleanField(default=False)),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='products', to='ecommerce.category')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=250)),
+                ("description", models.TextField()),
+                ("price", models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(50)])),
+                ("slug", models.SlugField(blank=True, null=True)),
+                ("stock", models.PositiveIntegerField(default=0)),
+                ("is_available", models.BooleanField(default=False)),
+                (
+                    "category",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="products",
+                        to="ecommerce.category",
+                    ),
+                ),
             ],
         ),
     ]

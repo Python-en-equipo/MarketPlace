@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo service redis-server start
 
 
-
-import environ                  
+import environ
 import os
 import sys
 from pathlib import Path
@@ -23,11 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # add this
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))  # add this
 
-env = environ.Env(                #add this
+env = environ.Env(  # add this
     # set casting, default value
-    DEBUG=(bool, False)         # add this
+    DEBUG=(bool, False)  # add this
 )
 
 # Quick-start development settings - unsuitable for production
@@ -35,21 +34,27 @@ env = environ.Env(                #add this
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = env('DJANGO_KEY')
+SECRET_KEY = env("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env("DEBUG")
 
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com", "test-marketplace-django.herokuapp.com"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "http://127.0.0.1:8000/",
+    "django-ecommerce-v1.herokuapp.com",
+    "test-marketplace-django.herokuapp.com",
+]
 
 
-CSRF_TRUSTED_ORIGINS = ['https://test-marketplace-django.herokuapp.com', 'https://django-ecommerce-v1.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ["https://test-marketplace-django.herokuapp.com", "https://django-ecommerce-v1.herokuapp.com"]
 
 # Alojar las apps en un directorio
-#sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+# sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
 # Application definitionds
@@ -66,7 +71,6 @@ INSTALLED_APPS = [
     "users",
     "shopping_cart",
     "payment",
-
     # 3rd apps
     "stripe",
     "storages",
@@ -91,7 +95,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR, 'templates'],
+        "DIRS": [BASE_DIR, "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -99,7 +103,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "ecommerce.context_processors.menu_categories"
+                "ecommerce.context_processors.menu_categories",
             ]
         },
     }
@@ -135,7 +139,6 @@ else:
     }
 
 
-
 if os.environ.get("GITHUB_WORKFLOW"):
     DATABASES = {
         "default": {
@@ -156,7 +159,7 @@ if "test" in sys.argv:
 
 
 # user personalizado
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = "users.CustomUser"
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -231,15 +234,15 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 # para enviar realmente
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 # EMAIL_HOST_USER = env("EMAIL")
 # EMAIL_HOST_PASSWORD = env('GMAIL_TOKEN')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = "/"
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")

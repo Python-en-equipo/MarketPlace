@@ -8,28 +8,34 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('ecommerce', '0001_initial'),
-    ]
+    dependencies = [("ecommerce", "0001_initial")]
 
     operations = [
         migrations.CreateModel(
-            name='CartSession',
+            name="CartSession",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('session_id', models.CharField(blank=True, max_length=255)),
-                ('data_created', models.DateTimeField(auto_now_add=True)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("session_id", models.CharField(blank=True, max_length=255)),
+                ("data_created", models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(
-            name='CartItem',
+            name="CartItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.IntegerField(default=0)),
-                ('is_active', models.BooleanField(default=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('cart', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='shopping_cart.cartsession')),
-                ('product', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='ecommerce.product')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("quantity", models.IntegerField(default=0)),
+                ("is_active", models.BooleanField(default=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "cart",
+                    models.ForeignKey(
+                        null=True, on_delete=django.db.models.deletion.SET_NULL, to="shopping_cart.cartsession"
+                    ),
+                ),
+                (
+                    "product",
+                    models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to="ecommerce.product"),
+                ),
             ],
         ),
     ]

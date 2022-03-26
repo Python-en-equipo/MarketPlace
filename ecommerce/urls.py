@@ -1,13 +1,6 @@
 from django.urls import path
 
-from .views import (
-    category,
-    home,
-    product_create,
-    product_deletion,
-    product_detail_view,
-    product_edit_view,
-)
+from .views import category, home, product_create, product_deletion, product_detail_view, product_edit_view
 
 # no borrar porque los templates usan la appname
 app_name = "ecommerce"
@@ -19,5 +12,4 @@ urlpatterns = [
     path("edit/<int:product_id>", product_edit_view, name="product-edit"),
     path("detail/<int:product_id>", product_detail_view, name="product-detail"),
     path("delete/<int:product_id>", product_deletion, name="product-delete"),
-
 ]

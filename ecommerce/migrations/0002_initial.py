@@ -8,20 +8,25 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('ecommerce', '0001_initial'),
-        ('users', '0001_initial'),
-    ]
+    dependencies = [("ecommerce", "0001_initial"), ("users", "0001_initial")]
 
     operations = [
         migrations.AddField(
-            model_name='product',
-            name='seller',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='products', to='users.seller'),
+            model_name="product",
+            name="seller",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="products",
+                to="users.seller",
+            ),
         ),
         migrations.AddField(
-            model_name='image',
-            name='product',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='product_images', to='ecommerce.product'),
+            model_name="image",
+            name="product",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name="product_images", to="ecommerce.product"
+            ),
         ),
     ]
