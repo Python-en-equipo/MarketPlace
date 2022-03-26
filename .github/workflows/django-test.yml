@@ -1,8 +1,6 @@
 name: Django tests
 
 on:
-  push:
-    branches: [ main, redis_and_model_registered]
   pull_request:
     branches: [ main ]
 
@@ -63,6 +61,6 @@ jobs:
     - name: Run migrations
       run: |
         pipenv run python manage.py migrate
-    # - name: Run Tests
-    #   run: |
-    #     pipenv run python manage.py test
+    - name: Run Tests
+      run: |
+        pipenv run python manage.py test
