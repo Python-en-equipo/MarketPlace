@@ -25,14 +25,18 @@
 					class="leading-none focus:outline-none border-b-2 hover:border-b-3 border-red-700">
 
 			</div>
+			{% if user_registration.errors %}
+			<div class="text-center text-red-700 mt-4">
+				{{ user_registration.errors }}
+			</div>
+			{% endif %}
 
 			<div class="mt-16 pt-16 flex justify-center">
-				<input type="submit" class="w-full  w-2/3 px-20 py-3 border border-red-500"
-					value="Login"></div>
+				<input type="submit" class="w-full  w-2/3 px-20 py-3 border border-red-500" value="Login">
+			</div>
 		</form>
-		{%for message in messages %}
-		<p> {{ message }} </p>
-		{% endfor %}
+
+
 
 		<h6 class="mb-16 mt-4"> No have acount?
 			<a class="text-blue-500 font-bold" href="{% url 'users:register' %}">Sing in</a>
