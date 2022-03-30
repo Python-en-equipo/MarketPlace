@@ -1,71 +1,85 @@
 {% extends '../base.html' %}
 {% block content %}
-  <div class="row">
-    <div class="card">
-      <div class="row">
-        <div class="col-9">
-          <div class="card">
-            <table class="table table-borderless table-shopping-cart">
-              <thead>
-                <tr class="small text-uppercase">
-                  <th scope="col">Producto</th>
-                  <th scope="col" width="120">Cantidad</th>
-                  <th scope="col" width="120">Precio</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for item in cart_items %}
-                  <tr>
-                    <td>
-                      <a href="#" class="title">
-                        {{item.product.title}}
-                      </a>
-                      <p class="text-muted small">{{item.product.description}}</p>
-                    </td>
-                    <td>
-                      <div class="col">
-                        <div class="input-group input-spinner">
-                            <div class="input-group-prepend">
-                                <a href="{% url 'shopping_cart:remove_product' item.product.id %}"
-                                    class="btn btn-light" type="button" id="button-plus"> <i
-                                        class="fa fa-minus"></i> </a>
-                            </div>
-                            <span class="d-flex" style="border: 1px solid #ccc; margin: 0 2px; padding:2px;box-sizing:border-box;">{{item.quantity}}</span>
-                            <div class="input-group-append">
-                                <a href="{% url 'shopping_cart:add_product' item.product.id %}"
-                                    class="btn btn-light" type="button" id="button-minus"> <i
-                                        class="fa fa-plus"></i> </a>
-                            </div>
-                        </div> <!-- input-group.// -->
-                    </div> <!-- col.// -->
-                    </td>
-                    <td>
-                      <div class="price-wrap">
-                        <div class="price">$ {{item.get_subtotal}}</div>
-                        <div class="text-muted">$ {{item.product.price }}</div>
-                      </div>
-                    </td>
-                    <td>
-                      <a href="{% url 'shopping_cart:delete_product' item.product.id %}" class="btn btn-outline-danger">Eliminar</a>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <aside class="col-3">
-          <div class="card">
-            <div class="card-body">
-              <dl class="dlist-align">
-                <dt>Precio total:</dt>
-                <dd class="text-right">$ {{total}}</dd>
-              </dl>
-              <form action="{% url 'payment:create-checkout-session'%}" method="POST">{% csrf_token %}<button type='submit' class="btn btn-success">Pagar</button></form>
-            </div>
-          </div>
-        </aside>
-      </div>
+
+<div class="flex justify-center items-center my-12">
+
+  {% if cart_items.count is 0%}
+
+  <div class="flex items:center md:items-start justify-center my-24 p-24  w-4/5 h-full border rounded-3xl">
+
+
+    <span
+                            class=" pt-1 mx-3 whitespace-nowrap text-4xl italic font-light text-red-700 hover:text-gray-900">
+                            
+                            Cart empty....
+                          </span>
+
+
   </div>
-{% endblock content %}
+  
+    {% else %}
+  <div class="flex flex-col md:flex-row space-x-4 items:center md:items-start justify-center my-2 pt-20 pb-8 px-8  w-4/5 h-full border rounded-3xl">
+    
+    
+    <div class="w-full md:w-3/5 h-full">
+      <h1 class="py-2 mb-8 text-xl text-gray-900 border-gray-300 border-b">My cart</h1>
+
+      {% for item in cart_items %}
+      <div class="border-gray-300 border-b flex items-start py-8 px-5 space-x-4">
+        <div class="flex w-24 border border-gray-300"><img
+            src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
+            alt="A black chair with wooden legs" class="w-full h-full"></div>
+        <div>
+          <p>{{item.product.title}}</p>
+          <p>${{item.product.price }}</p>
+          <!-- <p>{{item.product.description}}</p> -->
+        </div>
+
+        <div></div>
+        <!--  QUANTITY -->
+        <div class="flex justify-end mx-auto w-1/3 ">
+          <!-- <input type="number" name="" id="" class="flex px-2 border border-gray-900 w-1/4" value="1"> -->
+          <a href="{% url 'shopping_cart:add_product' item.product.id %}" class=""
+                          type="button" id="button-minus"> <i class="fa fa-plus"></i> </a>
+          {{item.quantity}}
+          <a href="{% url 'shopping_cart:remove_product' item.product.id %}" class=""
+          type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
+        </div>
+
+        <div>${{item.get_subtotal}}</div>
+
+      
+
+        <a href="{% url 'shopping_cart:delete_product' item.product.id %}" class="text-6xl ml-8 text-gray-500 hover:text-red-900"> x </a>
+
+
+      </div>
+      {% endfor %}
+    </div>
+
+
+
+    <div class="w-full md:w-1/3 ">
+      <h1 class="py-2 mb-8 text-xl text-gray-900 border-gray-300 border-b">Order summary</h1>
+      <div class="flex justify-between mb-16">
+        <div>Total</div>
+        <div>$ {{total}}</div>
+      </div><a href="">
+
+        <!-- PAY -->
+        <form action="{% url 'payment:create-checkout-session'%}" method="POST">{% csrf_token %}<button type='submit'
+            class="text-white bg-gray-900 hover:bg-gray-600 border text-center  w-4/5 mx-auto py-2">check out</button>
+        </form>
+
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+
+
+
+
+
+  {% endblock content %}
