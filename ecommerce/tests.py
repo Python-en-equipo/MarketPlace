@@ -37,6 +37,7 @@ class ProductHomeTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(response.context["products"], [])
 
+
     # TESTS DEPRECADOS PORQUE YA NO NOS FIJAMOS EN EL PRECIO, SINO EN LA DISPONIBILIDAD!
     # def test_product_wrong_price(self):
     #     """
