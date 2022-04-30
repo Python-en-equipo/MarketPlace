@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     # 3rd apps
     "stripe",
     "storages",
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -244,3 +245,9 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")
 STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY")
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
