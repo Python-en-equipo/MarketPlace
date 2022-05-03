@@ -18,7 +18,7 @@ AisModa es una aplicación web Marketplace que tiene el objetivo de poder compra
 <tr>
 <td align="left" >Arturo Martínez Pacheco</td>
 <td align="left" >BackEnd</td>
-<td align="left" >Python, FastAPI, PostgresSQL, Javascript, git, Flask, Linux, CSS, Diseño de Base de datos</td>
+<td align="left" >Python, django, postgres, github actions, beautiful soup</td>
 <td align="left" >México</td>
 <td align="left" ><a href="https://www.linkedin.com/in/arturo-mart%C3%ADnez-pacheco-273456155/">Arturo</a> </td>
 <td align="left" ><a href="https://github.com/Arturomtz8">Arturomtz8</a> </td>
@@ -27,7 +27,7 @@ AisModa es una aplicación web Marketplace que tiene el objetivo de poder compra
 <tr>
 <td align="left" >David Morán</td>
 <td align="left" >BackEnd</td>
-<td align="left" >Python, django, postgres, github actions, beautiful soup </td>
+<td align="left" >Python, FastAPI, PostgresSQL, Javascript, git, Flask, Linux, CSS, Diseño de Base de datos</td>
 <td align="left" >Panamá</td>
 <td align="left" ><a href="https://www.linkedin.com/in/david-mor%C3%A1n-005163195">David</a> </td>
 <td align="left" ><a href="https://github.com/davidmr27">davidmr27</a> </td>
