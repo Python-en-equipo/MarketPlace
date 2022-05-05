@@ -4,6 +4,7 @@ from ecommerce import views
 urlpatterns = [
     path('', views.api_root),
     path('products/', views.ProductList.as_view(), name='product-list'),
+    path('category/', views.ProductCategory.as_view(), name='product-category'),
 ]
    
 

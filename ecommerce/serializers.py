@@ -31,5 +31,5 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Category
         fields = [
-            "prodduct", "title", "slug"
+            "product", "title", "slug"
         ]
