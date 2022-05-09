@@ -3,10 +3,7 @@ from ecommerce.models import Category, Product, Image
 from rest_framework import serializers
 
 
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    category = serializers.HyperlinkedRelatedField(read_only=True, view_name='product-category')
-    # seller = serializers.HyperlinkedRelatedField(read_only=True, view_name='product-seller')
-
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
@@ -15,9 +12,8 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             "stock", "is_available",
         ]
 
-class ImageSerializer(serializers.HyperlinkedModelSerializer):
-    product = serializers.HyperlinkedRelatedField(read_only=True, view_name='product-image')
 
+class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = [
