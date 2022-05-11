@@ -2,10 +2,17 @@ from django.urls import reverse_lazy
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from .models import CustomUser
+from .models import CustomUser, Seller
 
 
 class UserTests(APITestCase):
+    def setUp(self) -> None:
+        self.user = CustomUser.objects.create_user(
+            email="mark@mail.com", first_name="Mark", last_name="Bruen", password="123456"
+        )
+
+        self.seller = Seller.objects.create(seller_name="Mark Store", profile=self.user)
+
     def test_user_detail(self):
         # set up
         user = CustomUser.objects.create_user(
@@ -14,7 +21,7 @@ class UserTests(APITestCase):
         user.save()
 
         # test
-        url = reverse_lazy('users:user-detail', kwargs={'pk': 1})
+        url = reverse_lazy('users:user-detail', kwargs={'pk': 2})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -34,3 +41,10 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["email"], data["email"])
         self.assertEqual(response.data["first_name"], data["first_name"])
+
+    def test_seller_detail(self):
+        url = reverse_lazy("users:seller-detail", kwargs={"pk": 1})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["seller_name"], "Mark Store")
+        self.assertEqual(response.data["profile"]["email"], self.user.email)
