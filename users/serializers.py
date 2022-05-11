@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from users.models import CustomUser
+from users.models import CustomUser, Seller
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -36,3 +36,11 @@ class UserSerializer(serializers.ModelSerializer):
 
         user.set_password(validated_data['password'])
         return user
+
+
+class SellerSerializer(serializers.ModelSerializer):
+    profile = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Seller
+        fields = ('seller_name', 'profile')
