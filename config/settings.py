@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo service redis-server start
 
 
-
-import environ                  
 import os
 import sys
 from pathlib import Path
+
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +25,9 @@ env = environ.Env()
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # add this
 
-env = environ.Env(                #add this
+env = environ.Env(  # add this
     # set casting, default value
-    DEBUG=(bool, False)         # add this
+    DEBUG=(bool, False)  # add this
 )
 
 # Quick-start development settings - unsuitable for production
@@ -43,13 +43,22 @@ DEBUG = env('DEBUG')
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://127.0.0.1:8000/", "django-ecommerce-v1.herokuapp.com", "test-marketplace-django.herokuapp.com"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "http://127.0.0.1:8000/",
+    "django-ecommerce-v1.herokuapp.com",
+    "test-marketplace-django.herokuapp.com",
+]
 
 
-CSRF_TRUSTED_ORIGINS = ['https://test-marketplace-django.herokuapp.com', 'https://django-ecommerce-v1.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = [
+    'https://test-marketplace-django.herokuapp.com',
+    'https://django-ecommerce-v1.herokuapp.com',
+]
 
 # Alojar las apps en un directorio
-#sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+# sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
 # Application definitionds
@@ -66,7 +75,6 @@ INSTALLED_APPS = [
     "users",
     "shopping_cart",
     "payment",
-
     # 3rd apps
     "stripe",
     "storages",
@@ -100,7 +108,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "ecommerce.context_processors.menu_categories"
+                "ecommerce.context_processors.menu_categories",
             ]
         },
     }
@@ -134,7 +142,6 @@ else:
             "PORT": "5432",
         }
     }
-
 
 
 if os.environ.get("GITHUB_WORKFLOW"):
@@ -249,5 +256,8 @@ STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY")
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
