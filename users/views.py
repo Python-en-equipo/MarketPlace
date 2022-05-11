@@ -3,8 +3,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from users.models import CustomUser
-from users.serializers import UserSerializer
+from users.models import CustomUser, Seller
+from users.serializers import SellerSerializer, UserSerializer
 
 
 @api_view(['POST'])
@@ -20,6 +20,12 @@ def user_create(request):
 @api_view(['GET'])
 def user_detail(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
-    serializer_context = {'request': request}
-    serializer = UserSerializer(instance=user, context=serializer_context)
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def seller_detail(request, pk):
+    seller = get_object_or_404(Seller, pk=pk)
+    serializer = SellerSerializer(seller)
     return Response(serializer.data)
