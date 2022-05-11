@@ -7,7 +7,6 @@ from rest_framework import status, generics, permissions
 from ecommerce.models import Product, Category
 from ecommerce.serializers import ProductSerializer, CategorySerializer
 from rest_framework.request import Request
-from django.http import HttpRequest
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 # LINK PARA LA API
@@ -15,14 +14,14 @@ from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 def api_root(request, format=None):
     return Response({
         'ecommerce': reverse('product-list', request=request, format=format),
-        'category': reverse('product-category', request=request, format=format),
+        'category': reverse('category-list', request=request, format=format),
     })
 
 
 @api_view(['GET'])
 def product_list(request):
-    queryset = Product.objects.all()
-    serializer = ProductSerializer(queryset, many=True)
+    queryset = Product.objects.select_related('category').all()
+    serializer = ProductSerializer(queryset, many=True, context={'request': request})
     return Response(serializer.data)
 
 
@@ -33,8 +32,15 @@ def product_detail(request, pk):
     return Response(serializer.data)
 
 
-
-class ProductCategory(generics.ListCreateAPIView):
+@api_view()
+def category_list(request):
     queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    permissions_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer = CategorySerializer(queryset, many=True)
+    return Response(serializer.data)
+
+
+@api_view()
+def category_detail(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    serializer = CategorySerializer(category)
+    return Response(serializer.data)

@@ -38,7 +38,7 @@ env = environ.Env(                #add this
 SECRET_KEY = env('DJANGO_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = True # env('DEBUG')
 
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False

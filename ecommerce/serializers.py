@@ -4,6 +4,10 @@ from rest_framework import serializers
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.HyperlinkedRelatedField(
+        queryset = Category.objects.all(),
+        view_name= 'category-detail',
+    )
     class Meta:
         model = Product
         fields = [
@@ -21,11 +25,9 @@ class ImageSerializer(serializers.ModelSerializer):
         ]
 
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
-    product = serializers.HyperlinkedRelatedField(read_only=True, view_name='product-category')
-
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
-        fields = [
-            "product", "title", "slug"
-        ]
+            model = Category
+            fields = [
+                "title", "slug"
+            ]
