@@ -7,11 +7,23 @@ from .models import CustomUser, Seller
 
 class UserTests(APITestCase):
     def setUp(self) -> None:
+        # Create a user
         self.user = CustomUser.objects.create_user(
             email="mark@mail.com", first_name="Mark", last_name="Bruen", password="123456"
         )
 
+        # Create a seller
         self.seller = Seller.objects.create(seller_name="Mark Store", profile=self.user)
+
+        # Create a token
+        url = reverse_lazy("users:login")
+        response = self.client.post(
+            "/login/", {"email": "mark@mail.com", "password": "123456"}, format="json"
+        )
+
+        # Set the token in the header
+        self.token = response.data["access"]
+        self.client.credentials(HTTP_AUTHORIZATION="Bearer " + self.token)
 
     def test_user_detail(self):
         # set up
