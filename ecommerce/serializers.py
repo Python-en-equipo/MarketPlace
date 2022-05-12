@@ -3,33 +3,31 @@ from ecommerce.models import Category, Product, Image
 from rest_framework import serializers
 
 
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    category = serializers.HyperlinkedRelatedField(read_only=True, view_name='product-category')
-    seller = serializers.HyperlinkedRelatedField(read_only=True, view_name='product-seller')
-
+class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.HyperlinkedRelatedField(
+        queryset = Category.objects.all(),
+        view_name= 'category-detail',
+    )
     class Meta:
         model = Product
         fields = [
-            "category", "seller", "title",
+            "category", "title",
             "description","price", "slug",
             "stock", "is_available",
         ]
 
-class ImageSerializer(serializers.HyperlinkedModelSerializer):
-    product = serializers.HyperlinkedRelatedField(read_only=True, view_name='product-image')
 
+class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = [
-            "product", "image_location"
+            "product"
         ]
 
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
-    product = serializers.HyperlinkedRelatedField(read_only=True, view_name='product-category')
-
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
-        fields = [
-            "product", "title", "slug"
-        ]
+            model = Category
+            fields = [
+                "title", "slug"
+            ]
