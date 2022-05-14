@@ -9,6 +9,7 @@ from ecommerce.serializers import ProductSerializer, CategorySerializer
 from rest_framework.request import Request
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
+
 # LINK PARA LA API
 @api_view(['GET'])
 def api_root(request, format=None):
@@ -49,17 +50,34 @@ def category_list(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def category_detail(request, pk):
     category = get_object_or_404(Category, pk=pk)
-    serializer = CategorySerializer(category)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = CategorySerializer(category)
+        return Response(serializer.data)
+    elif request.method == 'PUT' or request.method == 'PATCH':
+        serializer = CategorySerializer(category, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'DELETE':
+        category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # TODO: AÑADIR SELLER, CATEGORY Y CREACIÓN DE SLUG AUTOMÁTICA BASADA EN EL NOMBRE DE PROD
 @api_view(['POST'])
 def create_product(request):
     serializer = ProductSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+def create_category(request):
+    serializer = CategorySerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return Response(serializer.data, status=status.HTTP_201_CREATED)
