@@ -3,17 +3,23 @@ from ecommerce.models import Category, Product, Image
 from rest_framework import serializers
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+            model = Category
+            fields = [
+                "title", "slug"
+            ]
+
+
 class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.HyperlinkedRelatedField(
-        queryset = Category.objects.all(),
-        view_name= 'category-detail',
-    )
+    category = serializers.StringRelatedField()
     class Meta:
         model = Product
+        # TODO AÑADIR SELLER SERIALIZER
         fields = [
-            "category", "title",
-            "description","price", "slug",
-            "stock", "is_available",
+            "title", "description",
+            "price", "category", "slug",
+            "stock"
         ]
 
 
@@ -25,9 +31,3 @@ class ImageSerializer(serializers.ModelSerializer):
         ]
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-            model = Category
-            fields = [
-                "title", "slug"
-            ]

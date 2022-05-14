@@ -21,7 +21,7 @@ def api_root(request, format=None):
 @api_view(['GET'])
 def product_list(request):
     queryset = Product.objects.select_related('category').all()
-    serializer = ProductSerializer(queryset, many=True, context={'request': request})
+    serializer = ProductSerializer(queryset, many=True)
     return Response(serializer.data)
 
 
@@ -44,3 +44,11 @@ def category_detail(request, pk):
     category = get_object_or_404(Category, pk=pk)
     serializer = CategorySerializer(category)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_product(request):
+    serializer = ProductSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response('ok')
