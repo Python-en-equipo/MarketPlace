@@ -59,6 +59,7 @@ def category_list(request):
     return Response(serializer.data)
 
 
+# TODO: Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def category_detail(request, pk):
     category = get_object_or_404(Category, pk=pk)
