@@ -43,6 +43,15 @@ def product_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# TODO: AÑADIR SELLER, CATEGORY Y CREACIÓN DE SLUG AUTOMÁTICA BASADA EN EL NOMBRE DE PROD
+@api_view(['POST'])
+def create_product(request):
+    serializer = ProductSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 @api_view(['GET'])
 def category_list(request):
     queryset = Category.objects.all()
@@ -66,15 +75,7 @@ def category_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# TODO: AÑADIR SELLER, CATEGORY Y CREACIÓN DE SLUG AUTOMÁTICA BASADA EN EL NOMBRE DE PROD
-@api_view(['POST'])
-def create_product(request):
-    serializer = ProductSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
+# TODO: AÑADIR SLUG AUTOMATICO USANDO NOMBRE CAT
 @api_view(['POST'])
 def create_category(request):
     serializer = CategorySerializer(data=request.data)
