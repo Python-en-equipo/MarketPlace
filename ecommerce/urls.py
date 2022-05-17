@@ -5,8 +5,10 @@ urlpatterns = [
     path('', views.api_root),
     path('products/', views.product_list, name='product-list'),
     path('products/<int:pk>', views.product_detail, name='product-detail'),
-    path('category/', views.category_list, name='category-list'),
-    path('category-detail/<int:pk>', views.category_detail, name='category-detail'),
+    path('products/new', views.create_product, name='new-product'),
+    path('categories/', views.category_list, name='category-list'),
+    path('categories/<int:pk>', views.category_detail, name='category-detail'),
+    path('categories/new', views.create_category, name='new-category'),
 ]
    
 

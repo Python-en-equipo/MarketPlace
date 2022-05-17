@@ -30,10 +30,18 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+
     def was_created(self):
         if self.price < 50:
             return False
         return True
+    
+
+    def save(self, *args, **kwargs):
+        self.is_available = False
+        if self.stock > 0:
+            self.is_available = True
+        super(Product, self).save(*args, **kwargs)
 
 
 class Image(models.Model):
