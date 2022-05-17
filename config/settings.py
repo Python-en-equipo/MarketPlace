@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "stripe",
     "storages",
     'rest_framework',
+    'drf_yasg2',
 ]
 
 MIDDLEWARE = [
