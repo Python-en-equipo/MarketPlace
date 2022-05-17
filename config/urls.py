@@ -21,10 +21,9 @@ urlpatterns += [
 # Schema of Documentation API
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="Ecommerce API",
         default_version='v1',
-        description="Test description",
-        terms_of_service="https://www.google.com/policies/terms/",
+        description="Rest API del Ecommerce ",
         contact=openapi.Contact(email="contact@snippets.local"),
         license=openapi.License(name="BSD License"),
     ),
@@ -33,8 +32,8 @@ schema_view = get_schema_view(
 )
 # swagger
 urlpatterns += [
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  # noqa E501
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),  # noqa E501
+    # path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  # noqa E501
+    path('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),  # noqa E501
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
