@@ -21,13 +21,11 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'required': True, 'write_only': True},
         }
 
-    def validate(self, data):
-        if data['password'] != data['password2']:
+    def create(self, validated_data):
+        # validate password
+        if validated_data['password'] != validated_data['password2']:
             raise serializers.ValidationError({'password': 'Las contraseñas no coinciden'})
 
-        return data
-
-    def create(self, validated_data):
         user = CustomUser.objects.create_user(
             email=validated_data['email'],
             first_name=validated_data['first_name'],
@@ -38,6 +36,16 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+    # update user
+    def update(self, instance, validated_data):
+        instance.email = validated_data.get('email', instance.email)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+
+        instance.save()
+
+        return instance
 
 
 class SellerSerializer(serializers.ModelSerializer):
