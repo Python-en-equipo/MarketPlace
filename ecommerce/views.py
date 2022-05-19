@@ -19,20 +19,28 @@ def api_root(request, format=None):
     })
 
 
-@api_view(['GET'])
+# TODO: AÑADIR SELLER, category no se está guardando al crear un prod
+@api_view(['GET', 'POST'])
 def product_list(request):
     """
         Return a list of products by category
     """
-    queryset = Product.objects.select_related('category').all()
-    serializer = ProductSerializer(queryset, many=True)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        queryset = Product.objects.select_related('category').all()
+        serializer = ProductSerializer(queryset, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ProductSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)       
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 
 # TODO: Añadir slug creado automático en caso de que cambie nombre prod
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     if request.method == 'GET':
         serializer = ProductSerializer(product)
         return Response(serializer.data)
@@ -46,26 +54,24 @@ def product_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# TODO: AÑADIR SELLER, CATEGORY Y CREACIÓN DE SLUG AUTOMÁTICA BASADA EN EL NOMBRE DE PROD
-@api_view(['POST'])
-def create_product(request):
-    serializer = ProductSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def category_list(request):
-    queryset = Category.objects.all()
-    serializer = CategorySerializer(queryset, many=True)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        queryset = Category.objects.all()
+        serializer = CategorySerializer(queryset, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = CategorySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # TODO: Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
-def category_detail(request, pk):
-    category = get_object_or_404(Category, pk=pk)
+def category_detail(request, slug):
+    category = get_object_or_404(Category, slug=slug)
     if request.method == 'GET':
         serializer = CategorySerializer(category)
         return Response(serializer.data)
@@ -77,12 +83,3 @@ def category_detail(request, pk):
     elif request.method == 'DELETE':
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-# TODO: AÑADIR SLUG AUTOMATICO USANDO NOMBRE CAT
-@api_view(['POST'])
-def create_category(request):
-    serializer = CategorySerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    serializer.save()
-    return Response(serializer.data, status=status.HTTP_201_CREATED)

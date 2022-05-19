@@ -7,7 +7,7 @@ from drf_yasg2 import openapi
 from rest_framework import permissions
 
 urlpatterns = [
-    path("", include("ecommerce.urls")),
+    path("api/v1/", include("ecommerce.urls")),
     path("admin/", admin.site.urls),
     path("user/", include("users.urls")),
     path("cart/", include("shopping_cart.urls")),
