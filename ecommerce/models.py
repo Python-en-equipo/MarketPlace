@@ -7,7 +7,7 @@ from users.models import Seller
 
 class Category(models.Model):
     title = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = "categories"
