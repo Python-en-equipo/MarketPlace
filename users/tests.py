@@ -18,7 +18,7 @@ class UserTests(APITestCase):
         # Create a token
         url = reverse_lazy("users:login")
         response = self.client.post(
-            "/login/", {"email": "mark@mail.com", "password": "123456"}, format="json"
+            url, {"email": "mark@mail.com", "password": "123456"}, format="json"
         )
 
         # Set the token in the header
@@ -50,6 +50,14 @@ class UserTests(APITestCase):
             "password2": "123456",
         }
         response = self.client.post(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["email"], data["email"])
+        self.assertEqual(response.data["first_name"], data["first_name"])
+
+    def test_user_update(self):
+        url = reverse_lazy("users:user-detail", kwargs={'pk': 1})
+        data = {"email": "test@mail.com", "first_name": "Test", "last_name": "Test"}
+        response = self.client.put(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["email"], data["email"])
         self.assertEqual(response.data["first_name"], data["first_name"])
