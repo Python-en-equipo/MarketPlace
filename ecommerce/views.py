@@ -21,6 +21,9 @@ def api_root(request, format=None):
 
 @api_view(['GET'])
 def product_list(request):
+    """
+        Return a list of products by category
+    """
     queryset = Product.objects.select_related('category').all()
     serializer = ProductSerializer(queryset, many=True)
     return Response(serializer.data)

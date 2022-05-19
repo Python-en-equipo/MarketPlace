@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
 
         ('users', '0001_initial'),
         ('ecommerce', '0001_initial'),
-    ]
+
+]
 
     operations = [
         migrations.AddField(

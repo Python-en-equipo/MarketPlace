@@ -5,10 +5,14 @@ from django.utils.text import slugify
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    title_slug = serializers.SerializerMethodField()
+
+    def get_title_slug(self, instance):
+        return slugify(instance.title)
     class Meta:
             model = Category
             fields = [
-                "title", "slug"
+                "title_slug", "title"
             ]
 
 
