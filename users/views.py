@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404
-from isort import code
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import PermissionDenied
@@ -20,7 +19,7 @@ def user_create(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def user_detail(request, pk):
     if request.method == 'GET':
@@ -38,6 +37,12 @@ def user_detail(request, pk):
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        raise PermissionDenied("Usted no es el propietario de este objeto")
+    elif request.method == 'DELETE':
+        user = get_object_or_404(CustomUser, pk=pk)
+        if user == request.user:
+            user.delete()
+            return Response({"message": "Usuario eliminado con exito"}, status=status.HTTP_200_OK)
         raise PermissionDenied("Usted no es el propietario de este objeto")
 
 
