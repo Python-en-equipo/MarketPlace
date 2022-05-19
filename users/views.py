@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
+from isort import code
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -18,12 +20,25 @@ def user_create(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def user_detail(request, pk):
-    user = get_object_or_404(CustomUser, pk=pk)
-    serializer = UserSerializer(user)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        user = get_object_or_404(CustomUser, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    elif request.method == 'PUT' or request.method == 'PATCH':
+        user = get_object_or_404(CustomUser, pk=pk)
+
+        if user == request.user:
+            serializer = UserSerializer(user, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        raise PermissionDenied("Usted no es el propietario de este objeto")
 
 
 @api_view(['GET'])
