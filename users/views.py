@@ -5,6 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from users.decorators import own_user_required
 from users.models import CustomUser, Seller
 from users.serializers import SellerSerializer, UserSerializer
 
@@ -20,7 +21,7 @@ def user_create(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([IsAuthenticated])
+@own_user_required
 def user_detail(request, pk):
     if request.method == 'GET':
         user = get_object_or_404(CustomUser, pk=pk)
@@ -29,21 +30,17 @@ def user_detail(request, pk):
     elif request.method == 'PUT' or request.method == 'PATCH':
         user = get_object_or_404(CustomUser, pk=pk)
 
-        if user == request.user:
-            serializer = UserSerializer(user, data=request.data, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        raise PermissionDenied("Usted no es el propietario de este objeto")
     elif request.method == 'DELETE':
         user = get_object_or_404(CustomUser, pk=pk)
-        if user == request.user:
-            user.delete()
-            return Response({"message": "Usuario eliminado con exito"}, status=status.HTTP_200_OK)
-        raise PermissionDenied("Usted no es el propietario de este objeto")
+        user.delete()
+        return Response({"message": "Usuario eliminado con exito"}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
