@@ -54,6 +54,29 @@ class UserTests(APITestCase):
         self.assertEqual(response.data["email"], data["email"])
         self.assertEqual(response.data["first_name"], data["first_name"])
 
+    def test_user_login(self):
+
+        # first we're going to create a user
+        url = reverse_lazy("users:user-create")
+        user_data = {
+            "email": "dalto@gmail.com",
+            "first_name": "Dalto",
+            "last_name": "Ruecker",
+            "password": "123456",
+            "password2": "123456",
+        }
+
+        response = self.client.post(url, user_data, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        url = reverse_lazy("users:login")
+        credentials_data = {"email": "dalto@gmail.com", "password": "123456"}
+
+        response = self.client.post(url, credentials_data, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
     def test_user_update(self):
         url = reverse_lazy("users:user-detail", kwargs={'pk': 1})
         data = {"email": "test@mail.com", "first_name": "Test", "last_name": "Test"}
