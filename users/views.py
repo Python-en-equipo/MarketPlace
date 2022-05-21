@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from users.decorators import own_user_required
 from users.models import CustomUser, Seller
 from users.serializers import SellerSerializer, UserSerializer
 
@@ -18,12 +20,27 @@ def user_create(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@api_view(['GET', 'PUT', 'DELETE'])
+@own_user_required
 def user_detail(request, pk):
-    user = get_object_or_404(CustomUser, pk=pk)
-    serializer = UserSerializer(user)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        user = get_object_or_404(CustomUser, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    elif request.method == 'PUT' or request.method == 'PATCH':
+        user = get_object_or_404(CustomUser, pk=pk)
+
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        user = get_object_or_404(CustomUser, pk=pk)
+        user.delete()
+        return Response({"message": "Usuario eliminado con exito"}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
