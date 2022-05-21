@@ -6,14 +6,18 @@ from users.models import Seller
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(max_length=255)
+    title = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
     class Meta:
         verbose_name = 'category'
         verbose_name_plural = "categories"
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Category, self).save(*args, **kwargs)
 
 
 class Product(models.Model):
@@ -22,10 +26,9 @@ class Product(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField()
     price = models.PositiveIntegerField(validators=[MinValueValidator(50)])
-    slug = models.SlugField(null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True, unique=True)
     stock = models.PositiveIntegerField(default=0)
     is_available = models.BooleanField(default=False)
-
 
     def __str__(self):
         return self.title
@@ -39,6 +42,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         self.is_available = False
+        self.slug = slugify(self.title)
         if self.stock > 0:
             self.is_available = True
         super(Product, self).save(*args, **kwargs)
