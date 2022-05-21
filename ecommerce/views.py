@@ -18,8 +18,8 @@ from ecommerce.serializers import CategorySerializer, ProductSerializer
 def api_root(request, format=None):
     return Response(
         {
-            "ecommerce": reverse("product-list", request=request, format=format),
-            "category": reverse("category-list", request=request, format=format),
+            "ecommerce": reverse("ecommerce:product-list", request=request, format=format),
+            "category": reverse("ecommerce:category-list", request=request, format=format),
         }
     )
 
@@ -41,9 +41,8 @@ def product_list(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# TODO: Añadir slug creado automático en caso de que cambie nombre prod
-@user_is_seller
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
+@user_is_seller
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     if request.method == "GET":
@@ -73,8 +72,8 @@ def category_list(request):
 
 
 # TODO: Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
-@user_is_seller
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
+@user_is_seller
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     if request.method == "GET":

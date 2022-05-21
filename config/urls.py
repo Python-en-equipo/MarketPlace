@@ -14,10 +14,6 @@ urlpatterns = [
     path("payment/", include("payment.urls")),
 ]
 
-urlpatterns += [
-    path('api-auth/', include('rest_framework.urls')),
-]
-
 # Schema of Documentation API
 schema_view = get_schema_view(
     openapi.Info(
