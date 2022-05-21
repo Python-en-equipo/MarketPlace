@@ -8,8 +8,9 @@ from users.models import Seller
 class Category(models.Model):
     title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
+
     class Meta:
-        verbose_name = 'category'
+        verbose_name = "category"
         verbose_name_plural = "categories"
 
     def __str__(self):
@@ -21,8 +22,10 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, null=True, blank=True)
-    seller = models.ForeignKey(Seller, related_name="products", on_delete=models.CASCADE, null=True, blank=True) #momentaneo, hay que modificar tests!!
+    category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
+    seller = models.ForeignKey(
+        Seller, related_name="products", on_delete=models.CASCADE, null=True, blank=True
+    )  # momentaneo, hay que modificar tests!!
     title = models.CharField(max_length=250)
     description = models.TextField()
     price = models.PositiveIntegerField(validators=[MinValueValidator(50)])
@@ -33,12 +36,10 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-
     def was_created(self):
         if self.price < 50:
             return False
         return True
-    
 
     def save(self, *args, **kwargs):
         self.is_available = False

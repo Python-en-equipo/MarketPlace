@@ -1,16 +1,14 @@
 from django.urls import path
+
 from ecommerce import views
 
 urlpatterns = [
-    path('', views.api_root),
-    path('products/', views.product_list, name='product-list'),
-    path('products/<str:slug>', views.product_detail, name='product-detail'),
-    path('categories/', views.category_list, name='category-list'),
-    path('categories/<str:slug>', views.category_detail, name='category-detail'),
+    path("", views.api_root),
+    path("products/", views.product_list, name="product-list"),
+    path("products/<str:slug>", views.product_detail, name="product-detail"),
+    path("categories/", views.category_list, name="category-list"),
+    path("categories/<str:slug>", views.category_detail, name="category-detail"),
 ]
-   
-
-
 
 
 # ANTES DE QUE FUERA API

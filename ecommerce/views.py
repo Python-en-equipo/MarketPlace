@@ -1,67 +1,71 @@
 from multiprocessing import context
+
 from django.shortcuts import get_object_or_404
-from rest_framework.reverse import reverse
-from rest_framework.decorators import api_view, action, renderer_classes
-from rest_framework.response import Response
-from rest_framework import status, generics, permissions
-from ecommerce.models import Product, Category
-from ecommerce.serializers import ProductSerializer, CategorySerializer
-from rest_framework.request import Request
+from rest_framework import generics, permissions, status
+from rest_framework.decorators import action, api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
+from ecommerce.decorators import user_is_seller
+from ecommerce.models import Category, Product
+from ecommerce.serializers import CategorySerializer, ProductSerializer
 
 
 # LINK PARA LA API
-@api_view(['GET'])
+@api_view(["GET"])
 def api_root(request, format=None):
-    return Response({
-        'ecommerce': reverse('product-list', request=request, format=format),
-        'category': reverse('category-list', request=request, format=format),
-    })
+    return Response(
+        {
+            "ecommerce": reverse("product-list", request=request, format=format),
+            "category": reverse("category-list", request=request, format=format),
+        }
+    )
 
 
 # TODO: AÑADIR SELLER, category no se está guardando al crear un prod
-@api_view(['GET', 'POST'])
+@api_view(["GET", "POST"])
 def product_list(request):
     """
         Return a list of products by category
     """
-    if request.method == 'GET':
-        queryset = Product.objects.select_related('category').all()
+    if request.method == "GET":
+        queryset = Product.objects.select_related("category").all()
         serializer = ProductSerializer(queryset, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+    elif request.method == "POST":
         serializer = ProductSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)       
+        serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-
 # TODO: Añadir slug creado automático en caso de que cambie nombre prod
-@api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
+@user_is_seller
+@api_view(["GET", "PUT", "PATCH", "DELETE"])
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = ProductSerializer(product)
         return Response(serializer.data)
-    elif request.method == 'PUT' or request.method == 'PATCH':
+    elif request.method == "PUT" or request.method == "PATCH":
         serializer = ProductSerializer(product, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'DELETE':
+    elif request.method == "DELETE":
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
-@api_view(['GET', 'POST'])
+@api_view(["GET", "POST"])
 def category_list(request):
-    if request.method == 'GET':
+    if request.method == "GET":
         queryset = Category.objects.all()
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+    elif request.method == "POST":
         serializer = CategorySerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -69,17 +73,18 @@ def category_list(request):
 
 
 # TODO: Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
-@api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
+@user_is_seller
+@api_view(["GET", "PUT", "PATCH", "DELETE"])
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
-    if request.method == 'GET':
+    if request.method == "GET":
         serializer = CategorySerializer(category)
         return Response(serializer.data)
-    elif request.method == 'PUT' or request.method == 'PATCH':
+    elif request.method == "PUT" or request.method == "PATCH":
         serializer = CategorySerializer(category, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'DELETE':
+    elif request.method == "DELETE":
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
