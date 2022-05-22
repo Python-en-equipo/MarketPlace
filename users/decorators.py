@@ -1,3 +1,5 @@
+import functools
+
 from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import PermissionDenied
 
@@ -5,6 +7,7 @@ from users.models import CustomUser
 
 
 def own_user_required(func):
+    @functools.wraps(func)
     def wrapper(request, *args, **kwargs):
         user = get_object_or_404(CustomUser, pk=int(kwargs['pk']))
 
