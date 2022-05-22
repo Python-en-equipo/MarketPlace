@@ -9,7 +9,7 @@ from rest_framework import permissions
 urlpatterns = [
     path("api/v1/", include("ecommerce.urls")),
     path("admin/", admin.site.urls),
-    path("user/", include("users.urls")),
+    path("api/v1/user/", include("users.urls")),
     path("cart/", include("shopping_cart.urls")),
     path("payment/", include("payment.urls")),
 ]
