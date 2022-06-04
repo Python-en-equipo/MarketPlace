@@ -73,7 +73,7 @@ def category_list(request):
 
 # TODO: Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
-@user_is_seller
+# @user_is_seller
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     if request.method == "GET":
@@ -85,5 +85,7 @@ def category_detail(request, slug):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == "DELETE":
+        if category.products.count() > 0:
+            return Response({"error": "La colección no se puede eliminar porque tiene productos"})
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
