@@ -5,24 +5,14 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('ecommerce', '0002_initial'),
-    ]
+    dependencies = [("ecommerce", "0002_initial")]
 
     operations = [
+        migrations.AlterField(model_name="category", name="slug", field=models.SlugField(max_length=100, unique=True)),
         migrations.AlterField(
-            model_name='category',
-            name='slug',
-            field=models.SlugField(max_length=100, unique=True),
+            model_name="category", name="title", field=models.CharField(max_length=100, unique=True)
         ),
         migrations.AlterField(
-            model_name='category',
-            name='title',
-            field=models.CharField(max_length=100, unique=True),
-        ),
-        migrations.AlterField(
-            model_name='product',
-            name='slug',
-            field=models.SlugField(blank=True, null=True, unique=True),
+            model_name="product", name="slug", field=models.SlugField(blank=True, null=True, unique=True)
         ),
     ]
