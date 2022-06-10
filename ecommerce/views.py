@@ -35,6 +35,7 @@ def product_list(request):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return None
 
 
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
@@ -44,7 +45,7 @@ def product_detail(request, slug):
     if request.method == "GET":
         serializer = ProductSerializer(product)
         return Response(serializer.data)
-    elif request.method == "PUT" or request.method == "PATCH":
+    elif request.method in ('PUT', 'PATCH'):
         serializer = ProductSerializer(product, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -52,6 +53,7 @@ def product_detail(request, slug):
     elif request.method == "DELETE":
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    return None
 
 
 @api_view(["GET", "POST"])
@@ -65,6 +67,7 @@ def category_list(request):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return None
 
 
 # TODO: Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
@@ -75,7 +78,7 @@ def category_detail(request, slug):
     if request.method == "GET":
         serializer = CategorySerializer(category)
         return Response(serializer.data)
-    elif request.method == "PUT" or request.method == "PATCH":
+    elif request.method in ('PUT', 'PATCH'):
         serializer = CategorySerializer(category, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -85,3 +88,4 @@ def category_detail(request, slug):
             return Response({"error": "La colección no se puede eliminar porque tiene productos"})
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    return None
