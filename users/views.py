@@ -1,96 +1,105 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404
+from drf_yasg2 import openapi
+from drf_yasg2.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
-from ecommerce.decorators import unauthenticated_user
-from ecommerce.models import Product
-from users.models import Seller
+from config.settings import SWAGGER_SETTINGS
+from users.decorators import own_user_required
+from users.models import CustomUser, Seller
+from users.serializers import SellerSerializer, UserSerializer
 
-from .forms import SellerForm, UserEditForm, UserForm
 
-
-@unauthenticated_user
-def register_view(request):
-    form = UserForm
+@swagger_auto_schema(
+    method="post",
+    operation_description="Create new user (Authentication required)",
+    request_body=UserSerializer,
+    responses={
+        201: openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "email": openapi.Schema(title="Email", type=openapi.TYPE_STRING),
+                "first_name": openapi.Schema(title="First Name", type=openapi.TYPE_STRING),
+                "last_name": openapi.Schema(title="Last Name", type=openapi.TYPE_STRING),
+            },
+        )
+    },
+)
+@api_view(["POST"])
+def user_create(request):
     if request.method == "POST":
-        form = UserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            useremail = form.cleaned_data.get("email")
-            messages.success(request, f"{useremail} was succesfully created")
-            return redirect("users:login")
-
-    return render(request, "users/register.html", {"user_registration": form})
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@unauthenticated_user
-def login_view(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+@swagger_auto_schema(
+    method="get",
+    operation_description="Get user by id (Authentication required)",
+    responses={
+        200: openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "email": openapi.Schema(title="Email", type=openapi.TYPE_STRING),
+                "first_name": openapi.Schema(title="First Name", type=openapi.TYPE_STRING),
+                "last_name": openapi.Schema(title="Last Name", type=openapi.TYPE_STRING),
+            },
+        )
+    },
+)
+@swagger_auto_schema(
+    methods=["put"],
+    operation_description="Update user by id (Authentication required)",
+    responses={
+        200: openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "email": openapi.Schema(title="Email", type=openapi.TYPE_STRING),
+                "first_name": openapi.Schema(title="First Name", type=openapi.TYPE_STRING),
+                "last_name": openapi.Schema(title="Last Name", type=openapi.TYPE_STRING),
+            },
+        )
+    },
+)
+@swagger_auto_schema(
+    methods=["delete"],
+    operation_description="Delete user by id (Authentication required)",
+    responses={
+        200: openapi.Schema(
+            type=openapi.TYPE_OBJECT, properties={"message": openapi.Schema(title="Message", type=openapi.TYPE_STRING)}
+        )
+    },
+)
+@api_view(["GET", "PUT", "DELETE"])
+@own_user_required
+def user_detail(request, pk):
+    if request.method == "GET":
+        user = get_object_or_404(CustomUser, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    elif request.method == "PUT" or request.method == "PATCH":
+        user = get_object_or_404(CustomUser, pk=pk)
 
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("ecommerce:home")
-        else:
-            messages.info(request, "Email or password is incorrect.")
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
-    return render(request, "users/login.html")
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-def logout_view(request):
-    logout(request)
-    return redirect("users:login")
+    elif request.method == "DELETE":
+        user = get_object_or_404(CustomUser, pk=pk)
+        user.delete()
+        return Response({"message": "Usuario eliminado con exito"}, status=status.HTTP_200_OK)
 
 
-@login_required
-def user_panel(request):
-    if hasattr(request.user, "seller"):
-        products = Product.objects.filter(seller=request.user.seller)
-        ctx = {"products": products}
-        return render(request, "users/user_panel.html", ctx)
-    else:
-        return render(request, "users/user_panel.html")
-
-
-@login_required
-def seller_register(request):
-    """ registro disponible para clientes, debe estar registrado en la plataforma para acceder a este registro"""
-    """ hay que preveer de que alguien ya registrado como vendedor no se pueda volver a entrar a este registro"""
-    seller_form = SellerForm()
-    if request.method == "POST":
-        seller_form = SellerForm(request.POST)
-        if seller_form.is_valid():
-            seller = seller_form.save(commit=False)
-            seller.profile = request.user
-            seller.save()
-            return redirect("ecommerce:home")
-
-    return render(request, "users/seller_register.html", {"seller_form": seller_form})
-
-
-@login_required
-def user_modify_view(request):
-    try:
-        instance_seller = Seller.objects.get(profile__id=request.user.id)
-    except Seller.DoesNotExist:
-        instance_seller = None
-    user_form = UserEditForm(instance=request.user)
-    seller_form = SellerForm(instance=instance_seller)
-    if request.method == "POST":
-        user_form = UserEditForm(request.POST, instance=request.user)
-        seller_form = SellerForm(request.POST or None, instance=instance_seller)
-        if user_form.is_valid() and seller_form.is_valid():
-            custom_user = user_form.save()
-            seller = seller_form.save(commit=False)
-            seller.profile = custom_user
-            seller.save()
-            return redirect("users:user_panel")
-        elif user_form.is_valid():
-            user_form.save()
-            return redirect("users:user_panel")
-
-    return render(request, "users/users_edit.html", {"user_form": user_form, "seller_form": seller_form})
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def seller_detail(request, pk):
+    seller = get_object_or_404(Seller, pk=pk)
+    serializer = SellerSerializer(seller)
+    return Response(serializer.data)

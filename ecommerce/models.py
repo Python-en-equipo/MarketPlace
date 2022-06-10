@@ -6,17 +6,20 @@ from users.models import Seller
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
-    ordering = models.IntegerField(default=0)  # para tener un control sobre el orden de las categorias
+    title = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
 
     class Meta:
-        ordering = ["ordering"]
+
         verbose_name = "category"
         verbose_name_plural = "categories"
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Category, self).save(*args, **kwargs)
 
 
 class Product(models.Model):
@@ -27,7 +30,7 @@ class Product(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField()
     price = models.PositiveIntegerField(validators=[MinValueValidator(50)])
-    slug = models.SlugField(null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True, unique=True)
     stock = models.PositiveIntegerField(default=0)
     is_available = models.BooleanField(default=False)
 
@@ -40,6 +43,7 @@ class Product(models.Model):
         return True
 
     def save(self, *args, **kwargs):
+
         # LOGICA PARA LAS URLS UNICAS
         original_slug = slugify(self.title)  # creacion automatica apartir del titulo
         queryset = Product.objects.all().filter(slug__iexact=original_slug).count()
@@ -53,10 +57,7 @@ class Product(models.Model):
             # vuelve a hacer la verificacion
             queryset = Product.objects.all().filter(slug__iexact=slug).count()
         self.slug = slug
-        self.is_available = False
-        if self.stock > 0:
-            self.is_available = True
-        super(Product, self).save(*args, **kwargs)
+
 
 
 class Image(models.Model):

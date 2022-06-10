@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo service redis-server start
 
 
-import environ
+
 import os
 import sys
+from datetime import timedelta
 from pathlib import Path
+
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +40,9 @@ env = environ.Env(  # add this
 SECRET_KEY = env("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True # env("DEBUG")
+
 
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
@@ -51,7 +56,12 @@ ALLOWED_HOSTS = [
 ]
 
 
-CSRF_TRUSTED_ORIGINS = ["https://test-marketplace-django.herokuapp.com", "https://django-ecommerce-v1.herokuapp.com"]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://test-marketplace-django.herokuapp.com',
+    'https://django-ecommerce-v1.herokuapp.com',
+]
+
 
 # Alojar las apps en un directorio
 # sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -74,6 +84,8 @@ INSTALLED_APPS = [
     # 3rd apps
     "stripe",
     "storages",
+    'rest_framework',
+    'drf_yasg2',
 ]
 
 MIDDLEWARE = [
@@ -224,7 +236,7 @@ AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
 
-AWS_S3_FILE_OVERWRITE = False
+AWS_S3_FILE_OVERWRITE = True
 AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
@@ -247,3 +259,53 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")
 STRIPE_WEBHOOK_KEY = env("STRIPE_WEBHOOK_KEY")
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {'type': 'basic'},
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'description': 'SimpleJWT',
+            'in': 'header',
+        },
+    }
+}
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'JWK_URL': None,
+    'LEEWAY': 0,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
+    'JTI_CLAIM': 'jti',
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}

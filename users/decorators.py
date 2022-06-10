@@ -1,11 +1,20 @@
-from django.shortcuts import redirect
+import functools
+
+from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import PermissionDenied
+
+from users.models import CustomUser
 
 
-def unauthenticated_user(view_func):
-    def wrapper_func(request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect("ecommerce:home")
-        else:
-            return view_func(request, *args, **kwargs)
+def own_user_required(func):
+    @functools.wraps(func)
+    def wrapper(request, *args, **kwargs):
+        user = get_object_or_404(CustomUser, pk=int(kwargs['pk']))
 
-    return wrapper_func
+        if request.method == 'GET':
+            return func(request, *args, **kwargs)
+        if request.user == user:
+            return func(request, *args, **kwargs)
+        raise PermissionDenied("Usted no es el propietario de este objeto")
+
+    return wrapper

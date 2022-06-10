@@ -1,101 +1,91 @@
-from django.conf import settings
+from multiprocessing import context
 
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
-from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, permissions, status
+from rest_framework.decorators import action, api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
-from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect, render
-
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import user_passes_test
-
-
-from .forms import ImageForm, ProductForm
-from .models import Image, Product, Category
+from ecommerce.decorators import user_is_seller
+from ecommerce.models import Category, Product
+from ecommerce.serializers import CategorySerializer, ProductSerializer
 
 
-CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
+# LINK PARA LA API
+@api_view(["GET"])
+def api_root(request, format=None):
+    return Response(
+        {
+            "ecommerce": reverse("ecommerce:product-list", request=request, format=format),
+            "category": reverse("ecommerce:category-list", request=request, format=format),
+        }
+    )
 
 
-def seller_check(user):
-    return hasattr(user, "seller")
+# TODO: AÑADIR SELLER, category no se está guardando al crear un prod
+@api_view(["GET", "POST"])
+def product_list(request):
+    """
+        Return a list of products by category
+    """
+    if request.method == "GET":
+        queryset = Product.objects.select_related("category").all()
+        serializer = ProductSerializer(queryset, many=True)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        serializer = ProductSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-def home(request):
-    products = Product.objects.filter(is_available=True)
-    product_count = products.count()
-
-    return render(request, "ecommerce/home.html", {"products": products, "product_count": product_count})
-
-
-def category(request, category_slug=None):
-    category_instance = get_object_or_404(Category, slug=category_slug)
-    products = Product.objects.filter(category=category_instance)
-    product_count = products.count()
-
-    return render(request, "ecommerce/home.html", {"products": products, "product_count": product_count})
-
-
-@user_passes_test(seller_check)
-@login_required
-def product_create(request):
-    if request.user.seller:
-        product_form = ProductForm()
-        image_form = ImageForm()
-        if request.method == "POST":
-            product_form = ProductForm(request.POST)
-            image_form = ImageForm(request.POST, request.FILES)
-            if product_form.is_valid() and image_form.is_valid():
-                product = product_form.save(commit=False)
-                product.seller = request.user.seller
-                product.save()
-                image = image_form.save(commit=False)
-                image.product = product
-                image.save()
-                return redirect("ecommerce:home")
-    else:
-        return redirect("ecommerce:home")
-
-    return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
-
-
-@user_passes_test(seller_check)
-@login_required
-def product_edit_view(request, product_id):
-    instance_product = Product.objects.get(id=product_id)
-    try:
-        instance_image = Image.objects.get(product__id=product_id)
-    except Image.DoesNotExist:
-        instance_image = None
-    product_form = ProductForm(request.POST or None, instance=instance_product)
-    image_form = ImageForm(request.POST, request.FILES, instance=instance_image)
-    if product_form.is_valid() and image_form.is_valid():
-        product = product_form.save()
-        image = image_form.save(commit=False)
-        image.product = product
-        image.save()
-        return redirect("ecommerce:home")
-
-    elif product_form.is_valid():
-        product = product_form.save()
-        return redirect("ecommerce:home")
-
-    return render(request, "ecommerce/product_edit.html", {"product_form": product_form, "image_form": image_form})
-
-
-def product_detail_view(request, product_id):
-    product = Product.objects.get(id=product_id)
-    return render(request, "ecommerce/product_detail.html", {"product": product})
-
-
-@user_passes_test(seller_check)
-@login_required
-def product_deletion(request, product_id):
-    product = Product.objects.get(id=product_id)
-    if request.method == "POST":
-        messages.success(request, f"{product} was succesfully deleted")
+@api_view(["GET", "PUT", "PATCH", "DELETE"])
+@user_is_seller
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    if request.method == "GET":
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
+    elif request.method == "PUT" or request.method == "PATCH":
+        serializer = ProductSerializer(product, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == "DELETE":
         product.delete()
-        return redirect("ecommerce:home")
-    return render(request, "ecommerce/product_delete.html", {"product": product})
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(["GET", "POST"])
+def category_list(request):
+    if request.method == "GET":
+        queryset = Category.objects.all()
+        serializer = CategorySerializer(queryset, many=True)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        serializer = CategorySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+# TODO: Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
+@api_view(["GET", "PUT", "PATCH", "DELETE"])
+# @user_is_seller
+def category_detail(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    if request.method == "GET":
+        serializer = CategorySerializer(category)
+        return Response(serializer.data)
+    elif request.method == "PUT" or request.method == "PATCH":
+        serializer = CategorySerializer(category, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == "DELETE":
+        if category.products.count() > 0:
+            return Response({"error": "La colección no se puede eliminar porque tiene productos"})
+        category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
