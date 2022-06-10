@@ -20,6 +20,8 @@ django-heroku = "*"
 django-debug-toolbar = "*"
 django-environ = "*"
 stripe = "*"
+djangorestframework-simplejwt = "*"
+djangorestframework = "*"
 
 [dev-packages]
 environ = "*"
