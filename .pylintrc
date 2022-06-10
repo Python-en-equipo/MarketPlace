@@ -4,3 +4,7 @@ disable = line-too-long, missing-module-docstring, missing-function-docstring,
         missing-class-docstring, unused-variable, invalid-str-returned, unused-argument,
         invalid-name, wildcard-import, unused-wildcard-import, super-with-arguments
 ignore = migrations
+[MISCELLANEOUS]
+
+  # List of note tags to take in consideration, separated by a comma.
+  notes=FIXME,XXX,TODO
