@@ -81,7 +81,7 @@ class UserTests(APITestCase):
         url = reverse_lazy("users:user-detail", kwargs={'pk': 1})
         data = {"email": "test@mail.com", "first_name": "Test", "last_name": "Test"}
         response = self.client.put(url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["email"], data["email"])
         self.assertEqual(response.data["first_name"], data["first_name"])
 
