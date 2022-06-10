@@ -5,7 +5,7 @@ from ecommerce import views
 app_name = "ecommerce"
 
 urlpatterns = [
-    path("", views.api_root),
+    path("", views.api_root_format),
     path("products/", views.product_list, name="product-list"),
     path("products/<str:slug>", views.product_detail, name="product-detail"),
     path("categories/", views.category_list, name="category-list"),

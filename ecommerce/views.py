@@ -11,7 +11,7 @@ from ecommerce.serializers import CategorySerializer, ProductSerializer
 
 # LINK PARA LA API
 @api_view(["GET"])
-def api_root(request, format=None):
+def api_root_format(request, format=None):
     return Response(
         {
             "ecommerce": reverse("ecommerce:product-list", request=request, format=format),
@@ -20,7 +20,7 @@ def api_root(request, format=None):
     )
 
 
-# TODO: AÑADIR SELLER, category no se está guardando al crear un prod
+# AÑADIR SELLER, category no se está guardando al crear un prod
 @api_view(["GET", "POST"])
 def product_list(request):
     """
@@ -70,7 +70,7 @@ def category_list(request):
     return None
 
 
-# TODO: Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
+# Añadir regla para que regrese cuantos productos tiene cada categoriía y para que no deje eliminar cat si tiene algún prod
 @api_view(["GET", "PUT", "PATCH", "DELETE"])
 # @user_is_seller
 def category_detail(request, slug):

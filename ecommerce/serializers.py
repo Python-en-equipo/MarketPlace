@@ -14,7 +14,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        # TODO AÑADIR SELLER SERIALIZER
+        # AÑADIR SELLER SERIALIZER
         fields = ("id", "title", "slug", "description", "price", "category", "stock")
 
 
