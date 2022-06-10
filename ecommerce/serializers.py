@@ -1,6 +1,3 @@
-from os import read
-
-from django.utils.text import slugify
 from rest_framework import serializers
 
 from ecommerce.models import Category, Image, Product

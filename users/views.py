@@ -6,7 +6,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from config.settings import SWAGGER_SETTINGS
 from users.decorators import own_user_required
 from users.models import CustomUser, Seller
 from users.serializers import SellerSerializer, UserSerializer
@@ -70,7 +69,8 @@ def user_create(request):
     operation_description="Delete user by id (Authentication required)",
     responses={
         200: openapi.Schema(
-            type=openapi.TYPE_OBJECT, properties={"message": openapi.Schema(title="Message", type=openapi.TYPE_STRING)}
+            type=openapi.TYPE_OBJECT,
+            properties={"message": openapi.Schema(title="Message", type=openapi.TYPE_STRING)},
         )
     },
 )
