@@ -4,11 +4,6 @@
 
 {% block content %}
 
-{% if user_registration.errors %}
-{{ user_registration.errors }}
-<!-- display the form errors if they exist -->
-{% endif %}
-
 <div class="flex justify-center items-center">
 	<div
 		class="flex flex-col items-center justify-center my-20  pt-16   lg:mx-48 sm:2/3 md:w-2/4 lg:1/4 h-full border rounded-3xl  ">
@@ -16,10 +11,11 @@
 			<div class="flex justify-center items-center">
 				<span class="pt-1 mx-3 whitespace-nowrap text-4xl 
 				italic font-light text-red-700 hover:text-gray-900">
-				AisModa.</span>
+					AisModa.</span>
 			</div>
 		</div>
-		<form id="form" action="" class="px-20 pt-12 w-full flex-col space-y-6">
+		<form id="form" method="post" action="" class="px-20 pt-12 w-full flex-col space-y-6">
+			{% csrf_token %}
 			<div class="flex flex-col ">
 				<label for="name" class="text-left text-red-800">First Name*</label>
 				{{ user_registration.first_name }}
@@ -44,11 +40,20 @@
 				<label for="password" class="text-left text-red-800">Re-enter Password...</label>
 				{{ user_registration.password2 }}
 
+				{% if user_registration.errors %}
+
+				<div class="text-center text-red-700 mt-4">
+
+					{{ user_registration.errors }}
+				</div>
+				{% endif %}
+
 			</div>
 			<div class="mt-16 pt-16 flex justify-center">
-				<input type="submit" class="w-full  w-2/3 px-20 py-3 border border-red-500"
-				value="Register">
+				<input type="submit" class="w-full  w-2/3 px-20 py-3 border border-red-500" value="Register">
 			</div>
+
+
 
 		</form>
 		<h6 class="mb-16 mt-4"> Already have acount?<a class="text-blue-500 font-bold"
