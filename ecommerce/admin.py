@@ -17,6 +17,7 @@ class ImageAdmin(admin.ModelAdmin):
     list_display = ("product",)
 
 
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Image, ImageAdmin)
 admin.site.register(Category, CategoryAdmin)

@@ -4,37 +4,35 @@
 
 {% include '../hero.html' %}
 {% include '../categories.html' %}
-{%for message in messages %}
-<p> {{ message }} </p>
-{% endfor %}
 
-    <div class="max-w-2xl mx-auto  px-4 sm:py-6 mb-10 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1 class="text-center mt-24 mb-8 text-4xl font-medium  ">Products List</h1>
-        <div class=" mx-auto w-1/12 ">
-            <div class="mx-auto w-1/4 border-b-4 border-gray-900"></div>
-        </div>
-
-        <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-
-            {% for product in products %}
-            <div class="group relative">
-                <a href="{% url 'ecommerce:product-detail' product.pk %}">
-                    {% include "ecommerce/images.html" %}
-                    <div class="mt-4 flex justify-center items-center flex-col">
-                        <div>
-                            <h3 class="text-md text-gray-700">
-                                <a href="{% url 'ecommerce:product-detail' product.pk %}"><span aria-hidden="true"
-                                        class="absolute inset-0"></span>{{product.title}}</a>
-                                <a href="{% url 'shopping_cart:add_product' product.pk %}" class="btn btn-sm btn-outline-primary">Agregar al carrito</a> 
-                            </h3>
-                        </div>
-                        <p class="mt-0 text-xl italic font-light text-red-600">${{product.price}}</p>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
+<div class="max-w-2xl mx-auto  px-4 sm:py-6 mb-10 sm:px-6 lg:max-w-7xl lg:px-8">
+    <h1 class="text-center mt-24 mb-8 text-4xl font-medium  ">Products List</h1>
+    <div class=" mx-auto w-1/12 ">
+        <div class="mx-auto w-1/4 border-b-4 border-gray-900"></div>
     </div>
+
+    <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+
+        {% for product in products %}
+        <div class="group relative">
+            <a href="{% url 'ecommerce:product-detail' product.pk %}">
+                {% include "ecommerce/images.html" %}
+            </a>
+
+            <div class="mt-4 flex justify-center items-center flex-col">
+                <div>
+                    <h3 class="text-md text-gray-700 flex justify-between">
+                        <a href="{% url 'ecommerce:product-detail' product.pk %}"><span aria-hidden="true"
+                                ></span>{{product.title}}</a>
+                    </h3>
+                </div>
+                <p class="mt-0 text-xl italic font-light text-red-600">${{product.price}}</p>
+                <a href="{% url 'shopping_cart:add_product' product.pk %}" class="">add to cart</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 
 

@@ -1,10 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-from .shopping_cart import ShoppingCart
 from .models import CartItem, CartSession, Product
-from ecommerce.models import Image
 # from ecommerce.models import Product
 
 

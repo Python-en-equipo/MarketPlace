@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 # sudo service redis-server start
 
 
+
 import os
 import sys
 from datetime import timedelta
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # add this
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))  # add this
 
 env = environ.Env(  # add this
     # set casting, default value
@@ -36,10 +37,12 @@ env = environ.Env(  # add this
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = env('DJANGO_KEY')
+SECRET_KEY = env("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # env('DEBUG')
+
+DEBUG = True # env("DEBUG")
+
 
 
 # Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
@@ -53,10 +56,12 @@ ALLOWED_HOSTS = [
 ]
 
 
+
 CSRF_TRUSTED_ORIGINS = [
     'https://test-marketplace-django.herokuapp.com',
     'https://django-ecommerce-v1.herokuapp.com',
 ]
+
 
 # Alojar las apps en un directorio
 # sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -102,7 +107,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR, 'templates'],
+        "DIRS": [BASE_DIR, "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -166,7 +171,7 @@ if "test" in sys.argv:
 
 
 # user personalizado
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = "users.CustomUser"
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -241,15 +246,15 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 # para enviar realmente
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 # EMAIL_HOST_USER = env("EMAIL")
 # EMAIL_HOST_PASSWORD = env('GMAIL_TOKEN')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = "/"
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")

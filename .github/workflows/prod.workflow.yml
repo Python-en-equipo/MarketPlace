@@ -22,13 +22,16 @@ jobs:
     env:
       DEBUG: ${{ secrets.DEBUG }}
       DJANGO_KEY: ${{ secrets.DJANGO_KEY }}
-      NAME_DB_HEROKU: ${{ secrets.TES_NAME_DB_HEROKU }}
-      USER_DB_HEROKU: ${{ secrets.TEST_USER_DB_HEROKU }}
-      PASSWORD_DB_HEROKU: ${{ secrets.TEST_PASSWORD_DB_HEROKU }}
-      HOST_DB_HEROKU: ${{ secrets.TEST_HOST_DB_HEROKU }}
+      NAME_DB_HEROKU: ${{ secrets.NAME_DB_HEROKU }}
+      USER_DB_HEROKU: ${{ secrets.USER_DB_HEROKU }}
+      PASSWORD_DB_HEROKU: ${{ secrets.PASSWORD_DB_HEROKU }}
+      HOST_DB_HEROKU: ${{ secrets.HOST_DB_HEROKU }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+      STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+      STRIPE_PRIVATE_KEY: ${{ secrets.STRIPE_PRIVATE_KEY }}
+      STRIPE_WEBHOOK_KEY: ${{ secrets.STRIPE_WEBHOOK_KEY }}
       POSTGRES_NAME: github_actions
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -86,3 +89,4 @@ jobs:
           HD_AWS_STORAGE_BUCKET_NAME: ${{secrets.AWS_STORAGE_BUCKET_NAME}}
           HD_STRIPE_PRIVATE_KEY: ${{secrets.STRIPE_PRIVATE_KEY}}
           HD_STRIPE_PUBLIC_KEY: ${{secrets.STRIPE_PUBLIC_KEY}}
+          HD_STRIPE_WEBHOOK_KEY: ${{secrets.STRIPE_WEBHOOK_KEY}}
