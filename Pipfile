@@ -22,6 +22,7 @@ django-environ = "*"
 stripe = "*"
 djangorestframework-simplejwt = "*"
 djangorestframework = "*"
+drf-yasg2 = "*"
 
 [dev-packages]
 environ = "*"
