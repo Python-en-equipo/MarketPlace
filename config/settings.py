@@ -41,7 +41,6 @@ SECRET_KEY = env("DJANGO_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True # env("DEBUG")
 
 
 
