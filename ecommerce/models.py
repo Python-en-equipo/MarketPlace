@@ -10,7 +10,6 @@ class Category(models.Model):
     slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
 
     class Meta:
-
         verbose_name = "category"
         verbose_name_plural = "categories"
 
@@ -43,21 +42,11 @@ class Product(models.Model):
         return True
 
     def save(self, *args, **kwargs):
-
-        # LOGICA PARA LAS URLS UNICAS
-        original_slug = slugify(self.title)  # creacion automatica apartir del titulo
-        queryset = Product.objects.all().filter(slug__iexact=original_slug).count()
-        # "Busca si hay otro slug que conincida con el mismo original_slug"
-        count = 1
-        slug = original_slug
-        # (queryset) si encuentra otro con este mismo slug
-        while queryset:
-            slug = original_slug + "-" + str(count)
-            count += 1
-            # vuelve a hacer la verificacion
-            queryset = Product.objects.all().filter(slug__iexact=slug).count()
-        self.slug = slug
-
+        self.is_available = False
+        self.slug = slugify(self.title)
+        if self.stock > 0:
+            self.is_available = True
+        super(Product, self).save(*args, **kwargs)
 
 
 class Image(models.Model):
