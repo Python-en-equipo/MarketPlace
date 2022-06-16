@@ -37,53 +37,53 @@
 #         self.assertEqual(response.status_code, 200)
 #         self.assertQuerysetEqual(response.context["products"], [])
 
-    # TESTS DEPRECADOS PORQUE YA NO NOS FIJAMOS EN EL PRECIO, SINO EN LA DISPONIBILIDAD!
-    # def test_product_wrong_price(self):
-    #     """
-    #     If the product has a price below 50, should not appear in the home
-    #     """
-    #     product_inst = create_product("Title", "Description", 5)
-    #     response = self.client.get(reverse("ecommerce:home"))
-    #     self.assertQuerysetEqual(response.context["products"], [])
+# TESTS DEPRECADOS PORQUE YA NO NOS FIJAMOS EN EL PRECIO, SINO EN LA DISPONIBILIDAD!
+# def test_product_wrong_price(self):
+#     """
+#     If the product has a price below 50, should not appear in the home
+#     """
+#     product_inst = create_product("Title", "Description", 5)
+#     response = self.client.get(reverse("ecommerce:home"))
+#     self.assertQuerysetEqual(response.context["products"], [])
 
-    # def test_product_right_price(self):
-    #     """
-    #     If the product has a price equal or above 50, it should in the home
-    #     """
-    #     product_inst = create_product("Product with right price", "Description", 50)
-    #     response = self.client.get(reverse("ecommerce:home"))
-    #     self.assertQuerysetEqual(response.context["products"], ["<Product: Product with right price>"])
+# def test_product_right_price(self):
+#     """
+#     If the product has a price equal or above 50, it should in the home
+#     """
+#     product_inst = create_product("Product with right price", "Description", 50)
+#     response = self.client.get(reverse("ecommerce:home"))
+#     self.assertQuerysetEqual(response.context["products"], ["<Product: Product with right price>"])
 
-    # def test_two_products_right_and_wrong(self):
-    #     """
-    #     Two products are created, one with a low price, and the other with an acceptable price
-    #     It should only appear the product which price is above or equal 50
-    #     """
-    #     wrong_product = create_product("Producto no aceptado", "descripcion dummy", 49)
-    #     right_product = create_product("Producto aceptable", "descripcion dummy", 50)
-    #     response = self.client.get(reverse("ecommerce:home"))
-    #     self.assertQuerysetEqual(response.context["products"], ["<Product: Producto aceptable>"])
+# def test_two_products_right_and_wrong(self):
+#     """
+#     Two products are created, one with a low price, and the other with an acceptable price
+#     It should only appear the product which price is above or equal 50
+#     """
+#     wrong_product = create_product("Producto no aceptado", "descripcion dummy", 49)
+#     right_product = create_product("Producto aceptable", "descripcion dummy", 50)
+#     response = self.client.get(reverse("ecommerce:home"))
+#     self.assertQuerysetEqual(response.context["products"], ["<Product: Producto aceptable>"])
 
-    # def test_two_right_products(self):
-    #     """
-    #     Two products are created, one with a low price, and the other with an acceptable price
-    #     It should only appear the product which price is above or equal 50
-    #     """
-    #     wrong_product = create_product("Producto aceptable 1", "descripcion dummy", 67)
-    #     right_product = create_product("Producto aceptable 2", "descripcion dummy", 50)
-    #     response = self.client.get(reverse("ecommerce:home"))
-    #     self.assertQuerysetEqual(
-    #         response.context["products"],
-    #         ["<Product: Producto aceptable 1>", "<Product: Producto aceptable 2>"],
-    #         ordered=False,
-    #     )
+# def test_two_right_products(self):
+#     """
+#     Two products are created, one with a low price, and the other with an acceptable price
+#     It should only appear the product which price is above or equal 50
+#     """
+#     wrong_product = create_product("Producto aceptable 1", "descripcion dummy", 67)
+#     right_product = create_product("Producto aceptable 2", "descripcion dummy", 50)
+#     response = self.client.get(reverse("ecommerce:home"))
+#     self.assertQuerysetEqual(
+#         response.context["products"],
+#         ["<Product: Producto aceptable 1>", "<Product: Producto aceptable 2>"],
+#         ordered=False,
+#     )
 
-    # def test_two_wrong_products(self):
-    #     """
-    #     Two products are created, one with a low price, and the other with an acceptable price
-    #     It should only appear the product which price is above or equal 50
-    #     """
-    #     wrong_product = create_product("Producto no aceptado 1", "descripcion dummy", 20)
-    #     right_product = create_product("Producto no aceptado 2", "descripcion dummy", 49)
-    #     response = self.client.get(reverse("ecommerce:home"))
-    #     self.assertQuerysetEqual(response.context["products"], [])
+# def test_two_wrong_products(self):
+#     """
+#     Two products are created, one with a low price, and the other with an acceptable price
+#     It should only appear the product which price is above or equal 50
+#     """
+#     wrong_product = create_product("Producto no aceptado 1", "descripcion dummy", 20)
+#     right_product = create_product("Producto no aceptado 2", "descripcion dummy", 49)
+#     response = self.client.get(reverse("ecommerce:home"))
+#     self.assertQuerysetEqual(response.context["products"], [])

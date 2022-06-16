@@ -7,7 +7,7 @@ from users.models import Seller
 
 class Category(models.Model):
     title = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, default=slugify(title))
 
     class Meta:
         verbose_name = "category"
@@ -22,11 +22,11 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
+    category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE, default=1)
     seller = models.ForeignKey(
         Seller, related_name="products", on_delete=models.CASCADE, null=True, blank=True
     )  # momentaneo, hay que modificar tests!!
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=250, unique=True)
     description = models.TextField()
     price = models.PositiveIntegerField(validators=[MinValueValidator(50)])
     slug = models.SlugField(null=True, blank=True, unique=True)
