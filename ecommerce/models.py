@@ -7,10 +7,9 @@ from users.models import Seller
 
 class Category(models.Model):
     title = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, null=True, blank=True, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, default=slugify(title))
 
     class Meta:
-
         verbose_name = "category"
         verbose_name_plural = "categories"
 
@@ -23,11 +22,11 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE, null=True, blank=True)
+    category = models.ForeignKey(Category, related_name="products", on_delete=models.CASCADE, default=1)
     seller = models.ForeignKey(
         Seller, related_name="products", on_delete=models.CASCADE, null=True, blank=True
     )  # momentaneo, hay que modificar tests!!
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=250, unique=True)
     description = models.TextField()
     price = models.PositiveIntegerField(validators=[MinValueValidator(50)])
     slug = models.SlugField(null=True, blank=True, unique=True)
@@ -43,21 +42,11 @@ class Product(models.Model):
         return True
 
     def save(self, *args, **kwargs):
-
-        # LOGICA PARA LAS URLS UNICAS
-        original_slug = slugify(self.title)  # creacion automatica apartir del titulo
-        queryset = Product.objects.all().filter(slug__iexact=original_slug).count()
-        # "Busca si hay otro slug que conincida con el mismo original_slug"
-        count = 1
-        slug = original_slug
-        # (queryset) si encuentra otro con este mismo slug
-        while queryset:
-            slug = original_slug + "-" + str(count)
-            count += 1
-            # vuelve a hacer la verificacion
-            queryset = Product.objects.all().filter(slug__iexact=slug).count()
-        self.slug = slug
-
+        self.is_available = False
+        self.slug = slugify(self.title)
+        if self.stock > 0:
+            self.is_available = True
+        super(Product, self).save(*args, **kwargs)
 
 
 class Image(models.Model):

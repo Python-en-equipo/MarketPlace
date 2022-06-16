@@ -31,7 +31,7 @@ def product_list(request):
         serializer = ProductSerializer(queryset, many=True)
         return Response(serializer.data)
     elif request.method == "POST":
-        serializer = ProductSerializer(data=request.data)
+        serializer = ProductSerializer(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -45,7 +45,7 @@ def product_detail(request, slug):
     if request.method == "GET":
         serializer = ProductSerializer(product)
         return Response(serializer.data)
-    elif request.method in ('PUT', 'PATCH'):
+    elif request.method in ("PUT", "PATCH"):
         serializer = ProductSerializer(product, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -78,7 +78,7 @@ def category_detail(request, slug):
     if request.method == "GET":
         serializer = CategorySerializer(category)
         return Response(serializer.data)
-    elif request.method in ('PUT', 'PATCH'):
+    elif request.method in ("PUT", "PATCH"):
         serializer = CategorySerializer(category, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
