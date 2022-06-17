@@ -19,8 +19,8 @@ def user_is_seller(function):
     def wrapper_function(request, *args, **kwargs):
         print(kwargs)
         product = Product.objects.get(slug=kwargs["slug"])
-        seller = Seller.objects.get(profile__email=request.user.email)
-        print(seller.profile.email)
+        # seller = Seller.objects.get(profile__email=request.user.email)
+        # print(seller.profile.email)
         print(request.user.email)
         print(product.seller.profile.email)
 
