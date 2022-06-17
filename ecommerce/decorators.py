@@ -2,7 +2,6 @@ from django.shortcuts import redirect
 from rest_framework.exceptions import PermissionDenied
 
 from ecommerce.models import Product
-from users.models import Seller
 
 
 def unauthenticated_user(function):
