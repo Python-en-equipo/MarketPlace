@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.parallax{
+  background: #fff fixed no-repeat 50% 50%;
+}
+
+.parallax2{
+  background-size:cover; 
+  background-position:50% 50%;
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+}
+
+@media (min-width: 640px){
+  .parallax2{
+    background-size:50% 100%; 
+    background-position:100% 0%;
+  }
+  
+}
+
+.background{ 
+  background: rgba(0, 0, 0, 0.4);
+  background-blend-mode: darken;
+ }
+
+.background2{
+  background: rgba(0, 0, 0, 0.2);
+  background-blend-mode: darken;
+ } 
+
+.scroll::-webkit-scrollbar{
+    display: none;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
