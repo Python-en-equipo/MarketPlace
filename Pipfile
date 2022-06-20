@@ -23,6 +23,7 @@ stripe = "*"
 djangorestframework-simplejwt = "*"
 djangorestframework = "*"
 drf-yasg2 = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 environ = "*"
