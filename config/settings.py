@@ -87,11 +87,13 @@ INSTALLED_APPS = [
     "storages",
     'rest_framework',
     'drf_yasg2',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -100,6 +102,10 @@ MIDDLEWARE = [
     # "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+    'https://django-ecommerce-v1.herokuapp.com'
+]
 
 INTERNAL_IPS = ["127.0.0.1"]
 
