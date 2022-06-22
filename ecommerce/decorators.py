@@ -20,13 +20,18 @@ def user_is_seller(function):
         product = Product.objects.get(slug=kwargs["slug"])
         # seller = Seller.objects.get(profile__email=request.user.email)
         # print(seller.profile.email)
-        print(request.user.email)
-        print(product.seller.profile.email)
+        # print(request.user.email)
+        # print(product.seller.profile.email)
 
         if request.method == "GET":
             return function(request, *args, **kwargs)
-        elif request.user.email == product.seller.profile.email:
-            return function(request, *args, **kwargs)
-        raise PermissionDenied("No puedes editar este elemento")
+        # en caso que sea otro verbo
+        try:
+            if request.user.email == product.seller.profile.email:
+                return function(request, *args, **kwargs)
+            raise PermissionDenied("No tienes los permisos para editar este producto")
+        except Exception as e:
+            print(e)
+            raise PermissionDenied("No tienes los permisos para editar este producto")
 
     return wrapper_function
