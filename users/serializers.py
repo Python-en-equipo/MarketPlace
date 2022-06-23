@@ -13,35 +13,35 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('email', "first_name", "last_name", "password", "password2")
+        fields = ("email", "first_name", "last_name", "password", "password2")
         extra_kwargs = {
-            'email': {'required': True},
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-            'password': {'required': True, 'write_only': True},
+            "email": {"required": True},
+            "first_name": {"required": True},
+            "last_name": {"required": True},
+            "password": {"required": True, "write_only": True},
         }
 
     def create(self, validated_data):
         # validate password
-        if validated_data['password'] != validated_data['password2']:
-            raise serializers.ValidationError({'password': 'Las contraseñas no coinciden'})
+        if validated_data["password"] != validated_data["password2"]:
+            raise serializers.ValidationError({"password": "Las contraseñas no coinciden"})
 
         user = CustomUser.objects.create_user(
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
+            email=validated_data["email"],
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
         )
 
-        user.set_password(validated_data['password'])
+        user.set_password(validated_data["password"])
         user.save()
 
         return user
 
     # update user
     def update(self, instance, validated_data):
-        instance.email = validated_data.get('email', instance.email)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get("email", instance.email)
+        instance.first_name = validated_data.get("first_name", instance.first_name)
+        instance.last_name = validated_data.get("last_name", instance.last_name)
 
         instance.save()
 
@@ -53,4 +53,4 @@ class SellerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Seller
-        fields = ('seller_name', 'profile')
+        fields = ("seller_name", "profile")
