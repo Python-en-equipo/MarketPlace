@@ -7,8 +7,8 @@ app_name = "ecommerce"
 urlpatterns = [
     path("", views.api_root_format),
     path("products/", views.product_list, name="product-list"),
-    path("products/<str:slug>", views.product_detail, name="product-detail"),
-    path("categories/", views.category_list, name="category-list"),
+    path("products/<str:slug>", views.ProductDetail.as_view(), name="product-detail"),
+    path("categories/", views.CategoryList.as_view(), name="category-list"),
     path("categories/<str:slug>", views.category_detail, name="category-detail"),
 ]
 
