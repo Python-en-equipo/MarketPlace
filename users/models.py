@@ -46,7 +46,9 @@ class CustomUser(AbstractUser):
 
 
 class Seller(models.Model):
-    profile = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="seller", primary_key=True)
+    profile = models.OneToOneField(
+        CustomUser, on_delete=models.CASCADE, related_name="seller", primary_key=True
+    )
     seller_name = models.CharField(max_length=50, unique=True)
     # is_active = models.BooleanField(default=False)
 
