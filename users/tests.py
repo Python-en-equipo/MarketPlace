@@ -115,5 +115,5 @@ class UserTests(APITestCase):
         updateResponse = self.client.put(url, data, format="json")
         deleteReponse = self.client.delete(url)
 
-        self.assertEqual(updateResponse.status_code, status.HTTP_401_UNAUTHORIZED)
-        self.assertEqual(deleteReponse.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(updateResponse.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(deleteReponse.status_code, status.HTTP_403_FORBIDDEN)
