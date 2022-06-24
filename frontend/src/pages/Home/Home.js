@@ -28,7 +28,7 @@ const Home = () => {
             <h1 className="font-bold text-5xl tracking-widest align-middle">
               CUE THE COLOR
             </h1>
-            <button className="border-2 border-white my-4 py-5 px-16 transition-colors duration-[0.4s] hover:bg-white hover:text-light-red text-xl">
+            <button className="border-2 border-white my-4 py-5 px-16 transition-colors duration-[0.4s] hover:bg-white hover:text-red-500 text-xl">
               Shop the collection
             </button>
           </p>
@@ -50,11 +50,11 @@ const Home = () => {
             <p className="h-20">
               <span className="text-lg leading-[2] opacity-100 group-hover:opacity-0 transition-opacity duration-300">
                 Im a product <br />{" "}
-                <span className="text-light-orange italic">$100.00</span>
+                <span className="text-orange-500 italic">$100.00</span>
               </span>
               <a
                 href=""
-                className="absolute w-1/2 p-3 border-2 border-light-orange bottom-8 left-1/2 -translate-x-1/2  opacity-0 group-hover:opacity-100 text-light-red hover:text-orange-500 border-light-red hover:border-light-orange transition-opacity duration-300"
+                className="absolute w-1/2 p-3 border-2 border-orange-500 bottom-8 left-1/2 -translate-x-1/2  opacity-0 group-hover:opacity-100 text-red-500 hover:text-orange-500 border-red-500 hover:border-orange-500 transition-opacity duration-300"
               >
                 Add to cart
               </a>
@@ -92,11 +92,11 @@ const Home = () => {
             <p className="h-20">
               <span className="text-lg leading-[2] opacity-100 group-hover:opacity-0 transition-opacity duration-300">
                 Im a product <br />{" "}
-                <span className="text-light-orange italic">$100.00</span>
+                <span className="text-orange-500 italic">$100.00</span>
               </span>
               <a
                 href=""
-                className="absolute w-1/2 p-3 border-2 border-light-orange left-1/2 bottom-8 -translate-x-1/2   opacity-0 group-hover:opacity-100 text-light-red hover:text-orange-500 border-light-red hover:border-light-orange transition-opacity duration-300"
+                className="absolute w-1/2 p-3 border-2 border-orange-500 left-1/2 bottom-8 -translate-x-1/2   opacity-0 group-hover:opacity-100 text-red-500 hover:text-orange-500 border-red-500 hover:border-orange-500 transition-opacity duration-300"
               >
                 Add to cart
               </a>
