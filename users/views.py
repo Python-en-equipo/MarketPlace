@@ -7,9 +7,9 @@ from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from users.decorators import own_user_required
-from users.models import CustomUser, Seller
-from users.serializers import SellerSerializer, UserSerializer
+from .models import CustomUser, Seller
+from .permissions import IsOwnerPermission
+from .serializers import SellerSerializer, UserSerializer
 
 
 class UserCreateAPIView(CreateAPIView):
@@ -18,6 +18,7 @@ class UserCreateAPIView(CreateAPIView):
 
 class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
+    permission_classes = [IsOwnerPermission, IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
