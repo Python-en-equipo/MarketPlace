@@ -1,29 +1,23 @@
 version: '3.4'
 
 services:
-  # redis:
-  #   restart: always
-  #   image: redis:5
-  #   ports:
-  #     - "6379:6379"
-
   db:
     restart: always
     #restart: unless-stopped
-    image: postgres:14.1-alpine3.15 
+    image: postgres:14.1-alpine3.15
     volumes:
       - ./data/db:/var/lib/postgresql/data
     ports:
-      - 5431:5432 # para que sea visible en nuestro entorno local 
+      - 5431:5432 # para que sea visible en nuestro entorno local
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  django:    
+  django:
     restart: always
     container_name: django
-    build:      
+    build:
       context: .
       dockerfile: ./local.Dockerfile
     command: >
@@ -35,9 +29,11 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_HOST=db
-      - ALLOWED_HOSTS=127.0.0.1, localhost     
+      - ALLOWED_HOSTS=127.0.0.1, localhost
       - DJANGO_KEY=123
-      - DEBUG=True
+      - STRIPE_PUBLIC_KEY=env("STRIPE_PUBLIC_KEY")
+      - STRIPE_PRIVATE_KEY=env("STRIPE_PRIVATE_KEY")
+      - STRIPE_WEBHOOK_KEY=env("STRIPE_WEBHOOK_KEY")
 
     volumes:
       - .:/app
