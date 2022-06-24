@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
@@ -33,6 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
         user.set_password(validated_data["password"])
+
         user.save()
 
         return user
@@ -54,3 +57,14 @@ class SellerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seller
         fields = ("seller_name", "profile")
+
+    def create(self, validated_data):
+        user = CustomUser.objects.get(id=self.context["request"].user.id)
+
+        try:
+            seller = Seller.objects.create(profile=user, seller_name=validated_data["seller_name"])
+
+            return seller
+        except ObjectDoesNotExist:
+            error = {"message": "The user is already a seller"}
+            raise serializers.ValidationError(error)
