@@ -4,6 +4,12 @@ from ecommerce.models import Category, Image, Product
 from users.models import Seller
 
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ["product"]
+
+
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source="category.title", read_only=False)
     seller = serializers.CharField(source="seller.seller_name", read_only=True)
@@ -49,15 +55,12 @@ class ProductSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     # products = serializers.StringRelatedField(many=True)
     products = ProductSerializer(many=True, read_only=True)
+    images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Category
-        fields = ["id", "slug", "title", "products"]
+        fields = ["id", "slug", "title", "products", "images"]
 
-        extra_kwargs = {"id": {"read_only": True}, "slug": {"read_only": True}
-        }
+        extra_kwargs = {"id": {"read_only": True}, "slug": {"read_only": True}}
 
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image
-        fields = ["product"]
+
