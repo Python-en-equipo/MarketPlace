@@ -227,10 +227,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHE_TTL = 60 * 15
 
 
-AWS_S3_FILE_OVERWRITE = True
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
 # para la consola
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
