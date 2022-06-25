@@ -1,5 +1,4 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
@@ -11,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True, validators=[UniqueValidator(queryset=CustomUser.objects.all())]
     )
-    password2 = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True)
 
     class Meta:
         model = CustomUser
@@ -20,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email": {"required": True},
             "first_name": {"required": True},
             "last_name": {"required": True},
-            "password": {"required": True, "write_only": True},
+            "password": {"write_only": True},
         }
 
     def create(self, validated_data):
