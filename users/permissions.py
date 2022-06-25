@@ -1,5 +1,3 @@
-from email import message
-
 from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
