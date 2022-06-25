@@ -55,7 +55,7 @@ AisModa es una aplicación web Marketplace que tiene el objetivo de poder compra
 <td align="left" >Danny Solano</td>
 <td align="left" >FrontEnd</td>
 <td align="left" >HTML,CSS, JS, REACT, NODE, PHP, PYTHON,Tailwind, bootstrap, sass </td>
-<td align="left" >Venezuela</td>
+<td align="left" >Ecuador</td>
 <td align="left" ><a href="https://www.linkedin.com/in/danny-solano-755a09182/">Danny</a> </td>
 <td align="left" ><a href="https://github.com/Drastick17">Drastick17</a> </td>
 </tr>
