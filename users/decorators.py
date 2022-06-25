@@ -9,9 +9,9 @@ from users.models import CustomUser
 def own_user_required(func):
     @functools.wraps(func)
     def wrapper(request, *args, **kwargs):
-        user = get_object_or_404(CustomUser, pk=int(kwargs['pk']))
+        user = get_object_or_404(CustomUser, pk=int(kwargs["pk"]))
 
-        if request.method == 'GET':
+        if request.method == "GET":
             return func(request, *args, **kwargs)
         if request.user == user:
             return func(request, *args, **kwargs)
