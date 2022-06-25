@@ -28,7 +28,9 @@ env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))  # add this
 
 
+
 DEBUG = env.bool("DEBUG", True)
+
 
 
 SECRET_KEY = env("DJANGO_KEY")
