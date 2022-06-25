@@ -27,26 +27,14 @@ env = environ.Env()
 
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))  # add this
 
-env = environ.Env(  # add this
-    # set casting, default value
-    # add this
-)
 
-DEBUG = True
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+DEBUG = env.bool("DEBUG", True)
 
-# SECURITY WARNING: keep the secret key used in production secret!
+
 
 SECRET_KEY = env("DJANGO_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-
-
-
-
-# Recuerda establecer esta variable en produccion heroku config:set DEBUG=False
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -62,10 +50,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://test-marketplace-django.herokuapp.com',
     'https://django-ecommerce-v1.herokuapp.com',
 ]
-
-
-# Alojar las apps en un directorio
-# sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 
 # Application definitionds
@@ -92,6 +76,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -99,7 +84,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -174,9 +158,6 @@ if os.environ.get("GITHUB_WORKFLOW"):
 if "test" in sys.argv:
     DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3", "NAME": "mydatabase"}
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 
 # user personalizado
 AUTH_USER_MODEL = "users.CustomUser"
@@ -209,16 +190,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 # this is used for internal use
 
+# static files config
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
+
 STATIC_URL = "/static/"
+
 # django app related files, its used for external use
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+# media config
+
 MEDIA_URL = "/media/"
+
 # user uploaded files
 MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -239,14 +228,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
 
-# S3 BUCKETS CONFIG
-AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-
-AWS_S3_FILE_OVERWRITE = True
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 # para la consola
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

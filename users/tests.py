@@ -33,7 +33,7 @@ class UserTests(APITestCase):
         user.save()
 
         # test
-        url = reverse_lazy('users:user-detail', kwargs={'pk': 2})
+        url = reverse_lazy("users:user-detail", kwargs={"pk": 2})
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -78,7 +78,7 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_update(self):
-        url = reverse_lazy("users:user-detail", kwargs={'pk': 1})
+        url = reverse_lazy("users:user-detail", kwargs={"pk": 1})
         data = {"email": "test@mail.com", "first_name": "Test", "last_name": "Test"}
         response = self.client.put(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -88,7 +88,7 @@ class UserTests(APITestCase):
     def test_user_delete(self):
         url = reverse_lazy("users:user-detail", kwargs={"pk": 1})
         response = self.client.delete(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_seller_detail(self):
         url = reverse_lazy("users:seller-detail", kwargs={"pk": 1})
@@ -96,3 +96,24 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["seller_name"], "Mark Store")
         self.assertEqual(response.data["profile"]["email"], self.user.email)
+
+    def test_permission_user(self):
+
+        CustomUser.objects.create_user(
+            email="test@mail.com", first_name="Test", last_name="Test", password="123456"
+        )
+
+        data = {
+            "email": "test@mail.com",
+            "first_name": "Test",
+            "last_name": "Test",
+            "password": "123456",
+        }
+
+        url = reverse_lazy("users:user-detail", kwargs={"pk": 2})
+
+        updateResponse = self.client.put(url, data, format="json")
+        deleteReponse = self.client.delete(url)
+
+        self.assertEqual(updateResponse.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(deleteReponse.status_code, status.HTTP_403_FORBIDDEN)
