@@ -5,8 +5,7 @@ from rest_framework.validators import UniqueValidator
 from users.models import CustomUser, Seller
 
 
-class UserSerializer(serializers.ModelSerializer):
-
+class UserCreateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True, validators=[UniqueValidator(queryset=CustomUser.objects.all())]
     )
@@ -38,6 +37,17 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ("email", "first_name", "last_name")
+        extra_kwargs = {
+            "email": {"required": True},
+            "first_name": {"required": True},
+            "last_name": {"required": True},
+        }
 
     # update user
     def update(self, instance, validated_data):
