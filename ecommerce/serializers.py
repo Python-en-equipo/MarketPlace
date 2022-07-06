@@ -7,18 +7,18 @@ from users.models import Seller
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ["product"]
+        fields = ["image_location"]
 
 
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source="category.title", read_only=False)
     seller = serializers.CharField(source="seller.seller_name", read_only=True)
-    # seller = SellerSerializer()
+    product_images = ImageSerializer(many=True)
 
     class Meta:
         model = Product
         # AÑADIR SELLER SERIALIZER
-        fields = ("id", "slug", "title", "description", "price", "category", "stock", "seller")
+        fields = ("id", "slug", "title", "description", "product_images", "price", "category", "stock", "seller")
 
         extra_kwargs = {
             "id": {"read_only": True},
