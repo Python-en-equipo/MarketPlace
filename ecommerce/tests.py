@@ -1,89 +1,61 @@
-# from django.test import TestCase
-# from django.urls import reverse
 
-# from .models import Product
+# not working yet
+# from django.urls import reverse_lazy
+# from rest_framework import status
+# from rest_framework.test import APITestCase
 
+# from users.models import CustomUser, Seller
 
-# def create_product(title_prod, description_prod, price_prod):
-#     """
-#     Create a product with the given info
-#     """
-#     product_inst = Product.objects.create(title=title_prod, description=description_prod, price=price_prod)
-#     return product_inst
+# import tempfile
+# from PIL import Image
 
+# class ImageTest(APITestCase):
+#     def setUp(self) -> None:
+#         # Create a user
+#         self.user = CustomUser.objects.create_user(
+#             email="mark@mail.com", first_name="Mark", last_name="Bruen", password="123456"
+#         )
 
-# class ProductModelTests(TestCase):
-#     def test_product_was_not_created(self):
-#         """
-#         Check that a product with a price below 50 it is not created
-#         """
-#         inst_product = create_product("producto con precio bajo", "descripcion dummy", 30)
-#         self.assertIs(inst_product.was_created(), False)
+#         # Create a seller
+#         self.seller = Seller.objects.create(seller_name="Mark Store", profile=self.user)
 
-#     def test_product_was_created(self):
-#         """
-#         Check that a product with a price equal or above 50 it is created
-#         """
-#         inst_product = create_product("producto con precio aceptable", "descripcion dummy", 50)
-#         self.assertIs(inst_product.was_created(), True)
+#         # Create a token
+#         url = reverse_lazy("users:login")
+#         response = self.client.post(
+#             url, {"email": "mark@mail.com", "password": "123456"}, format="json"
+#         )
 
+#         # Set the token in the header
+#         self.token = response.data["access"]
+#         self.client.credentials(HTTP_AUTHORIZATION="Bearer " + self.token)
 
-# class ProductHomeTests(TestCase):
-#     def test_no_products(self):
-#         """
-#         If no products exist, the page should be empty.
-#         """
-#         response = self.client.get(reverse("ecommerce:home"))
-#         self.assertEqual(response.status_code, 200)
-#         self.assertQuerysetEqual(response.context["products"], [])
+#         # Create an image
+#         self.tmp_file = tempfile.NamedTemporaryFile(suffix='.png')
+#         image = Image.new('RGB', (100, 100))
+#         image.save(self.tmp_file.name)
+#         self.params = {
+                    
+#             "title": "prueba",
+#             "description": "prueba",
+#             "product_images": self.tmp_file,
+#             "price": 1900,
+#             "category": "prueba",
+#             "stock": 3
+#         }        
+#         self.HTTP_HOST = "localhost:8000"
 
-# TESTS DEPRECADOS PORQUE YA NO NOS FIJAMOS EN EL PRECIO, SINO EN LA DISPONIBILIDAD!
-# def test_product_wrong_price(self):
-#     """
-#     If the product has a price below 50, should not appear in the home
-#     """
-#     product_inst = create_product("Title", "Description", 5)
-#     response = self.client.get(reverse("ecommerce:home"))
-#     self.assertQuerysetEqual(response.context["products"], [])
-
-# def test_product_right_price(self):
-#     """
-#     If the product has a price equal or above 50, it should in the home
-#     """
-#     product_inst = create_product("Product with right price", "Description", 50)
-#     response = self.client.get(reverse("ecommerce:home"))
-#     self.assertQuerysetEqual(response.context["products"], ["<Product: Product with right price>"])
-
-# def test_two_products_right_and_wrong(self):
-#     """
-#     Two products are created, one with a low price, and the other with an acceptable price
-#     It should only appear the product which price is above or equal 50
-#     """
-#     wrong_product = create_product("Producto no aceptado", "descripcion dummy", 49)
-#     right_product = create_product("Producto aceptable", "descripcion dummy", 50)
-#     response = self.client.get(reverse("ecommerce:home"))
-#     self.assertQuerysetEqual(response.context["products"], ["<Product: Producto aceptable>"])
-
-# def test_two_right_products(self):
-#     """
-#     Two products are created, one with a low price, and the other with an acceptable price
-#     It should only appear the product which price is above or equal 50
-#     """
-#     wrong_product = create_product("Producto aceptable 1", "descripcion dummy", 67)
-#     right_product = create_product("Producto aceptable 2", "descripcion dummy", 50)
-#     response = self.client.get(reverse("ecommerce:home"))
-#     self.assertQuerysetEqual(
-#         response.context["products"],
-#         ["<Product: Producto aceptable 1>", "<Product: Producto aceptable 2>"],
-#         ordered=False,
-#     )
-
-# def test_two_wrong_products(self):
-#     """
-#     Two products are created, one with a low price, and the other with an acceptable price
-#     It should only appear the product which price is above or equal 50
-#     """
-#     wrong_product = create_product("Producto no aceptado 1", "descripcion dummy", 20)
-#     right_product = create_product("Producto no aceptado 2", "descripcion dummy", 49)
-#     response = self.client.get(reverse("ecommerce:home"))
-#     self.assertQuerysetEqual(response.context["products"], [])
+#     def test_valid_authenticated_post_returns_201(self):
+#         url = reverse_lazy("ecommerce:product-list")
+#         print(self.params)
+#         print(self.HTTP_HOST)
+#         response = self.client.post(
+#            url, {
+#             "title": "prueba",
+#             "description": "prueba",
+#             "product_images": self.tmp_file,
+#             "price": 1900,
+#             "category": "prueba",
+#             "stock": 3
+#         }, format='multipart', HTTP_HOST=self.HTTP_HOST)
+        
+#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
