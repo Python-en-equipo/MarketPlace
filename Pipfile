@@ -24,6 +24,7 @@ djangorestframework-simplejwt = "*"
 djangorestframework = "*"
 drf-yasg2 = "*"
 django-cors-headers = "*"
+django-filter = "*"
 
 [dev-packages]
 environ = "*"
