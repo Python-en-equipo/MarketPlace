@@ -20,8 +20,20 @@ class APIRootView(APIView):
 
 class ProductList(ListCreateAPIView):
     serializer_class = ProductSerializer
-    queryset = Product.objects.all().order_by("id")
     permission_classes = [IsStaffOrReadOnly]
+
+    def get_queryset(self):
+        queryset = Product.objects.all().order_by("id")
+        category_name = self.request.query_params.get("category")
+        seller_name = self.request.query_params.get("seller")
+        if category_name is not None:
+            category_name = category_name.capitalize()
+            queryset = queryset.filter(category__title=category_name)
+        elif seller_name is not None:
+            seller_name = seller_name.capitalize()
+            queryset = queryset.filter(seller__seller_name=seller_name)
+
+        return queryset
 
 
 class ProductDetail(RetrieveUpdateDestroyAPIView):
