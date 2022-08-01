@@ -9,7 +9,7 @@ from ecommerce.models import Category, Product
 from ecommerce.serializers import CategorySerializer, ProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from ecommerce.filters import ProductFilter
-
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 class APIRootView(APIView):
@@ -25,8 +25,11 @@ class ProductList(ListCreateAPIView):
     queryset = Product.objects.all().order_by("id")
     serializer_class = ProductSerializer
     permission_classes = [IsStaffOrReadOnly]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = ProductFilter
+    search_fields = ["title", "description", "category__title"]
+    ordering_fields = ['price', 'stock', 'category']
+
 
 
 class ProductDetail(RetrieveUpdateDestroyAPIView):
