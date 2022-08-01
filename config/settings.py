@@ -29,8 +29,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))  # add this
 
 
 
-# DEBUG = env.bool("DEBUG", True)
-DEBUG = True
+DEBUG = env.bool("DEBUG", True)
 
 
 
