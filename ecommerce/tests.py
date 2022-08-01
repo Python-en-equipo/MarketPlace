@@ -1,4 +1,3 @@
-
 # not working yet
 # from django.urls import reverse_lazy
 # from rest_framework import status
@@ -34,14 +33,14 @@
 #         image = Image.new('RGB', (100, 100))
 #         image.save(self.tmp_file.name)
 #         self.params = {
-                    
+
 #             "title": "prueba",
 #             "description": "prueba",
 #             "product_images": self.tmp_file,
 #             "price": 1900,
 #             "category": "prueba",
 #             "stock": 3
-#         }        
+#         }
 #         self.HTTP_HOST = "localhost:8000"
 
 #     def test_valid_authenticated_post_returns_201(self):
@@ -57,5 +56,5 @@
 #             "category": "prueba",
 #             "stock": 3
 #         }, format='multipart', HTTP_HOST=self.HTTP_HOST)
-        
+
 #         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

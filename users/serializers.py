@@ -6,9 +6,7 @@ from users.models import CustomUser, Seller
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
-        required=True, validators=[UniqueValidator(queryset=CustomUser.objects.all())]
-    )
+    email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=CustomUser.objects.all())])
     password2 = serializers.CharField(write_only=True)
 
     class Meta:
@@ -43,11 +41,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ("id", "email", "first_name", "last_name")
-        extra_kwargs = {
-            "email": {"required": True},
-            "first_name": {"required": True},
-            "last_name": {"required": True},
-        }
+        extra_kwargs = {"email": {"required": True}, "first_name": {"required": True}, "last_name": {"required": True}}
 
     # update user
     def update(self, instance, validated_data):

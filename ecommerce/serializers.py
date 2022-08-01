@@ -13,7 +13,7 @@ class ImageSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source="category.title", read_only=False)
     seller = serializers.CharField(source="seller.seller_name", read_only=True)
-    product_images = ImageSerializer(many=True, read_only = False)
+    product_images = ImageSerializer(many=True, read_only=False)
 
     class Meta:
         model = Product
@@ -61,5 +61,3 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ["id", "slug", "title", "products"]
 
         extra_kwargs = {"id": {"read_only": True}, "slug": {"read_only": True}}
-
-

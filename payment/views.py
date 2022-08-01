@@ -1,11 +1,12 @@
-from django.conf import settings
 import stripe
-from config.settings import STRIPE_PRIVATE_KEY, STRIPE_WEBHOOK_KEY
+from django.conf import settings
+from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+
+from config.settings import STRIPE_PRIVATE_KEY, STRIPE_WEBHOOK_KEY
 from shopping_cart.models import CartItem, CartSession
 from shopping_cart.views import _get_session_id
 
