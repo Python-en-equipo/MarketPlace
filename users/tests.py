@@ -17,9 +17,7 @@ class UserTests(APITestCase):
 
         # Create a token
         url = reverse_lazy("users:login")
-        response = self.client.post(
-            url, {"email": "mark@mail.com", "password": "123456"}, format="json"
-        )
+        response = self.client.post(url, {"email": "mark@mail.com", "password": "123456"}, format="json")
 
         # Set the token in the header
         self.token = response.data["access"]
@@ -99,16 +97,9 @@ class UserTests(APITestCase):
 
     def test_permission_user(self):
 
-        CustomUser.objects.create_user(
-            email="test@mail.com", first_name="Test", last_name="Test", password="123456"
-        )
+        CustomUser.objects.create_user(email="test@mail.com", first_name="Test", last_name="Test", password="123456")
 
-        data = {
-            "email": "test@mail.com",
-            "first_name": "Test",
-            "last_name": "Test",
-            "password": "123456",
-        }
+        data = {"email": "test@mail.com", "first_name": "Test", "last_name": "Test", "password": "123456"}
 
         url = reverse_lazy("users:user-detail", kwargs={"pk": 2})
 

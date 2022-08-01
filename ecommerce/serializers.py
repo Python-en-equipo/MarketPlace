@@ -33,14 +33,16 @@ class ProductSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print(validated_data)
         category = validated_data.pop("category")
+        product_images = validated_data.pop("product_images")
         category_title = Category.objects.get(title=category["title"])
-        print(category_title)
         email = self.context["request"].user
         try:
             seller_email = Seller.objects.get(profile__email=email)
             print(seller_email)
-            product = Product.objects.create(**validated_data, category=category_title, seller=seller_email)
-            return product
+            new_product = Product.objects.create(**validated_data, category=category_title, seller=seller_email)
+            for image in product_images:
+                Image.objects.create(product=new_product, image_location=image)
+            return new_product
         except Seller.DoesNotExist:
             raise serializers.ValidationError("Crea antes una tienda para poder publicar productos")
 
@@ -53,14 +55,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    # products = serializers.StringRelatedField(many=True)
     products = ProductSerializer(many=True, read_only=True)
-    images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Category
-        fields = ["id", "slug", "title", "products", "images"]
+        fields = ["id", "slug", "title", "products"]
 
         extra_kwargs = {"id": {"read_only": True}, "slug": {"read_only": True}}
-
-

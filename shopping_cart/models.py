@@ -1,4 +1,5 @@
 from django.db import models
+
 from ecommerce.models import Product
 
 # Create your models here.
