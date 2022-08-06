@@ -1,0 +1,10 @@
+POST http://django-ecommerce-v1.herokuapp.com/api/v1/users/
+Content-Type:"application/json"
+
+{
+"email": "dannny@example.com",
+"first_name": "dannyasAsa",
+"last_name": "ArpiSAsaSA",
+"password": "123456789",
+"password2": "123456789"
+}

@@ -1,4 +1,3 @@
-//import React from 'react'
 import Carousel from "../../components/Carusel";
 
 import background from "../../assets/img/media/background.jpg";
