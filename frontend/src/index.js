@@ -12,7 +12,7 @@ root.render(
   <>
     <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <App className="bg-[#E5E5E5]" />
     </Provider>
     </BrowserRouter>
   </>

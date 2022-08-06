@@ -1,7 +1,9 @@
 import {useState} from 'react'
+import {useSelector} from 'react-redux'
 import Logo from '../assets/img/media/logo.png'
 
 const Header = () => {
+  const { user } = useSelector(state => state.userReducer)
   const [open, setOpen] = useState(false)
   const [showmenu, setShowMenu] = useState(false)
   const [y, setY] = useState(0)
@@ -41,7 +43,7 @@ const Header = () => {
       </div>    
       <div className='hidden md:flex flex-shrink-0 flex-row gap-8 text-gray-400 justify-end items-center'>
       <a href=''><i className="fa-solid fa-bag-shopping"></i></a>
-      <a href=''>Login</a>
+      {user ?<a href='/'>Login</a>:<a>{user.name}</a>}
       <i className='fas fa-bars block text-xl'></i>
       </div>
     </div> 

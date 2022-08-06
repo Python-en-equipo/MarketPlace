@@ -22,7 +22,6 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="products" element={<Products />} />
         <Route path="product" element={<Product />} />
-        {/*Desconozco pero logica elias: Si es usuario renderizar Profile, si no es, renderizar ProfileSeller */}
       </Route>
       <Route path="profile" element={<Profile />} />
       <Route path="profile-seller" element={<ProfileSeller />} />
