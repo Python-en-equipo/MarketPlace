@@ -1,9 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import (
-    CreateAPIView,
-    ListAPIView,
-    RetrieveUpdateDestroyAPIView,
-)
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
@@ -22,7 +18,7 @@ class APIRootView(APIView):
         return Response(data)
 
 
-class ProductList(ListAPIView, CreateAPIView):
+class ProductList(ListCreateAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all().order_by("id")
     permission_classes = [IsStaffOrReadOnly]
@@ -35,7 +31,7 @@ class ProductDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
 
 
-class CategoryList(ListAPIView, CreateAPIView):
+class CategoryList(ListCreateAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all().order_by("id")
     permission_classes = [IsStaffOrReadOnly]
