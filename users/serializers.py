@@ -53,6 +53,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         return instance
 
+
 class CreateSellerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seller
@@ -69,6 +70,7 @@ class CreateSellerSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             error = {"message": "The user is already a seller"}
             raise serializers.ValidationError(error)
+
 
 class SellerSerializer(serializers.ModelSerializer):
     profile = UserSerializer(read_only=True)

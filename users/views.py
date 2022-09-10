@@ -3,12 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import CustomUser, Seller
 from .permissions import IsOwnerSellerPermission, IsOwnerUserPermission
-from .serializers import (
-    CreateSellerSerializer,
-    SellerSerializer,
-    UserCreateSerializer,
-    UserSerializer,
-)
+from .serializers import CreateSellerSerializer, SellerSerializer, UserCreateSerializer, UserSerializer
 
 
 class UserCreateAPIView(CreateAPIView):

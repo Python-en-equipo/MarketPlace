@@ -11,21 +11,34 @@ class ModelListField(serializers.ListField):
         """
         return [self.child.to_representation(item) if item is not None else None for item in data.all()]
 
+
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ["image_location"]
 
+
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source="category.title", read_only=False)
     seller = serializers.CharField(source="seller.seller_name", read_only=True)
 
-    images = ModelListField(child=serializers.ImageField(),  allow_empty=False, min_length=1, write_only=True)
+    images = ModelListField(child=serializers.ImageField(), allow_empty=False, min_length=1, write_only=True)
     product_images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
-        fields = ("id", "slug", "title", "description", "product_images", "price", "category", "stock", "seller", "images")
+        fields = (
+            "id",
+            "slug",
+            "title",
+            "description",
+            "product_images",
+            "price",
+            "category",
+            "stock",
+            "seller",
+            "images",
+        )
 
         extra_kwargs = {
             "id": {"read_only": True},
