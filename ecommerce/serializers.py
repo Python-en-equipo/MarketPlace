@@ -19,6 +19,7 @@ class ImageSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source="category.title", read_only=False)
     seller = serializers.CharField(source="seller.seller_name", read_only=True)
+
     images = ModelListField(child=serializers.ImageField(),  allow_empty=False, min_length=1, write_only=True)
     product_images = ImageSerializer(many=True, read_only=True)
 
