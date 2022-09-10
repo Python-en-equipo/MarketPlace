@@ -28,8 +28,8 @@ schema_view = get_schema_view(
 )
 # swagger
 urlpatterns += [
-    # path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),  # noqa E501
-    path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc")  # noqa E501
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),  # noqa E501
+    path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),  # noqa E501
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
