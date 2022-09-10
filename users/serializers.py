@@ -53,16 +53,14 @@ class UserSerializer(serializers.ModelSerializer):
 
         return instance
 
-
-class SellerSerializer(serializers.ModelSerializer):
-    profile = UserSerializer(read_only=True)
-
+class CreateSellerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seller
-        fields = ("seller_name", "profile")
+        fields = ("seller_name",)
 
     def create(self, validated_data):
         user = CustomUser.objects.get(id=self.context["request"].user.id)
+        print(user)
 
         try:
             seller = Seller.objects.create(profile=user, seller_name=validated_data["seller_name"])
@@ -71,3 +69,10 @@ class SellerSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             error = {"message": "The user is already a seller"}
             raise serializers.ValidationError(error)
+
+class SellerSerializer(serializers.ModelSerializer):
+    profile = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Seller
+        fields = ("seller_name", "profile")

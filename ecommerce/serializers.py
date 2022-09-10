@@ -4,21 +4,28 @@ from ecommerce.models import Category, Image, Product
 from users.models import Seller
 
 
+class ModelListField(serializers.ListField):
+    def to_representation(self, data):
+        """
+        List of object instances -> List of dicts of primitive datatypes.
+        """
+        return [self.child.to_representation(item) if item is not None else None for item in data.all()]
+
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ["image_location"]
 
-
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.CharField(source="category.title", read_only=False)
     seller = serializers.CharField(source="seller.seller_name", read_only=True)
-    product_images = ImageSerializer(many=True)
+
+    images = ModelListField(child=serializers.ImageField(),  allow_empty=False, min_length=1, write_only=True)
+    product_images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
-        # AÑADIR SELLER SERIALIZER
-        fields = ("id", "slug", "title", "description", "product_images", "price", "category", "stock", "seller")
+        fields = ("id", "slug", "title", "description", "product_images", "price", "category", "stock", "seller", "images")
 
         extra_kwargs = {
             "id": {"read_only": True},
@@ -33,12 +40,11 @@ class ProductSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print(validated_data)
         category = validated_data.pop("category")
-        product_images = validated_data.pop("product_images")
+        product_images = validated_data.pop("images")
         category_title = Category.objects.get(title=category["title"])
         email = self.context["request"].user
         try:
             seller_email = Seller.objects.get(profile__email=email)
-            print(seller_email)
             new_product = Product.objects.create(**validated_data, category=category_title, seller=seller_email)
             for image in product_images:
                 Image.objects.create(product=new_product, image_location=image)

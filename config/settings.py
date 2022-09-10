@@ -189,14 +189,14 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
 STATIC_URL = "/static/"
 
 # django app related files, its used for external use
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # media config
 
 MEDIA_URL = "/media/"
 
 # user uploaded files
-MEDIA_ROOT = os.path.join(BASE_DIR, "static/media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 # Default primary key field type
