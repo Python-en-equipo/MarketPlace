@@ -31,15 +31,13 @@ function Login() {
     handleBackground();
   },[dispatch])
 
-  const onRegister = (data) =>{
-    console.log(data)
+  const onSubmit = (data) =>{
     dispatch(createUser(data))
     to('/')
   }
 
   const onLogin = (data) =>{
     setE(loginUser(data))
-    console.log(data)
     to('/')
   }
 
@@ -48,7 +46,7 @@ function Login() {
       <section ref={signRef} className="sign">
         <section className="sign__user">
           <div className="sign__forms">
-            <form className="sign__up" onSubmit={handleSubmit(onRegister)}>
+            <form className="sign__up" onSubmit={handleSubmit(onSubmit)}>
               <h1 className="sign__title">Create Account</h1>
               <div className="sign__icons">
                 <i className="fa-brands fa-facebook"></i>

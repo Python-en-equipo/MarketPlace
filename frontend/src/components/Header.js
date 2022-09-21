@@ -1,6 +1,7 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import {useState} from 'react'
 import {useSelector} from 'react-redux'
+import Logo from '../assets/img/media/logo.png'
 
 const Header = () => {
   const { user } = useSelector(state => state.userReducer)

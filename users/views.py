@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .models import CustomUser, Seller
 from .permissions import IsOwnerSellerPermission, IsOwnerUserPermission
-from .serializers import SellerSerializer, UserCreateSerializer, UserSerializer
+from .serializers import CreateSellerSerializer, SellerSerializer, UserCreateSerializer, UserSerializer
 
 
 class UserCreateAPIView(CreateAPIView):
@@ -17,7 +17,7 @@ class UserRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
 
 class SellerCreateAPIView(CreateAPIView):
-    serializer_class = SellerSerializer
+    serializer_class = CreateSellerSerializer
     permission_classes = [IsAuthenticated]
 
 
